@@ -9,7 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <!-- <link rel="stylesheet"  href="styles/styles.css"/> -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -17,21 +17,79 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
     <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
       img {
         width: 200px;
         height: 175px;
-      };
-      .width250{
-        width: 250px;
       }
-
+      :root{
+        --header-height: 50px;
+        --sidebar-width: 250px:
+      }
+      .header{
+        position: fixed;
+        min-width: auto;
+        box-shadow: var(--bs-sm);
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 5050;
+        background-color: white;
+        width: 100%;
+        height: var(--header-height);
+      }
+      .test{
+        background:none;
+        border:none;
+        padding:0;
+        
+      }
+      .card{
+        width: 250px; 
+        border-radius: 50px
+      }
+      .sidebar{
+        position: fixed;
+        top: 0;
+        margin-top: var(--header-height);
+        flex-shrink: 0;
+        width: 250px;
+        border:1px solid black;
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - var(--header-height));
+        overflow-y : auto;
+        background-color: #333;
+      }
+      .container2{
+        display: flex;
+        position: relative;
+        width: 100%;
+      }
+      .content{
+        padding-left: 250px;
+        margin-left: var(--sidebar-width);
+        margin-top: var(--header-height);
+        overflow-x: hidden;
+      }
+      .nav-link:hover{
+        background-color: #0d6efd;
+      }
+      
       
     </style>
   </head>
-  <body>    
-    <div class="row">
-      
-      <div class="col d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+  <body style="background-color: #ddd; overflow:auto;">    
+    <header class="header">
+      <div> NAVBAR</div>
+    </header>
+    <div class="container2">
+      <aside class="sidebar">  
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
           <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
           <span class="fs-4">Sidebar</span>
@@ -69,29 +127,32 @@
             </a>
           </li>
         </ul>
-      </div>
-      <div class="col-9 width250">
-        <% if(exercises.length > 0) {%>
-          <div class="row">
-            <% exercises.forEach(function(exercise) { %> 
-              <div class="col">  
-                <div class=" card card-body mb-3 ">
-                  <img class="m-auto" src="<%= exercise.thumbnail.substr(6) %> " alt="">
-                  <div class="row-1">
-
-                    <div class="col">Exercise : <%= exercise.name %> </div>
-                    <div class="col">Body's area : <%= exercise.area %> </div>
-                    <div class="col">difficulty : <%= exercise.difficulty %> </div>
+      </aside>
+      <main >  
+        <div class=" content" >
+          <% if(exercises.length > 0) {%>
+            <div class="row">
+              <% exercises.forEach(function(exercise) { %> 
+                <div class="col" >  
+                  <div class=" card card-body mb-3 " style="width: 250px; border-radius: 50px; position: relative;">
+                    <img class="m-auto" src="<%= exercise.thumbnail.substr(6) %> " alt="">
+                    <div class="row-1">
+  
+                      <div class="col">Exercise : <%= exercise.name %> </div>
+                      <div class="col">Body's area : <%= exercise.area %> </div>
+                      <div class="col">difficulty : <%= exercise.difficulty %> </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <% })%>
-            </div>  
-          <% } else {%>
-            <p>No Exercises</p>
-          <% } %>
-      </div>
+                <% })%>
+              </div>  
+            <% } else {%>
+              <p>No Exercises</p>
+            <% } %>
+        </div>
+      </main>
     </div>
+    
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>

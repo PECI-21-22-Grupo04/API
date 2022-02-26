@@ -46,7 +46,9 @@ async function createTest(){
 } */
 // createTest(); 
 app.use(express.static('public')); 
-app.use('/exercises', express.static('exercises'));
+// app.use('/styles', express.static('styles'));
+
+// app.use('/exercises', express.static('exercises'));
 
 // use Routes
 app.use(indexRoutes);
