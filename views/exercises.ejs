@@ -66,12 +66,19 @@
         overflow-y : auto;
         background-color: #333;
       }
-      .container2{
+      .container-flex{
         display: flex;
         position: relative;
         width: 100%;
       }
+      .conteiner-grid{
+        display:grid;
+        grid-template-columns: 300px 300px 300px;
+      }
       .content{
+        display:grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap:50px;
         padding-left: 250px;
         margin-left: var(--sidebar-width);
         margin-top: var(--header-height);
@@ -79,6 +86,12 @@
       }
       .nav-link:hover{
         background-color: #0d6efd;
+      }
+      .card:hover{
+        background-color: #0d6efd;
+        color : white;
+        border: 1px solid black;
+
       }
       
       
@@ -88,7 +101,7 @@
     <header class="header">
       <div> NAVBAR</div>
     </header>
-    <div class="container2">
+    <div class="container-flex">
       <aside class="sidebar">  
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
           <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -117,7 +130,7 @@
           <li>
             <a href="#" class="nav-link text-white">
               <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-              Products
+              Plans
             </a>
           </li>
           <li>
@@ -128,13 +141,15 @@
           </li>
         </ul>
       </aside>
-      <main >  
+      <main >
+        <form action="/exercises" method="POST" enctype="multipart/form-data" style=" margin-left : 250px; margin-top : 50px;" >
+          <input type="submit" value="Easy" class="btn btn-primary btn-block" >
+        </form> 
         <div class=" content" >
+          
           <% if(exercises.length > 0) {%>
-            <div class="row">
               <% exercises.forEach(function(exercise) { %> 
-                <div class="col" >  
-                  <div class=" card card-body mb-3 " style="width: 250px; border-radius: 50px; position: relative;">
+                  <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; position: relative;">
                     <img class="m-auto" src="<%= exercise.thumbnail.substr(6) %> " alt="">
                     <div class="row-1">
   
@@ -142,10 +157,8 @@
                       <div class="col">Body's area : <%= exercise.area %> </div>
                       <div class="col">difficulty : <%= exercise.difficulty %> </div>
                     </div>
-                  </div>
-                </div>
+                  </article>
                 <% })%>
-              </div>  
             <% } else {%>
               <p>No Exercises</p>
             <% } %>
