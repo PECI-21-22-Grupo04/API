@@ -10,9 +10,9 @@ const mongoose = require('mongoose');
 
 
 // Database
-mongoose.connect('mongodb://localhost:27017/playground')
+mongoose.connect('mongodb://127.0.0.1:27017/playground')
     .then(() => console.log('Connected to MongoDB...'))
-    .catch(err => console.error('Could not connett to MongoDB...',err));
+    .catch(err => console.error('Could not connect to MongoDB...',err));
 
 
 
@@ -20,6 +20,8 @@ mongoose.connect('mongodb://localhost:27017/playground')
 const indexRoutes = require('./routes/index');
 const uploadRoutes = require('./routes/upload');
 const exercisesRoutes = require('./routes/exercises')
+const plansRoutes = require('./routes/plans');
+const { ppid } = require('process');
 
 // Engine
 app.set('view engine', 'ejs');
@@ -54,6 +56,7 @@ app.use(express.static('public'));
 app.use(indexRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/exercises',exercisesRoutes);
+app.use('/plans',plansRoutes)
 // port listening
 app.get('/test', (req, res) => {
     res.render('test');

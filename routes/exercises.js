@@ -3,9 +3,17 @@ const router = express.Router();
 const Exercise = require('../models/Exercise')
 
 router.get('/', async (req, res) => {
-    console.log(req.query.object + ' . ')
+
+   // exercises= {}
     const exercises = await Exercise.find(req.query);
-    res.render('exercises', {exercises: exercises});
+
+    if (exercises)
+    {
+        res.render('exercises', {exercises: exercises});
+    }
+
+    else {res.render('exercises', {exercises:  {}});
+} 
 });
 
 router.post('/', async (req, res) => {
