@@ -47,7 +47,7 @@ async function createTest(){
     console.log(result);
 } */
 // createTest(); 
-app.use(express.static('public')); 
+app.use(express.static(__dirname + '/public'));
 // app.use('/styles', express.static('styles'));
 
 // app.use('/exercises', express.static('exercises'));

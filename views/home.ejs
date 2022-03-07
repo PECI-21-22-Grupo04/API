@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href= "/css/styles.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -16,73 +17,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
-      <style>
-        html,
-        body {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-        }
-        img {
-          width: 200px;
-          height: 175px;
-        }
-        :root{
-          --header-height: 50px;
-          --sidebar-width: 250px:
-        }
-        .header{
-          position: fixed;
-          min-width: auto;
-          box-shadow: var(--bs-sm);
-          top: 0;
-          left: 0;
-          width: 100%;
-          z-index: 5050;
-          background-color: white;
-          width: 100%;
-          height: var(--header-height);
-        }
-        .test{
-          background:none;
-          border:none;
-          padding:0;
-          
-        }
-        .card{
-          width: 250px; 
-          border-radius: 50px
-        }
-        .sidebar{
-          position: fixed;
-          top: 0;
-          margin-top: var(--header-height);
-          flex-shrink: 0;
-          width: 250px;
-          border:1px solid black;
-          display: flex;
-          flex-direction: column;
-          height: calc(100vh - var(--header-height));
-          overflow-y : auto;
-          background-color: #333;
-        }
-        .container2{
-          display: flex;
-          position: relative;
-          width: 100%;
-        }
-        .content{
-          padding-left: 250px;
-          margin-left: var(--sidebar-width);
-          margin-top: var(--header-height);
-          overflow-x: hidden;
-        }
-        .nav-link:hover{
-          background-color: #0d6efd;
-        }
-        
-        
-      </style>
     </head>
     <body style="background-color: #ddd; overflow:auto;">    
       <header class="header">
