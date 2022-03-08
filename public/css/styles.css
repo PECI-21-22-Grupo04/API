@@ -21,7 +21,6 @@ img {
   width: 100%;
   z-index: 5050;
   background-color: white;
-  width: 100%;
   height: var(--header-height);
 }
 .test{
@@ -39,13 +38,18 @@ img {
   top: 0;
   margin-top: var(--header-height);
   flex-shrink: 0;
-  width: 250px;
+  width: 0px;
   border:1px solid black;
   display: flex;
   flex-direction: column;
   height: calc(100vh - var(--header-height));
   overflow-y : auto;
   background-color: #333;
+  transition: width 0.4s ease-in-out;
+
+}
+.sidebar.open{
+  width: 250px;
 }
 .container-flex{
   display: flex;
@@ -65,7 +69,7 @@ img {
   margin-top: var(--header-height);
   overflow-x: hidden;
 }
-.nav-link:hover{
+.nav-link:hover {
   background-color: #0d6efd;
 }
 .card:hover{
@@ -75,3 +79,33 @@ img {
 
 }
 
+.menu-icon {
+  width: 55px;
+  height: 50px;
+  padding-left: 10px;  
+  padding-top: 5px;
+  cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #111;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+.menu-icon:hover .bar1, .menu-icon:hover .bar2, .menu-icon:hover .bar3{
+  background-color: #666;
+}
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+}
