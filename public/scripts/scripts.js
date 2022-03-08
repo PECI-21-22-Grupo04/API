@@ -1,6 +1,3 @@
-function menuButton(x) {
-    x.classList.toggle("change");
-};
 
 const menuIcon = document.querySelector("[data-menu-icon]")
 const sidebar =  document.querySelector("[data-sidebar]")
