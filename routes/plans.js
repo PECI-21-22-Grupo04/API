@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const { default: mongoose } = require('mongoose');
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+router.use(bodyParser());
+
 router.get('/', async (req, res) => {
 
 
@@ -29,16 +32,26 @@ router.get('/upload', async (req, res) => {
     }
     
 });
-router.post('/upload', (req, res) => {
-    console.log(req.file.path)
+
+router.post('/create', jsonParser, (req, res) => {
+    console.log(req.body.name)
+    console.log(req.body.difficulty)
+
     const plan = new Plan({
-      
+        name: req.body.name,
+        difficulty: req.body.difficulty,
         exerciseList: []
 
     }).save()
     .then(() => console.log('Plan created'));
-    res.redirect('/upload');
+    res.redirect('/');
 })
+
+router.get('/create', (req, res) => {
+  
+    res.render('createPlan')
+})
+
 
 router.post('/upload/exer',  urlencodedParser ,async (req, res) => {
     // add ex to plan
@@ -52,14 +65,11 @@ router.post('/upload/exer',  urlencodedParser ,async (req, res) => {
     {   
         thumbnail="public"+imgsSelected[i].substr(21)
         console.log(thumbnail) 
-       var ids = await Exercise.find({thumbnail}).select({exId:1})
-        const {id , exid} = ids
-       console.log(exid)
-
-    //    const newPlan = new Plan ({
-    //        name: "test",
-    //        exerciseListID:{ids}
-    //    })
+        var id = await Exercise.findOne({thumbnail}).select({_id:0 , exId:1})
+        console.log(id.exId)
+        
+        
+       
 
     //    const result = await newPlan.save();
     //    console.log("was save succ ? " + result)

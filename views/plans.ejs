@@ -76,9 +76,10 @@
         <div class=" content" >
           
           <% if(plans.length > 0) {%>
-              <% plans.forEach(function(exercise) { %> 
+              <% plans.forEach(function(plan) { %> 
                   <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; position: relative;">
-                    <img class="m-auto" src="<%= exercise.thumbnail.substr(6) %> " alt="">
+                    <div class="col">Plan : <%= plan.name %> </div>
+                      <div class="col">Difficulty : <%= plan.difficulty %> </div>
                   </article>
                 <% })%>
             <% } else {%>
