@@ -33,7 +33,7 @@
         var imageSelection = [];
 
         imageContainer.addEventListener('click', (e) => {
-            if (!imageSelection.includes(e)) {
+            if (!imageSelection.includes(e.target.src)) {
               console.log('we adding')
                 imageSelection.push(e.target.src);
 
