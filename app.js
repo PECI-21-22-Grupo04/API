@@ -22,6 +22,7 @@ const indexRoutes = require('./routes/index');
 const uploadRoutes = require('./routes/upload');
 const exercisesRoutes = require('./routes/exercises')
 const plansRoutes = require('./routes/plans');
+const loginRoutes = require('./routes/login');
 
 
 // Engine
@@ -57,10 +58,12 @@ app.use(express.static(__dirname + '/public'));
 app.use(indexRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/exercises',exercisesRoutes);
-app.use('/plans',plansRoutes)
+app.use('/plans',plansRoutes);
+app.use('/login',loginRoutes);
+
 // port listening
 app.get('/test', (req, res) => {
-    res.render('test');
+    res.render('login');
 })
 app.listen(5000, ()=>{
     console.log(`Listening on port 5000...`);
