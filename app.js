@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 
-
-
+app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 // Database
 mongoose.connect('mongodb://127.0.0.1:27017/playground')
     .then(() => console.log('Connected to MongoDB...'))
@@ -21,7 +22,7 @@ const indexRoutes = require('./routes/index');
 const uploadRoutes = require('./routes/upload');
 const exercisesRoutes = require('./routes/exercises')
 const plansRoutes = require('./routes/plans');
-const { ppid } = require('process');
+
 
 // Engine
 app.set('view engine', 'ejs');

@@ -114,12 +114,7 @@
               <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
               Home
             </a>
-          </li>
-          <li>
-            <a href="/upload" class="nav-link text-white">
-              <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-              Upload
-            </a>
+          </li> JSON.stringify(imageSelection)
           </li>
           <li>
             <a href="/exercises" class=" nav-link text-white">
@@ -145,18 +140,20 @@
         <form action="/exercises" method="POST" enctype="multipart/form-data" style=" margin-left : 250px; margin-top : 50px;" >
           <input type="submit" value="Easy" class="btn btn-primary btn-block" >
         </form> 
-        <div class=" content" >
+        
+        <div class="content" id="image-container">
           
           <% if(exercises.length > 0) {%>
               <% exercises.forEach(function(exercise) { %> 
                   <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; position: relative;">
                     <img class="m-auto" src="<%= exercise.thumbnail.substr(6) %> " alt="">
                   </article>
-                  <button id="add-image-button">Add Image Choice</button>
+                  
                 <% })%>
             <% } else {%>
               <p>No Exercises</p>
             <% } %>
+            <button id="add-image-button">x</button>
         </div>
         
       </main>
@@ -165,5 +162,39 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script>
+        const imageContainer = document.getElementById('image-container');
+        var imageSelection = [];
+
+        imageContainer.addEventListener('click', (e) => {
+            if (!imageSelection.includes(e)) {
+              console.log('we adding')
+                imageSelection.push(e.target.src);
+
+
+
+                const addImageButton = document.getElementById('add-image-button');
+
+        addImageButton.addEventListener('click', async () => {
+          const url = 'http://localhost:5000/plans/upload/exer';
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            // body: imageSelection
+            body:JSON.stringify( imageSelection)
+          });
+          console.log(response)
+          imageSelection = [];
+        });
+       
+            }
+
+
+        
+});
+
+    </script>
   </body>
 </html>
