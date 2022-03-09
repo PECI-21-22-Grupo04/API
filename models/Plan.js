@@ -4,10 +4,9 @@ const mongoose = require('mongoose');
 //import {exerciseSchema} from './Exercise'
 const exerciseSchema = require('./Exercise').schema
 const planSchema = new mongoose.Schema({
-    //exerciseList: [ { type: exerciseSchema } ] ,
     exerciseListID: [ [Number] ] ,
-    name: String,
-
+    name:{type: String , unique : true, required : true} ,
+    difficulty: String,
 
    
 });

@@ -30,13 +30,16 @@ router.get('/upload', async (req, res) => {
     {
         res.render('uploadPlan', {exercises})
     }
+
+
+    // populate
     
 });
 
 router.post('/create', jsonParser, (req, res) => {
     console.log(req.body.name)
     console.log(req.body.difficulty)
-
+    localStorage.setItem('name',req.body.name);
     const plan = new Plan({
         name: req.body.name,
         difficulty: req.body.difficulty,
@@ -44,16 +47,20 @@ router.post('/create', jsonParser, (req, res) => {
 
     }).save()
     .then(() => console.log('Plan created'));
-    res.redirect('/');
+    res.redirect('/plans/upload');
 })
 
-router.get('/create', (req, res) => {
+router.get('/create', async (req, res) => {
   
-    res.render('createPlan')
+    
+
+   
+        res.render('createPlan')
+    
 })
 
 
-router.post('/upload/exer',  urlencodedParser ,async (req, res) => {
+router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
     // add ex to plan
 
 
@@ -67,27 +74,24 @@ router.post('/upload/exer',  urlencodedParser ,async (req, res) => {
         console.log(thumbnail) 
         var id = await Exercise.findOne({thumbnail}).select({_id:0 , exId:1})
         console.log(id.exId)
+        pname = localStorage.getItem('name')
+        console.log("pname " + pname)
+        var myplan = await Plan.findOne({name : pname})
+        console.log("plan")
+        console.log(myplan)
+
+        await myplan.exerciseListID.push(id.exId);
+        await myplan.save();
+
         
         
        
 
-    //    const result = await newPlan.save();
-    //    console.log("was save succ ? " + result)
-       // we got ids, lets add them
     }
-
-
-    // fetch this id so i can populate plan
     
-    // Plan.find().populate(
-    //     {
-            
-    //     }
-    // ).exec()
     res.send('ok')
   
 })
-
 
 
 module.exports = router;
