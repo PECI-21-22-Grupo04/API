@@ -18,16 +18,20 @@
             <% } else {%>
               <p>No Exercises</p>
             <% } %>
-            <button id="add-image-button">x</button>
+           
         </div>
         
+        
       </main>
-    </div>
+      <div >
+        <button  id="add-image-button" >x</button>
+      </div>
+     
     
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-    <script src="/scripts/scripts.js"></script>
+   
     <script>
         const imageContainer = document.getElementById('image-container');
         var imageSelection = [];
@@ -36,31 +40,44 @@
             if (!imageSelection.includes(e.target.src)) {
               console.log('we adding')
                 imageSelection.push(e.target.src);
+              }
 
+               
 
-
-                const addImageButton = document.getElementById('add-image-button');
-
-        addImageButton.addEventListener('click', async () => {
+          
+      });
+      const addImageButton = document.getElementById('add-image-button');
+addImageButton.addEventListener('click', async () => {
+          console.log("SENDING ")
           const url = 'http://localhost:5000/plans/upload/exer';
-          const response = await fetch(url, {
+          try {
+            
+            const response = await fetch(
+            url, 
+            {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body:JSON.stringify( imageSelection),
+            body:JSON.stringify(imageSelection),
 
           });
           console.log(response)
           imageSelection = [];
-        } );
-       
-            }
-
-
+          }
+          catch(e)
+          {
+            console.log("error on")
+            
+            imageSelection = [];
+          }
+         
         
-});
+          imageSelection = [];
 
+
+        } );
+      
     </script>
   </body>
 </html>

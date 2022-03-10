@@ -67,31 +67,41 @@ router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
     console.log("Someone just pushed the button!")
 
     imgsSelected = req.body
-    //console.log(req.body)
+    console.log(req.body)
     for(i=0; i<imgsSelected.length;i++)
     {   
         thumbnail="public"+imgsSelected[i].substr(21)
-        console.log(thumbnail) 
+        // console.log(thumbnail) 
         var id = await Exercise.findOne({thumbnail}).select({_id:0 , exId:1})
         console.log(id.exId)
         pname = localStorage.getItem('name')
-        console.log("pname " + pname)
+        // console.log("pname " + pname)
         var myplan = await Plan.findOne({name : pname})
-        console.log("plan")
-        console.log(myplan)
+        // console.log("plan")
+        // console.log(myplan)
 
-        await myplan.exerciseListID.push(id.exId);
-        await myplan.save();
-
+         myplan.exerciseListID.push(id.exId);
+       try{ 
+           await myplan.save();
+        }
+        catch(e)
+        {
+            console.log(e)
+        }
         
         
        
 
     }
-    
     res.send('ok')
+
+    // console.log("plan after")
+    // console.log(myplan)
+    
+
   
 })
+
 
 
 module.exports = router;
