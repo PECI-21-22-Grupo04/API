@@ -63,6 +63,11 @@ addImageButton.addEventListener('click', async () => {
 
           });
           console.log(response)
+          if (response.ok)
+          {
+            console.log('HITTING')
+            window.location.href = "/plans"
+          }
           imageSelection = [];
           }
           catch(e)

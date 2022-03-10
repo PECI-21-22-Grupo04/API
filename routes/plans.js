@@ -93,7 +93,7 @@ router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
        
 
     }
-    res.send('ok')
+    res.send("ok")
 
     // console.log("plan after")
     // console.log(myplan)
