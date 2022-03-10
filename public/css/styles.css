@@ -6,6 +6,10 @@ body {
   overflow:auto;
   background: linear-gradient(to right, #aaa, #ddd);
 }
+aside{
+  
+  font-variant: small-caps;
+}
 img {
   width: 200px;
   height: 175px;
@@ -66,10 +70,9 @@ img {
 }
 .content{
   display:grid;
-  grid-template-columns: repeat(auto-fill, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap:50px;
-  padding-left: 250px;
-  margin-left: var(--sidebar-width);
+  
   margin-top: var(--header-height);
   overflow-x: hidden;
 }
@@ -273,3 +276,16 @@ display: block;
   overflow-x : hidden;
   background-color: #222;
   transition: width var(--sidebar-animation-time) var(--sidebar-animation-curve);}
+
+  .filter-button{
+    position: absolute;
+    background-color: #666;
+    width: 100%;
+    height : 100px;
+    bottom: 0;
+    text-align: center;
+    padding-top: 26px;
+    cursor: pointer;
+    font-size: 2em;
+  font-variant: small-caps;
+  }
