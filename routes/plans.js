@@ -77,8 +77,7 @@ router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
         pname = localStorage.getItem('name')
         // console.log("pname " + pname)
         var myplan = await Plan.findOne({name : pname})
-        // console.log("plan")
-        // console.log(myplan)
+
 
          myplan.exerciseListID.push(id.exId);
        try{ 
@@ -95,9 +94,6 @@ router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
     }
     res.send("ok")
 
-    // console.log("plan after")
-    // console.log(myplan)
-    
 
   
 })
