@@ -20,7 +20,7 @@
       <![endif]-->
   
   </head>
-  <body style="background-color: #ddd; overflow:auto;">    
+  <body >    
     <header class="header">
       
       <div class="menu-icon change" data-menu-icon>
@@ -73,13 +73,10 @@
         </ul>
       </aside>
       <main >
-        <form action="/exercises" method="POST" enctype="multipart/form-data" style=" margin-left : 250px; margin-top : 50px;" >
-          <input type="submit" value="Easy" class="btn btn-primary btn-block" >
-        </form> 
         <div class=" content" >
           <% if(exercises.length > 0) {%>
               <% exercises.forEach(function(exercise) { %> 
-                  <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px;">
+                  <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; display: flex">
                     <img class="m-auto" src="<%= exercise.thumbnail.substr(6) %> " alt="" style=" border-radius: 50px;">
                     <div class="row-1">
   
@@ -94,6 +91,33 @@
             <% } %>
         </div>
       </main>
+      <aside class="query-selector">
+        <nav class="dropdown-nav">
+
+          <label for="touch"><span class="dropdown-span">Difficulty</span></label>               
+          <input class="dropdown-input" type="checkbox" id="touch"> 
+        
+          <ul class="slide">
+            <li class="dropdown-li"><a class="dropdown-a" href="#">Easy</a></li> 
+            <li class="dropdown-li"><a class="dropdown-a" href="#">Medium</a></li> 
+            <li class="dropdown-li"><a class="dropdown-a" href="#">Hard</a></li> 
+          </ul>
+        
+        </nav> 
+        <nav class="dropdown-nav">
+
+          <label for="touch"><span class="dropdown-span">titre</span></label>               
+          <input class="dropdown-input" type="checkbox" id="touch"> 
+        
+          <ul class="slide">
+            <li class="dropdown-li"><a class="dropdown-a" href="#">Lorem1 Ipsum</a></li> 
+            <li class="dropdown-li"><a class="dropdown-a" href="#">Lorem1 Ipsum</a></li> 
+            <li class="dropdown-li"><a class="dropdown-a" href="#">Lorem1 Ipsum</a></li> 
+            <li class="dropdown-li"><a class="dropdown-a" href="#">Lorem1 Ipsum</a></li> 
+          </ul>
+        
+        </nav> 
+      </aside>
     </div>
     
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>

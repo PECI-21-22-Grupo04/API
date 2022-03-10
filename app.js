@@ -68,7 +68,7 @@ app.use('/login',loginRoutes);
 
 // port listening
 app.get('/test', (req, res) => {
-    res.render('login');
+    res.render('test');
 })
 app.listen(5000, ()=>{
     console.log(`Listening on port 5000...`);

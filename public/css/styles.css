@@ -1,8 +1,10 @@
-html,
+ html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow:auto;
+  background: linear-gradient(to right, #aaa, #ddd);
 }
 img {
   width: 200px;
@@ -36,8 +38,9 @@ img {
   border-radius: 50px
 }
 .sidebar{
-  position: fixed;
-  top: 0;
+  position: sticky;
+  overflow-x: hidden;
+  top: 60px;
   margin-top: var(--header-height);
   flex-shrink: 0;
   width: 0px;
@@ -63,7 +66,7 @@ img {
 }
 .content{
   display:grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, 1fr);
   gap:50px;
   padding-left: 250px;
   margin-left: var(--sidebar-width);
@@ -71,10 +74,10 @@ img {
   overflow-x: hidden;
 }
 .nav-link:hover {
-  background-color: #666;
+  background: linear-gradient(to right, #666, #222222);
 }
 .nav-pills .nav-link.active{
-  background-color: #666;
+  background: linear-gradient(to right, #666, #222222);
 }
 .card:hover{
   background-color: #0d6efd;
@@ -192,3 +195,81 @@ width: 100%;
 .form-search:valid a {
 display: block;
 }
+
+/* Dropdown query button */
+
+.dropdown-h1 {
+  padding: 40px;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.dropdown-li .dropdown-a {
+  text-decoration: none;
+  color: #2d2f31;
+  text-align: center;
+}
+.dropdown-nav {
+  width: 100%;
+  background: #d9d9d9;
+}
+
+.dropdown-span {
+  padding: 30px;
+  background: #2d2f31;
+  color: white;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  cursor: pointer;
+  display: block;
+  width: 300px;
+}
+
+.dropdown-span::after {
+  float: right;
+  right: 10%;
+  content: "+";
+}
+
+.slide {
+  position: fixed;
+  background-color: #666;
+  list-style: none;
+  padding-left: 0%;
+  clear: both;
+  width: 300px;
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.4s ease;
+}
+
+.slide .dropdown-li {
+  padding: 30px;
+}
+
+#touch {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch:checked + .slide {
+  height: 300px;
+}
+
+/* Query selector area */
+
+.query-selector{
+  position: fixed;
+  overflow-x: hidden;
+  right: 0;
+  margin-top: var(--header-height);
+  flex-shrink: 0;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height));
+  overflow-y : auto;
+  overflow-x : hidden;
+  background-color: #222;
+  transition: width var(--sidebar-animation-time) var(--sidebar-animation-curve);}
