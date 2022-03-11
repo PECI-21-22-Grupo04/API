@@ -76,7 +76,7 @@
         <div class=" content" >
           <% if(exercises.length > 0) {%>
               <% exercises.forEach(function(exercise) { %> 
-                  <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; display: flex">
+                  <label class="card card-body mb-3 " style="width: 250px; border-radius: 50px; display: flex">
                     <img class="m-auto" src="<%= exercise.thumbnail.substr(6) %> " alt="" style=" border-radius: 50px;">
                     <div class="row-1">
   
@@ -84,15 +84,17 @@
                       <div class="col">Body's area : <%= exercise.area %> </div>
                       <div class="col">difficulty : <%= exercise.difficulty %> </div>
                     </div>
-                  </article>
+                  </label>
                 <% })%>
             <% } else {%>
               <p>No Exercises</p>
             <% } %>
         </div>
       </main>
-      <aside class="query-selector">
-        <nav class="dropdown-nav">
+
+      <aside class="query-selector" data-filter-sidebar>
+        <img class="filter-img" src="/images/filter.png" alt="" data-filter-icon>
+        <nav class="dropdown-nav" >
 
           <label for="touch"><span class="dropdown-span">Difficulty</span></label>               
           <input class="dropdown-input" type="checkbox" id="touch"> 

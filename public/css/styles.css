@@ -82,6 +82,9 @@ img {
 .nav-pills .nav-link.active{
   background: linear-gradient(to right, #666, #222222);
 }
+.card{
+  cursor: pointer;
+}
 .card:hover{
   background-color: #0d6efd;
   color : white;
@@ -218,6 +221,7 @@ display: block;
 }
 
 .dropdown-span {
+  position: relative;
   padding: 30px;
   background: #2d2f31;
   color: white;
@@ -268,24 +272,40 @@ display: block;
   right: 0;
   margin-top: var(--header-height);
   flex-shrink: 0;
-  width: 300px;
+  width: 0px;
   display: flex;
   flex-direction: column;
   height: calc(100vh - var(--header-height));
   overflow-y : auto;
   overflow-x : hidden;
   background-color: #222;
-  transition: width var(--sidebar-animation-time) var(--sidebar-animation-curve);}
+  transition: width var(--sidebar-animation-time) var(--sidebar-animation-curve);
+}
+.query-selector.open{
+  width: 300px;
+}
 
-  .filter-button{
-    position: absolute;
-    background-color: #666;
-    width: 100%;
-    height : 100px;
-    bottom: 0;
-    text-align: center;
-    padding-top: 26px;
-    cursor: pointer;
-    font-size: 2em;
+.filter-button{
+  position: absolute;
+  background-color: #666;
+  width: 100%;
+  height : 100px;
+  bottom: 0;
+  text-align: center;
+  padding-top: 26px;
+  cursor: pointer;
+  font-size: 2em;
   font-variant: small-caps;
-  }
+}
+
+.filter-img {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  right: 5px;
+  cursor: pointer;
+  transition: right var(--sidebar-animation-time) var(--sidebar-animation-curve);
+}
+.filter-img.open {
+  right: 305px;
+}

@@ -7,6 +7,15 @@ menuIcon.addEventListener("click", () => {
     menuIcon.classList.toggle("change");
 })
 
+const filterIcon = document.querySelector("[data-filter-icon]")
+const filterSidebar = document.querySelector("[data-filter-sidebar]")
+
+filterIcon.addEventListener("click", () => {
+    filterIcon.classList.toggle("open");
+    filterSidebar.classList.toggle("open");
+});
+
+
 
 const clearInput = () => {
     const input = document.querySelector("[data-input]");
