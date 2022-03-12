@@ -32,7 +32,6 @@ router.get('/upload', async (req, res) => {
     }
 
 
-    // populate
     
 });
 
@@ -108,6 +107,7 @@ router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
          myplan.exerciseListID.push(id.exId);
        try{ 
            await myplan.save();
+           
         }
         catch(e)
         {
@@ -118,6 +118,7 @@ router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
        
 
     }
+    localStorage.clear()
     res.send("ok")
 
 
