@@ -10,10 +10,17 @@ aside{
   
   font-variant: small-caps;
 }
-img {
-  width: 200px;
-  height: 175px;
+.img-card {
+  position: inherit;
+  width: 240px;
+  height: 180px;
+  transition: all 0.5s ease;
 }
+.img-card:hover {
+  width: 260px;
+  height: 195px;
+}
+
 :root{
   --header-height: 60px;
   --sidebar-width: 200px;
@@ -38,9 +45,17 @@ img {
   
 }
 .card{
-  width: 250px; 
-  border-radius: 50px
+  width: 300px; 
+  cursor: pointer;
+  background-color: #00000000;
+  border: none;
 }
+/* .card:hover{
+  background-color: #0d6efd;
+  color : white;
+  border: 1px solid black;
+
+} */
 .sidebar{
   position: sticky;
   overflow-x: hidden;
@@ -82,15 +97,7 @@ img {
 .nav-pills .nav-link.active{
   background: linear-gradient(to right, #666, #222222);
 }
-.card{
-  cursor: pointer;
-}
-.card:hover{
-  background-color: #0d6efd;
-  color : white;
-  border: 1px solid black;
 
-}
 /* sidebar Icon */
 .menu-icon {
   width: 55px;
