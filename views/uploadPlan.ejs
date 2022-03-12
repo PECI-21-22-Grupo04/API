@@ -3,23 +3,25 @@
     <%- include('modules/navbar') -%>
     <div class="container-flex">
       <%- include('modules/sidebar', {Page : 'Plans'}) -%>
+      
       <main >
-        <div id="image-container">
-          
-          <% if(exercises.length > 0) {%>
-              <% exercises.forEach(function(exercise) { %> 
-                  <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; ">
-                    <img class="m-auto" src="<%= exercise.thumbnail.substr(6) %> " alt="">
-                  </article>
-                  
-                <% })%>
-            <% } else {%>
-              <p>No Exercises</p>
-            <% } %>
-           
-        </div>
-        <div >
-          <button  id="add-image-button" >x</button>
+        <div class="content"></div>
+          <div id="image-container">
+            
+            <% if(exercises.length > 0) {%>
+                <% exercises.forEach(function(exercise) { %> 
+                    <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; ">
+                      <img class="m-auto img-card" src="<%= exercise.thumbnail.substr(6) %> " alt="">
+                    </article>
+                    
+                  <% })%>
+              <% } else {%>
+                <p>No Exercises</p>
+              <% } %>
+          </div>  
+          <div >
+            <button  id="add-image-button" >x</button>
+          </div>
         </div>
         
         
