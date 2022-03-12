@@ -36,6 +36,10 @@
             console.log('we adding')
             imageSelection.push(e.target.src);
         }
+        else{
+          console.log('we removing')
+          imageSelection=remove(imageSelection,e.target.src);
+        }
     });
       
     const addImageButton = document.getElementById('add-image-button');
@@ -64,6 +68,8 @@
 
 
     });
-  
+    function remove(arrOriginal, elementToRemove){
+    return arrOriginal.filter(function(el){return el !== elementToRemove});
+}
     </script>
   <%- include('modules/footer') -%>
