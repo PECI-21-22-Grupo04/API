@@ -36,6 +36,16 @@ router.get('/upload', async (req, res) => {
     
 });
 
+router.get('/single/:id', async (req, res) => {
+    
+    // query db for this name will be id eventually
+    res.send(req.params.id)
+
+
+    // populate
+    
+});
+
 router.post('/create', jsonParser, (req, res) => {
     console.log(req.body.name)
     console.log(req.body.difficulty)

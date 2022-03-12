@@ -91,10 +91,11 @@ aside{
   grid-template-columns: 300px 300px 300px;
 }
 .content{
+
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, 1fr);
   gap:50px;
-  
+  grid-auto-flow: row; 
   margin-top: var(--header-height);
   overflow-x: hidden;
 }
