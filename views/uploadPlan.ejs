@@ -10,8 +10,8 @@
             
             <% if(exercises.length > 0) {%>
                 <% exercises.forEach(function(exercise) { %> 
-                    <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; ">
-                      <img class="m-auto img-card" src="<%= exercise.thumbnail.substr(6) %> " alt="">
+                    <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; " data-con>
+                      <img class="m-auto img-card" src="<%= exercise.thumbnail.substr(6) %> " alt="" data-img>
                     </article>
                     
                   <% })%>
@@ -31,7 +31,27 @@
       const imageContainer = document.getElementById('image-container');
     var imageSelection = [];
 
+
+    
+    const articles = document.querySelectorAll('[data-con]')
+   
+  
+      
+        const img = document.querySelectorAll('[data-img]')
+        img.forEach ( i => { 
+          i.addEventListener('click', (e)=> {
+          console.log('toggling')
+          i.classList.toggle('check');
+        })
+       
+    })
+  
+   
+
+
+
     imageContainer.addEventListener('click', (e) => {
+      //  img.classList.toggle('check');
         if (!imageSelection.includes(e.target.src)) {
             console.log('we adding')
             imageSelection.push(e.target.src);
@@ -39,6 +59,7 @@
         else{
           console.log('we removing')
           imageSelection=remove(imageSelection,e.target.src);
+          //img.classList.toggle('check');
         }
     });
       
