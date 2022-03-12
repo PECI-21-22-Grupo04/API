@@ -39,7 +39,23 @@ router.get('/upload', async (req, res) => {
 router.get('/single/:id', async (req, res) => {
     
     // query db for this name will be id eventually
-    res.send(req.params.id)
+
+    const plan = await Plan.findOne({name : req.params.id});
+
+    if (plan)
+    {
+       
+        res.render('planDetails', {plan})
+        
+
+
+    }
+    else{
+        console.log('error')
+    
+    }
+
+    
 
 
     // populate

@@ -1,0 +1,25 @@
+<%- include('modules/header') -%>
+  <body >    
+    <%- include('modules/navbar') -%>
+    <div class="container-flex">
+      <%- include('modules/sidebar', {Page : 'Home'}) -%>
+      <main >
+          <div class=" content"  >
+            <% if(plan) {%>
+              <div style=" text-align: center;">
+                <div class="col" style="text-align: center;"  ><%= plan.name %></div>
+                <div class="col">Difficulty : <%= plan.difficulty %> </div>
+                <div class="col">Exerc : <%= plan.exerciseListID %> </div>
+
+              </div>
+             
+                  
+                   
+                  
+            <% } else {%>
+              <p>Error, fetching the plan</p>
+            <% } %>
+          </div>
+        </main>
+      </div>
+<%- include('modules/footer') -%>
