@@ -10,8 +10,8 @@
             
             <% if(exercises.length > 0) {%>
                 <% exercises.forEach(function(exercise) { %> 
-                    <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; " data-con>
-                      <img class="m-auto img-card" src="<%= exercise.thumbnail.substr(6) %> " alt="" data-img>
+                    <article class="card" style="width: 250px; border-radius: 50px; " data-con>
+                      <img class="m-auto img-card" src="<%= exercise.thumbnail.substr(6) %> " alt="" style="padding:2%"data-img>
                     </article>
                     
                   <% })%>
