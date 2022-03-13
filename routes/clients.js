@@ -9,13 +9,13 @@ router.get('/', async (req, res) => {
 
    // exercises= {}
     const clients = await db.selectAllClients("chave")
-
+    const parsed_data = JSON.parse(JSON.stringify(clients))[0]
 
     console.log(clients)
-    res.send("sdsadsa")
+   
     if (clients)
     {
-        res.render('clients', {clients});
+        res.render('clients', {clients : parsed_data});
     }
 
     else {res.render('clients', {clients:  {}}) };

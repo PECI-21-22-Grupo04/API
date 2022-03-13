@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const { default: mongoose } = require('mongoose');
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
+const db = require('../db/dbFunctions.js');
 
 
 
@@ -16,15 +16,19 @@ router.use(bodyParser());
 router.get('/', async (req, res) => {
 
     
-    // const plans = await Plan.find(req.query);
-    
+    const plans = await db.selectAllExercises()
+    const parsed_data = JSON.parse(JSON.stringify(plans))[0]
 
-    // if (plans)
-    // {
-    //     res.render('plans', {plans});
-    // }
 
-    // else {res.render('plans', {plans: {} });
+    if (plans)
+    {
+        res.render('plans', {plans : parsed_data});
+    }
+
+    else 
+    {
+        res.render('plans', {}) 
+    }
 
 
 
@@ -109,7 +113,10 @@ router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
     {   
         thumbnail="public"+imgsSelected[i].substr(21)
         // console.log(thumbnail) 
-        var id = await Exercise.findOne({thumbnail}).select({_id:0 , exId:1})
+
+        // procedure to find from thumbnail.
+        // get id, continue from here.
+
         console.log(id.exId)
         pname = localStorage.getItem('name')
         // console.log("pname " + pname)

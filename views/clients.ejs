@@ -6,16 +6,16 @@
       <main >
         <div class=" content" >
           <% if(clients.length > 0) {%>
-              <% exercises.forEach(function(client) { %> 
+              <% clients.forEach(function(client) { %> 
                   <label class="card card-body mb-3 ">
                     <div class="row-1">
   
-                      <div class="col">Client : <%= client.name %> </div>
+                      <div class="col">Client : <%= client.mail %> </div>
                     </div>
                   </label>
                 <% })%>
             <% } else {%>
-              <p>No Exercises</p>
+              <p>No clients</p>
             <% } %>
         </div>
       </main>

@@ -10,6 +10,7 @@ module.exports = {
     selectClientInfo,
     selectAllClients,
     selectAllExercises,
+    selectAllPrograms,
     createExercise
 }
 
@@ -135,21 +136,21 @@ function selectAllExercises( userKey) {
     });
 };
 
-function selectAllPlans( userKey) {
+function selectAllPrograms( ) {
     return new Promise((resolve) => {
         
 
-        var sql = 'CALL spSelectAllPlans(?)';
+        var sql = 'CALL spSelectAllPlans()';
 
-        dbconnection.query(sql,  userKey, (err, data) => {
+        dbconnection.query(sql,  (err, data) => {
             if (err) {
-                resolve(1);
+                resolve("fetc error");
             }
             else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
                 resolve(data);
             }
             else {
-                resolve(2);
+                resolve("data error");
             }
         });
     });
