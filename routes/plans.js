@@ -8,20 +8,27 @@ const { default: mongoose } = require('mongoose');
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
+
+
+
 router.use(bodyParser());
 
 router.get('/', async (req, res) => {
 
+    
+    // const plans = await Plan.find(req.query);
+    
 
-    const plans = await Plan.find(req.query);
+    // if (plans)
+    // {
+    //     res.render('plans', {plans});
+    // }
 
-    if (plans)
-    {
-        res.render('plans', {plans});
-    }
+    // else {res.render('plans', {plans: {} });
 
-    else {res.render('plans', {plans: {} });
-} 
+
+
+
 });
 router.get('/upload', async (req, res) => {
     const exercises = await Exercise.find(req.query);
@@ -38,6 +45,7 @@ router.get('/upload', async (req, res) => {
 router.get('/single/:id', async (req, res) => {
     
     // query db for this name will be id eventually
+
 
     const plan = await Plan.findOne({name : req.params.id});
 
@@ -65,6 +73,8 @@ router.post('/create', jsonParser, (req, res) => {
     console.log(req.body.name)
     console.log(req.body.difficulty)
     localStorage.setItem('name',req.body.name);
+
+
     const plan = new Plan({
         name: req.body.name,
         difficulty: req.body.difficulty,
@@ -72,6 +82,8 @@ router.post('/create', jsonParser, (req, res) => {
 
     }).save()
     .then(() => console.log('Plan created'));
+
+
     res.redirect('/plans/upload');
 })
 

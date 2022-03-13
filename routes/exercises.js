@@ -1,27 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const Exercise = require('../models/Exercise')
+
+const db = require('../db/dbFunctions.js');
 
 router.get('/', async (req, res) => {
 
-   // exercises= {}
-    const exercises = await Exercise.find(req.query);
+
+    const exercises = await db.selectAllExercises()
+    const parsed_data = JSON.parse(JSON.stringify(exercises))[0]
+
 
     if (exercises)
     {
-        res.render('exercises', {exercises: exercises});
+        res.render('exercises', {exercises : parsed_data});
     }
 
-    else {res.render('exercises', {exercises:  {}});
-} 
+    else 
+    {
+        res.render('exercises', {}) 
+    }
+ 
 });
 
 router.post('/', async (req, res) => {
-    res.redirect('/exercises?difficulty=easy');
+    //res.redirect('/exercises?difficulty=easy');
 })
 
-/* route.get('/images/:filename', (req, res) => {
 
-}) */
 
 module.exports = router;

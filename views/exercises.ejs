@@ -8,11 +8,11 @@
           <% if(exercises.length > 0) {%>
               <% exercises.forEach(function(exercise) { %> 
                   <label class="card card-body mb-3 ">
-                    <img class="m-auto img-card" src="<%= exercise.thumbnail.substr(6) %> " alt="" >
+                    <img class="m-auto img-card" src="<%= exercise.thumbnailPath.substr(6) %> " alt="" >
                     <div class="row-1">
   
-                      <div class="col">Exercise : <%= exercise.name %> </div>
-                      <div class="col">Body's area : <%= exercise.area %> </div>
+                      <div class="col">Exercise : <%= exercise.e_name %> </div>
+                      <div class="col">Body's area : <%= exercise.targetMuscle %> </div>
                       <div class="col">difficulty : <%= exercise.difficulty %> </div>
                     </div>
                   </label>

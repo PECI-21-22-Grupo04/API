@@ -6,6 +6,18 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+
+
+const mysql = require('mysql');
+const dotenv = require('dotenv').config();
+
+// const db = mysql.createConnection({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_DATABASE,
+// });
+
 if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
     localStorage = new LocalStorage('./scratch');
@@ -28,36 +40,15 @@ const uploadRoutes = require('./routes/upload');
 const exercisesRoutes = require('./routes/exercises')
 const plansRoutes = require('./routes/plans');
 const loginRoutes = require('./routes/login');
+const clientRoutes = require('./routes/clients');
 
 
 // Engine
 app.set('view engine', 'ejs');
 
-/* 
-const exercisesSchema = new mongoose.Schema({
-    name: String,
-    area: String,
-    difficulty : Number, 
-    thumbnail : String    
-});
 
-const plansSchema = new mongoose.Schema({
 
-});
-
-const Test = mongoose.model('', Schema);
-async function createTest(){
-    const test = new Test({
-        name: 'Diogob'
-    });
-    const result = await test.save();
-    console.log(result);
-} */
-// createTest(); 
 app.use(express.static(__dirname + '/public'));
-// app.use('/styles', express.static('styles'));
-
-// app.use('/exercises', express.static('exercises'));
 
 // use Routes
 app.use(indexRoutes);
@@ -65,6 +56,7 @@ app.use('/upload', uploadRoutes);
 app.use('/exercises',exercisesRoutes);
 app.use('/plans',plansRoutes);
 app.use('/login',loginRoutes);
+app.use('/clients',clientRoutes);
 
 // port listening
 app.get('/test', (req, res) => {
