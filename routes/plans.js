@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Plan = require('../models/Plan')
-const Exercise = require('../models/Exercise')
-
 const bodyParser = require('body-parser');
-const { default: mongoose } = require('mongoose');
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 const db = require('../db/dbFunctions.js');
 
 
@@ -16,9 +13,8 @@ router.use(bodyParser());
 router.get('/', async (req, res) => {
 
     
-    const plans = await db.selectAllExercises()
+    const plans = await db.selectAllPrograms()
     const parsed_data = JSON.parse(JSON.stringify(plans))[0]
-
 
     if (plans)
     {
@@ -35,33 +31,38 @@ router.get('/', async (req, res) => {
 
 });
 router.get('/upload', async (req, res) => {
-    const exercises = await Exercise.find(req.query);
+ 
+    const exercises = await db.selectAllExercises()
+    const parsed_data = JSON.parse(JSON.stringify(exercises))[0]
+    console.log(parsed_data.e_name)
 
     if (exercises)
     {
-        res.render('uploadPlan', {exercises})
+        res.render('uploadPlan', {exercises :parsed_data })
     }
 
+    else 
+    {
+        res.render('exercises', {}) 
+    }
 
     
 });
 
-router.get('/single/:id', async (req, res) => {
+router.get('/single/:name', async (req, res) => {
     
     // query db for this name will be id eventually
 
+    const plans = await db.selectProgramFromName(req.params.name);
+    const parsed_data = JSON.parse(JSON.stringify(plans))[0]
 
-    const plan = await Plan.findOne({name : req.params.id});
-
-    if (plan)
+    if (plans)
     {
-       
-        res.render('planDetails', {plan})
-        
-
+        res.render('planDetails', {plan : parsed_data})
 
     }
     else{
+        res.send('error')
         console.log('error')
     
     }
@@ -73,31 +74,25 @@ router.get('/single/:id', async (req, res) => {
     
 });
 
-router.post('/create', jsonParser, (req, res) => {
-    console.log(req.body.name)
-    console.log(req.body.difficulty)
+router.post('/create', jsonParser, async (req, res) => {
     localStorage.setItem('name',req.body.name);
 
-
-    const plan = new Plan({
-        name: req.body.name,
-        difficulty: req.body.difficulty,
-        exerciseList: []
-
-    }).save()
-    .then(() => console.log('Plan created'));
-
-
-    res.redirect('/plans/upload');
+    const plan = await db.createProgram(req.body.name,req.body.description,"")
+    if (plan==0)
+    {
+        res.redirect('/plans/upload');
+    }
+    else
+    {
+        console.log(plan)
+        console.log("something went wrong")
+    }
+  
 })
 
 router.get('/create', async (req, res) => {
-  
-    
-
    
-        res.render('createPlan')
-    
+        res.render('createPlan')  
 })
 
 
@@ -112,27 +107,23 @@ router.post('/upload/exer' ,urlencodedParser,async (req, res) => {
     for(i=0; i<imgsSelected.length;i++)
     {   
         thumbnail="public"+imgsSelected[i].substr(21)
-        // console.log(thumbnail) 
-
-        // procedure to find from thumbnail.
-        // get id, continue from here.
-
-        console.log(id.exId)
-        pname = localStorage.getItem('name')
-        // console.log("pname " + pname)
-        var myplan = await Plan.findOne({name : pname})
-
-
-         myplan.exerciseListID.push(id.exId);
-       try{ 
-           await myplan.save();
-           
-        }
-        catch(e)
-        {
-            console.log(e)
-        }
+        console.log(thumbnail) 
         
+         // find from thumb
+        const exer = await db.SelectExerFromThumb(thumbnail)
+        const parsed_data = JSON.parse(JSON.stringify(exer))[0]
+       // var id = await Exercise.findOne({thumbnail}).select({_id:0 , exId:1})
+        console.log(parsed_data)
+
+        // find the plan we are creating.
+        // add this ex to it.
+
+    //     pname = localStorage.getItem('name')
+    //     var myplan = await Plan.findOne({name : pname})
+    //     myplan.exerciseListID.push(id.exId);
+    //     await myplan.save();
+           
+
         
        
 

@@ -8,11 +8,12 @@
           <div   class="wrapper">
           
             <% if(plan) {%>
+              <% plan.forEach(function(p) { %> 
               <div  class="detailedPlan">
-                <h1 class="col" style="text-align: center;"  ><%= plan.name %></h1>
-                <h1 class="col">Difficulty : <%= plan.difficulty %> </h1>
-                <h1 class="col">Exerc : <%= plan.exerciseListID %> </h1>
-               
+                <h1 class="col" style="text-align: center;"  ><%= p.p_name %></h1>
+                <h1 class="col"> Description: <%= p.p_description %> </h1>
+                <h1 class="col">Exerc : <%= p.thumbnailPath %> </h1>
+                <% })%>
                     <div class="bck-btt">  <button  onclick="window.location.href='/plans/single/edit/'" >Edit</button></div>
               </div>
              

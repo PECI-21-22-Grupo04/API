@@ -11,7 +11,10 @@ module.exports = {
     selectAllClients,
     selectAllExercises,
     selectAllPrograms,
-    createExercise
+    SelectExerFromThumb,
+    createExercise,
+    createProgram,
+    selectProgramFromName
 }
 
 // Connect to database (MUST USE LEGACY AUTHENTICATION METHOD (RETAIN MYSQL 5.X COMPATIBILITY))
@@ -41,6 +44,25 @@ function createClient(mail, fName, lName, userKey) {
         var sql = 'CALL spCreateClient(?,?,?,?)';
 
         dbconnection.query(sql, [mail, fName, lName, userKey], (err, data) => {
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined' && data["affectedRows"] == 1) { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+
+function createProgram(pname , pdescription ,pthumbnailPath) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spcreateProgram(?,?,?)';
+
+        dbconnection.query(sql, [pname, pdescription, pthumbnailPath], (err, data) => {
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -140,7 +162,7 @@ function selectAllPrograms( ) {
     return new Promise((resolve) => {
         
 
-        var sql = 'CALL spSelectAllPlans()';
+        var sql = 'CALL spSelectAllPrograms()';
 
         dbconnection.query(sql,  (err, data) => {
             if (err) {
@@ -156,6 +178,45 @@ function selectAllPrograms( ) {
     });
 };
 
+function SelectExerFromThumb( thumb) {
+    return new Promise((resolve) => {
+        
+
+        var sql = 'CALL spSelectExerFromThumb(?)';
+
+        dbconnection.query(sql, thumb, (err, data) => {
+            if (err) {
+                resolve("fetc error");
+            }
+            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+                resolve(data);
+            }
+            else {
+                resolve("data error");
+            }
+        });
+    });
+};
+
+function selectProgramFromName( name) {
+    return new Promise((resolve) => {
+        
+
+        var sql = 'CALL spSelectProgramFromName(?)';
+
+        dbconnection.query(sql, name, (err, data) => {
+            if (err) {
+                resolve("fetc error");
+            }
+            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+                resolve(data);
+            }
+            else {
+                resolve("data error");
+            }
+        });
+    });
+};
 
 function deleteClient(mail, userKey) {
     return new Promise((resolve) => {

@@ -85,6 +85,17 @@ aside{
     margin: 0 auto;
     
 }
+
+.cc{
+  position: absolute;
+  width: calc(100vw - var(--sidebar-width));
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  gap: 150px;
+
+  margin-top: 100px;}
+
 .bck-btt{
 
   position: relative;
