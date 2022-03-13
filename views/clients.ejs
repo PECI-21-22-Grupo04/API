@@ -1,0 +1,24 @@
+<%- include('modules/header') -%>
+  <body >    
+    <%- include('modules/navbar') -%>
+    <div class="container-flex">
+      <%- include('modules/sidebar', {Page : 'Costumers'}) -%>
+      <main >
+        <div class=" content" >
+          <% if(clients.length > 0) {%>
+              <% exercises.forEach(function(client) { %> 
+                  <label class="card card-body mb-3 ">
+                    <div class="row-1">
+  
+                      <div class="col">Client : <%= client.name %> </div>
+                    </div>
+                  </label>
+                <% })%>
+            <% } else {%>
+              <p>No Exercises</p>
+            <% } %>
+        </div>
+      </main>
+    </div>
+    
+<%- include('modules/footer') -%>

@@ -17,6 +17,9 @@ filterIcon.addEventListener("click", () => {
 
 
 
+
+
+
 const clearInput = () => {
     const input = document.querySelector("[data-input]");
     input.value = "";
