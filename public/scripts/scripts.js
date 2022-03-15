@@ -1,10 +1,11 @@
 
 const menuIcon = document.querySelector("[data-menu-icon]")
 const sidebar =  document.querySelector("[data-sidebar]")
-
+const content = document.querySelector("[data-content]")
 menuIcon.addEventListener("click", () => {
     sidebar.classList.toggle("open");
     menuIcon.classList.toggle("change");
+    content.classList.toggle("open");
 })
 
 const filterIcon = document.querySelector("[data-filter-icon]")

@@ -4,8 +4,8 @@
     <div class="container-flex">
       <%- include('modules/sidebar', {Page : 'Exercises'}) -%>
       <main >
-        <div class=" content" >
-          <% if(exercises.length > 0) {%>
+        <div class=" content" data-content>
+          <% if(exercises) {%>
               <% exercises.forEach(function(exercise) { %> 
                   <label class="card card-body mb-3 ">
                     <img class="m-auto img-card" src="<%= exercise.thumbnailPath.substr(6) %> " alt="" >
