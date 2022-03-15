@@ -145,7 +145,7 @@ aside{
   width : calc(100vw - var(--sidebar-width));
   left : var(--sidebar-width);
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(235px,235px));
   gap:50px;
   grid-auto-flow: row; 
   margin-top: var(--header-height);
