@@ -4,14 +4,21 @@ body {
   margin: 0;
   padding: 0;
   overflow:auto;
+  overflow-X:hidden;
   background: linear-gradient(to right, #aaa, #ddd);
 }
 aside{
   
   font-variant: small-caps;
 }
+.div-image {
+  position: relative;
+  width: 240px;
+  height: 180px;
+
+}
 .img-card {
-  position: inherit;
+  position: absolute;
   width: 240px;
   height: 180px;
   transition: all 0.5s ease;
@@ -152,9 +159,32 @@ aside{
   overflow-x: hidden;
   overflow-x: hidden;
   transition: all var(--sidebar-animation-time) var(--sidebar-animation-curve);
+
 }
 
 .content.open{
+  width : 100vw;
+  left: 0px;
+}
+
+.grid-table{
+  position: absolute;
+  top: 100px;
+  width : calc(100vw - var(--sidebar-width));
+  height: calc(100vh - var(--header-height));
+  left : var(--sidebar-width);
+  display:grid;
+  grid-template-columns: 50px 30vw 20vw 20vw;
+  grid-template-rows: repeat(auto-fill, minmax(35px,60px));
+  grid-auto-flow: row; 
+  margin-top: var(--header-height);
+  overflow-x: hidden;
+  overflow-x: hidden;
+  transition: all var(--sidebar-animation-time) var(--sidebar-animation-curve);
+  border-color: #07051a;
+}
+
+.grid-table.open{
   width : 100vw;
   left: 0px;
 }

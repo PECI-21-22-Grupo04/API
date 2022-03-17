@@ -5,20 +5,17 @@
       <%- include('modules/sidebar', {Page : 'Plans'}) -%>
       
       <main >
-        <div class="content" data-content >
-          <div id="image-container">
-            
-            <% if(exercises.length > 0) {%>
-                <% exercises.forEach(function(exercise) { %> 
+        <div id="image-container" class="content" style="height: 90vw; grid-template-rows: repeat(auto-fill, minmax(173px,176px))" data-content >
+          
+          <% if(exercises.length > 0) {%>
+            <% exercises.forEach(function(exercise) { %> 
                     <article class="card" style="width: 250px; border-radius: 50px; " data-con>
                       <img class="m-auto img-card" src="<%= exercise.thumbnailPath.substr(6) %> " alt="" style="padding:2%"data-img>
-                    </article>
-                    
+                    </article>                     
                   <% })%>
               <% } else {%>
                 <p>No Exercises</p>
               <% } %>
-          </div>  
           <div >
             <button id="add-image-button" >x</button>
           </div>

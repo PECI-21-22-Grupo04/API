@@ -1,0 +1,15 @@
+<div class="grid-table " data-content>
+    <% if(exercises) {%>
+        <% exercises.forEach(function(exercise) { %> 
+            <div class="col">
+                <img class="m-auto img-card" src="<%= exercise.thumbnailPath.substr(6) %> " alt="" style="height: 50px; width: 50px;">
+            </div>
+            
+            <div class="col"><%= exercise.e_name %> </div>
+            <div class="col"><%= exercise.targetMuscle %> </div>
+            <div class="col"><%= exercise.difficulty %> </div>
+        <% })%>
+    <% } else {%>
+        <p>No Exercises</p>
+    <% } %>
+</div>

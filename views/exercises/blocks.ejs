@@ -1,0 +1,19 @@
+<div class=" content" data-content>
+    <% if(exercises) {%>
+        <% exercises.forEach(function(exercise) { %> 
+            <label class="card card-body mb-3 ">
+                <div class="div-image">
+                <img class="m-auto img-card" src="<%= exercise.thumbnailPath.substr(6) %> " alt="" >
+                </div>
+                <div class="row-1">
+
+                <div class="col"><%= exercise.e_name %> </div>
+                <div class="col" style="font-size: 0.8em;"><%= exercise.targetMuscle %> </div>
+                <div class="col" style="font-size: 0.8em;"><%= exercise.difficulty %> </div>
+                </div>
+            </label>
+        <% })%>
+    <% } else {%>
+        <p>No Exercises</p>
+    <% } %>
+</div>

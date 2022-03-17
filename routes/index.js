@@ -10,6 +10,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/reg", (req, res) => {
-  res.send("will add a reg page soon");
+  res.render("reg");
 });
 module.exports = router;
