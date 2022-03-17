@@ -7,7 +7,7 @@
         <form action="/plans/create">
           <input  type="submit" value="Create" class="btn btn-primary btn-block" style=" margin-left : 250px; margin-top : 50px; ">
         </form>
-        <div class=" content"  >
+        <div class=" content" data-content  >
           <% if(plans.length > 0) {%>
               <% plans.forEach(function(plan) { %> 
                   <article class="card card-body mb-3 " style="width: 250px; border-radius: 50px; position: relative;" >

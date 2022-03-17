@@ -145,12 +145,18 @@ aside{
   width : calc(100vw - var(--sidebar-width));
   left : var(--sidebar-width);
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(235px,235px));
   gap:50px;
   grid-auto-flow: row; 
   margin-top: var(--header-height);
   overflow-x: hidden;
   overflow-x: hidden;
+  transition: all var(--sidebar-animation-time) var(--sidebar-animation-curve);
+}
+
+.content.open{
+  width : 100vw;
+  left: 0px;
 }
 .nav-link:hover {
   background: linear-gradient(to right, #666, #222222);
