@@ -5,6 +5,7 @@ const db = require("../db/dbFunctions.js");
 
 router.get("/", async (req, res) => {
   const clients = await db.selectAllClients("chave");
+  console.log("🚀 ~ file: clients.js ~ line 8 ~ router.get ~ clients", clients)
   const parsed_data = JSON.parse(JSON.stringify(clients))[0];
 
   console.log(clients);
