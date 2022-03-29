@@ -1,4 +1,5 @@
-<div class=" content" data-content>
+<div class=" content" >
+
     <% if(exercises) {%>
         <% exercises.forEach(function(exercise) { %> 
             <label class="card card-body mb-3 ">
@@ -7,9 +8,14 @@
                 </div>
                 <div class="row-1">
 
-                <div class="col"><%= exercise.e_name %> </div>
+                <div class="col" style="text-align: center;font-size: 1.2em;"><%= exercise.e_name %> </div>
                 <div class="col" style="font-size: 0.8em;"><%= exercise.targetMuscle %> </div>
                 <div class="col" style="font-size: 0.8em;"><%= exercise.difficulty %> </div>
+                
+                </div>
+
+                <div class="card-footer">
+                    Mais detalhes<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
                 </div>
             </label>
         <% })%>

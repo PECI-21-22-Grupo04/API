@@ -3,10 +3,10 @@
     <%- include('modules/navbar') -%>
     <div class="container-flex">
       <%- include('modules/sidebar', {Page : 'Upload'}) -%>
-      <main > 
-        <div class=" content" data-content >
-          <div class="row">
-            <h1 class=" display-4 my-4">Mongo File Uploads</h1>
+      <main data-content> 
+        <h1 class=" display-4 my-4">Upload de Exercícios</h1>
+        <div class=" content upload ">
+          <div class="row" style="text-align : center">
             <form action="/upload" method="POST" enctype="multipart/form-data">
               <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>

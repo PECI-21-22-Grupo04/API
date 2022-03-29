@@ -4,9 +4,8 @@
     <div class="container-flex">
       <%- include('modules/sidebar', {Page : 'Plans'}) -%>
       <main >
-      <div class="content" style="height: 90vw" data-content>
+      <div class="content" data-content>
         <form action="/plans/create" method="post">
-           
                 name: <input type="text" name="name" value="" /><br><br>
                 description: <input type="text" name="description" value="" /><br><br>
                 <input type="submit" value="accept"/><br><br><hr>

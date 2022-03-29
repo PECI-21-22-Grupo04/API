@@ -14,10 +14,25 @@
     justify-content: center;
     flex-direction: column;
     position: relative;
-    background: linear-gradient(135deg, rgba(36, 46, 77, 0.9), rgba(137, 126, 121, 0.9));
+    background: linear-gradient(47deg, rgb(7 60 229 / 90%), rgb(45 139 139 / 90%),rgb(185 100 62 / 90%),rgb(225 76 9 / 90%));
     font-family: "Roboto", helvetica, arial, sans-serif;
     font-size: 1.5em;
+    background-size: 400% 400%;
+    animation: gradient 20s ease infinite;
   }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+    
   body:before {
     content: "";
     position: absolute;

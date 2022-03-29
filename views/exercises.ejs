@@ -2,12 +2,23 @@
   <body >    
     <%- include('modules/navbar') -%>
     <div class="container-flex">
+      
       <%- include('modules/sidebar', {Page : 'Exercises'}) -%>
-      <main >
+      <main data-content>
+        <h1 class=" display-4 my-4">Exercícios</h1>
         <%- include('exercises/blocks', {exercises : exercises}) -%>
       </main>
       <%- include('exercises/querySelector', {exercises : exercises}) -%>
       
     </div>
-    
+    <script>
+      const filterIcon = document.querySelector("[data-filter-icon]")
+      const filterSidebar = document.querySelector("[data-filter-sidebar]")
+
+      filterIcon.addEventListener("click", () => {
+          filterIcon.classList.toggle("open");
+          filterSidebar.classList.toggle("open");
+      });
+
+    </script>
 <%- include('modules/footer') -%>

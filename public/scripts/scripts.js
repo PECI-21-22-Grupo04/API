@@ -1,22 +1,22 @@
 
 const menuIcon = document.querySelector("[data-menu-icon]")
 const sidebar =  document.querySelector("[data-sidebar]")
-const content = document.querySelector("[data-content]")
+const content = document.querySelectorAll("[data-content]")
 menuIcon.addEventListener("click", () => {
     sidebar.classList.toggle("open");
     menuIcon.classList.toggle("change");
-    content.classList.toggle("open");
-})
-
-const filterIcon = document.querySelector("[data-filter-icon]")
-const filterSidebar = document.querySelector("[data-filter-sidebar]")
-
-filterIcon.addEventListener("click", () => {
-    filterIcon.classList.toggle("open");
-    filterSidebar.classList.toggle("open");
+    content.forEach( (cont) => {
+        cont.classList.toggle("open");
+    });
 });
 
 
+const avatarIcon = document.querySelector(".avatar");
+const avatarDropdown = document.querySelector(".avatar-dropdown")
+
+avatarIcon.addEventListener("click", () => {
+    avatarDropdown.classList.toggle("open");
+});
 
 
 
