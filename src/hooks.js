@@ -8,23 +8,32 @@ export const handle = async({event,resolve})=>{
     event.locals.user = cookies || null;
     
     let response;
-    
-    const sessions = JSON.parse(fs.readFileSync("sessions.json", 'utf8'))
+    let sessions = {}
     let usermail;
-    for (let key in sessions) {
-        if(sessions[key] === cookies.session_id){
-            usermail = key;
-            break
-        }
-    }
-    // console.log(usermail)
-    if(usermail){
-        event.locals.user.authenticated = true
-        event.locals.user.email = usermail
-    }else{
+    if(!fs.existsSync('sessions.json')){
         event.locals.user.authenticated = false
-        
+        response = await resolve(event);
+        return response
+    }else{
+        var content = fs.readFileSync("sessions.json", 'utf8');
+        sessions = JSON.parse(content)
+        for (let key in sessions) {
+            if(sessions[key].session === cookies.session_id){
+                usermail = key;
+                break
+            }
+        }
+        console.log(usermail)
+        if(usermail){
+            event.locals.user.authenticated = true
+            event.locals.user.email = usermail
+        }else{
+            event.locals.user.authenticated = false
+            
+        }
+
     }
+            
     response = await resolve(event);
     return response
     
@@ -32,7 +41,7 @@ export const handle = async({event,resolve})=>{
 
 export async function getSession(event) {
     
-    console.log(event.locals.user)
+    /* console.log(event.locals.user) */
     if(!event.locals.user.authenticated){
         
         return{
@@ -44,7 +53,7 @@ export async function getSession(event) {
         return{
             user: {
                 authenticated: true,
-                email: event.locals.user.email
+                email: event.locals.user.email,
             }
         }
     }

@@ -20,15 +20,17 @@ export async function get(){
 }
 export async function post({request}){
     // localStorage.setItem("name", request.body.name);
-    const data = await request.formData();
     // await create(data);
-    const plan = await db.createProgram(data.get("name"), data.get("description"), "","");
+    const body = await request.json();
+    console.log(JSON.stringify(body))
+    const plan = await db.createProgram(body.email, body.pname, body.pdescription, body.pathology, body.pthumbnailPath, body.pvideoPath, body.showcase);
     
     console.log(plan) 
     if (plan == 0) {
         console.log('sucesssssss');
+        // const exertoplan = await db.addExercisetoProgram(body.pro, body.pname, body.pdescription, body.pathology, body.pthumbnailPath, body.pvideoPath, body.showcase)
         return{
-            headers:{location:'/user/plans/uploadplan'},
+            headers:{location:'/user/plans/'},
             status: 302
         }
     } else {

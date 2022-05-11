@@ -29,7 +29,7 @@
                 $session = {
                     user: {
                     authenticated: true,
-                    email: email,
+                    email: email
                 }}
                 dispatch('success')
             }else{

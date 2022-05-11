@@ -5,9 +5,19 @@
     import {Steps} from 'svelte-steps'
     import Upload from '$lib/components/exercises/upload.svelte'
     import { goto } from "$app/navigation";
+    import { session } from '$app/stores';
     const components = [Form,Upload]
     let current=0;
-    let exercise={}
+    let exercise = {
+            email:$session.user.email,
+            name:"",
+            targetmuscle:"",
+            difficulty:"",
+            description:"",
+            pathologie:"",
+            thumbnail:"",
+            videopath:""
+       }
     let stepsTextOnly = [
     { text: 'Step one' },
     { text: 'Step two' },
@@ -23,7 +33,7 @@
             const res = await fetch('/user/exercises/createexe', {
                 method: 'POST',
                 body:JSON.stringify(                    
-                    exercise
+                    exercise,
                 ),
                 headers: {
                     'Content-Type': 'application/json'
@@ -83,4 +93,3 @@
     <button on:click={back} >Back </button>
   </div>
 {/if}
-

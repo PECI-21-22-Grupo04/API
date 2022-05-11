@@ -23,5 +23,10 @@
 </style>
 <main>
     <img src="/logo.png" alt=""><br><br>
-    <svelte:component on:success={redirectToUser} bind:current this={components[current]}/>
+    
+    {#if current == 0}
+        <Login on:success={redirectToUser} bind:current/>
+    {:else}
+        <Register on:success={redirectToUser} bind:current/>    
+    {/if}
 </main>

@@ -1,6 +1,28 @@
 <script>
     import Card from "$lib/components/Card.svelte"
-    export let parsed_data;
+    import {onMount} from 'svelte';
+    import { session } from '$app/stores';
+    
+    let parsed_data=[];
+    onMount(async ()=>{
+
+        const res = await fetch('/user/plans', {
+                method: 'POST',
+                body:JSON.stringify({                    
+                    email: $session.user.email
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "accept": "application/json"
+                }
+            })
+        const data = await res.json();
+        parsed_data = data.parsed_data
+    })    
+
+
+
+
     let thumbnail = '../../static/planosdummy.jpg';
 </script>
 
@@ -14,7 +36,7 @@
 <div class="content">
     <Card path="/user/plans/createplan" starter= {1}/>
     {#each [...parsed_data] as plan }
-        <Card path="/user/plans/{plan.pName}">
+        <Card path="/user/plans/{plan.programID}">
             <div class="div-image">
                 <img class="m-auto img-card" src={thumbnail} alt="" >
             </div>
@@ -24,6 +46,8 @@
             <div style="font-size: 0.8em;">{plan.exercises} </div>
               
         </Card>
+    {:else}
+        <p>Loading</p>
     {/each}
 </div>
 

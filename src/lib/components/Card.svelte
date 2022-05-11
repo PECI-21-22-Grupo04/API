@@ -1,7 +1,8 @@
 
 <script>
     export let starter = 0;
-    export let path='/*';
+    export let path="";
+    export let details = 1;
     console.log(starter)
 </script>
 <style>
@@ -14,6 +15,7 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    height: fit-content;
     word-wrap: break-word;
     background-clip: border-box;
     width: 300px;
@@ -100,23 +102,51 @@
 
 </style>
   <!-- svelte-ignore a11y-label-has-associated-control -->
-<a href={path} >    
-  {#if starter != 0}
-    <label class="card card-body default">
-      <div class="button_plus" >
-        <div class="crux">
-          <div class="bar_hor"></div>
-          <div class="bar_ver"></div>
+{#if path!=""}
+  <a href={path} >    
+    {#if starter != 0}
+      <label class="card card-body default">
+        <div class="button_plus" >
+          <div class="crux">
+            <div class="bar_hor"></div>
+            <div class="bar_ver"></div>
+          </div>
         </div>
+      </label>
+      {:else}
+      <label class="card card-body mb-3 ">
+        <slot></slot>
+        {#if details==1}
+          <div class="card-footer">
+            Mais detalhes<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
+            
+          </div>
+          
+        {/if}
+      </label>
+    {/if}
+  </a>
+
+{:else}  
+  {#if starter != 0}
+  <label class="card card-body default">
+    <div class="button_plus" >
+      <div class="crux">
+        <div class="bar_hor"></div>
+        <div class="bar_ver"></div>
       </div>
-    </label>
-    {:else}
-    <label class="card card-body mb-3 ">
-      <slot></slot>
+    </div>
+  </label>
+  {:else}
+  <label class="card card-body mb-3 ">
+    <slot></slot>
+    {#if details==1}
       <div class="card-footer">
         Mais detalhes<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
         
       </div>
-    </label>
+      
+    {/if}
+  </label>
   {/if}
-</a>
+{/if}  

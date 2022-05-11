@@ -15,11 +15,12 @@ export const db = {
     selectAllClients,
     selectAllExercises,
     selectAllPrograms,
-    SelectExerFromThumb,
+    selectInstructorExerciseFromID,
     createExercise,
     createProgram,
-    selectProgramFromName,
-    SelectInstructorExercises
+    selectInstructorProgramFromID,
+    addExercisetoProgram,
+    selectPlanExercises
 }
 
 // Connect to database (MUST USE LEGACY AUTHENTICATION METHOD (RETAIN MYSQL 5.X COMPATIBILITY))
@@ -29,7 +30,7 @@ const dbconnection = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
 });
-
+const dbKey = process.env.DB_ENCRYPTKEY;
 dbconnection.connect((error) => {
 
     if (error) {
@@ -63,12 +64,12 @@ function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,c
             contact,
             paypalAcc,
             zero,
-            password], (err, data) => {
+            dbKey], (err, data) => {
+                console.log(data)
                 if (err && err.errno==1062) {
                     resolve(1);
                 }
                 else if (typeof data !== 'undefined') { 
-                    console.log(data)
                     resolve(0);
                 }
                 else {
@@ -82,7 +83,7 @@ function createClient(mail, fName, lName, userKey) {
 
         var sql = 'CALL spCreateClient(?,?,?,?)';
 
-        dbconnection.query(sql, [mail, fName, lName, userKey], (err, data) => {
+        dbconnection.query(sql, [mail, fName, lName, dbKey], (err, data) => {
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -96,12 +97,31 @@ function createClient(mail, fName, lName, userKey) {
     });
 };
 
-function createProgram(pname , pdescription ,pthumbnailPath, pvideoPath) {
+function createProgram(email, pname , pdescription, pathology,pthumbnailPath, pvideoPath, showcase) {
     return new Promise((resolve) => {
 
-        var sql = 'CALL spcreateProgram(?,?,?,?)';
+        var sql = 'CALL spcreateProgram(?,?,?,?,?,?,?,?)';
 
-        dbconnection.query(sql, [pname, pdescription, pthumbnailPath, pvideoPath], (err, data) => {
+        dbconnection.query(sql, [email,pname, pdescription, pathology , pthumbnailPath, pvideoPath, showcase,dbKey], (err, data) => {
+            console.log(data)
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined' && data["affectedRows"] == 1) { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+function addExercisetoProgram(programID, exerciseID , nsets, nreps, duration) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spAddExerciseToProgram(?,?,?,?,?)';
+
+        dbconnection.query(sql, [programID, exerciseID , nsets, nreps, duration], (err, data) => {
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -115,20 +135,20 @@ function createProgram(pname , pdescription ,pthumbnailPath, pvideoPath) {
     });
 };
 
-function createExercise(ename, difficulty, e_description, targetMuscle ,thumbnailPath,videoPath,ispublic) {
+function createExercise(email, ename, difficulty, edescription, pathologies, targetMuscle ,thumbnailPath,videoPath,userKey) {
     return new Promise((resolve) => {
 
-        var sql = 'CALL spCreateExercise(?,?,?,?,?,?,?)';
-        console.log(ename)
-        dbconnection.query(sql, [ename, difficulty, e_description, targetMuscle ,thumbnailPath,videoPath,ispublic], (err, data) => {
+        var sql = 'CALL spCreateExercise(?,?,?,?,?,?,?,?,?)';
+        
+        dbconnection.query(sql, [email,ename, difficulty, edescription, pathologies,targetMuscle ,thumbnailPath,videoPath,dbKey], (err, data) => {
+            console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);
             }
-            else if (typeof data !== 'undefined' && data["affectedRows"] == 1) { 
+            else if (typeof data !== 'undefined') { 
                 resolve(0);
             }
             else {
-                console.log(data)
                 resolve(2);
             }
         });
@@ -141,12 +161,12 @@ function selectInstructor(mail, userKey) {
 
         var sql = 'CALL spSelectInstructor(?,?)';
 
-        dbconnection.query(sql, [mail, userKey], (err, data) => {
+        dbconnection.query(sql, [mail, dbKey], (err, data) => {
+            console.log(data);
             if (err) {
                 resolve(1);
             }
             else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
-                // console.log(data);
                 resolve(data);
             }
             else {
@@ -162,7 +182,7 @@ function selectClient(mail, userKey) {
 
         var sql = 'CALL spSelectClient(?,?)';
 
-        dbconnection.query(sql, [mail, userKey], (err, data) => {
+        dbconnection.query(sql, [mail, dbKey], (err, data) => {
             if (err) {
                 resolve(1);
             }
@@ -177,13 +197,14 @@ function selectClient(mail, userKey) {
 };
 
 
-function selectAllClients( userKey) {
+function selectAllClients( email) {
     return new Promise((resolve) => {
         
 
-        var sql = 'CALL spSelectAllClients(?)';
+        var sql = 'CALL spSelectInstructorClients(?,?)';
 
-        dbconnection.query(sql,  userKey, (err, data) => {
+        dbconnection.query(sql,  [email,dbKey], (err, data) => {
+            console.log(data)
             if (err) {
                 resolve(1);
             }
@@ -198,16 +219,38 @@ function selectAllClients( userKey) {
 };
 
 
-function selectAllExercises( userKey) {
+function selectAllExercises(email,userKey) {
     return new Promise((resolve) => {
         
 
-        var sql = 'CALL spSelectAllExercises()';
+        var sql = 'CALL spSelectInstructorExercises(?,?)';
 
-        dbconnection.query(sql, (err, data) => {
+        dbconnection.query(sql,[email,dbKey] ,(err, data) => {
+            // console.log(data);
             if (err) {
                 console.log(err)
-                resolve("fetc error");
+                resolve("fetch error");
+            }
+            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+                resolve(data);
+            }
+            else {
+                resolve("data error");
+            }
+        });
+    });
+};
+function selectPlanExercises(programID) {
+    return new Promise((resolve) => {
+        
+
+        var sql = 'CALL spSelectProgramExercises(?)';
+
+        dbconnection.query(sql,[programID] ,(err, data) => {
+            // console.log(data);
+            if (err) {
+                console.log(err)
+                resolve("fetch error");
             }
             else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
                 resolve(data);
@@ -219,13 +262,13 @@ function selectAllExercises( userKey) {
     });
 };
 
-function selectAllPrograms( ) {
+function selectAllPrograms(email,userKey ) {
     return new Promise((resolve) => {
         
 
-        var sql = 'CALL spSelectAllPrograms()';
+        var sql = 'CALL spSelectInstructorPrograms(?,?)';
 
-        dbconnection.query(sql,  (err, data) => {
+        dbconnection.query(sql,[email,dbKey] , (err, data) => {
             if (err) {
                 resolve("fetc error");
             }
@@ -239,13 +282,13 @@ function selectAllPrograms( ) {
     });
 };
 
-function SelectExerFromThumb( thumb) {
+function selectInstructorExerciseFromID(email,eid,userkey) {
     return new Promise((resolve) => {
         
 
-        var sql = 'CALL spSelectExerFromThumb(?)';
+        var sql = 'CALL spSelectInstructorExerciseFromID(?,?,?)';
 
-        dbconnection.query(sql, thumb, (err, data) => {
+        dbconnection.query(sql, [email,eid,dbKey], (err, data) => {
             if (err) {
                 resolve("fetc error");
             }
@@ -259,13 +302,13 @@ function SelectExerFromThumb( thumb) {
     });
 };
 
-function selectProgramFromName( name) {
+function selectInstructorProgramFromID( email,pid,userKey) {
     return new Promise((resolve) => {
         
 
-        var sql = 'CALL spSelectProgramFromName(?)';
+        var sql = 'CALL spSelectInstructorProgramFromID(?,?,?)';
 
-        dbconnection.query(sql, name, (err, data) => {
+        dbconnection.query(sql, [email,pid,dbKey], (err, data) => {
             if (err) {
                 resolve("fetc error");
             }
@@ -284,7 +327,7 @@ function deleteClient(mail, userKey) {
 
         var sql = 'CALL spDeleteClient(?,?)';
 
-        dbconnection.query(sql, [mail, userKey], (err, data) => {
+        dbconnection.query(sql, [mail, dbKey], (err, data) => {
             if (err) {
                 resolve(1);
             }
@@ -303,7 +346,7 @@ function addClientInfo(mail, age, height, weight, fitness, pathologies, userKey)
 
         var sql = 'CALL spAddClientInfo(?,?,?,?,?,?,?)';
 
-        dbconnection.query(sql, [mail, age, height, weight, fitness, pathologies, userKey], (err, data) => {
+        dbconnection.query(sql, [mail, age, height, weight, fitness, pathologies, dbKey], (err, data) => {
             if (err) {
                 resolve(1);
             }
@@ -322,7 +365,7 @@ function selectClientInfo(mail, userKey) {
 
         var sql = 'CALL spSelectClientInfo(?,?)';
 
-        dbconnection.query(sql, [mail, userKey], (err, data) => {
+        dbconnection.query(sql, [mail, dbKey], (err, data) => {
             if (err) {
                 resolve(1);
             }
@@ -331,52 +374,6 @@ function selectClientInfo(mail, userKey) {
             }
             else {
                 resolve(2);
-            }
-        });
-    });
-};
-
-function SelectInstructorExercises( mail, userKey) {
-
-
-    return new Promise((resolve) => {
-        
-
-        var sql = 'CALL spSelectInstructorExercises(?, ?)';
-
-        dbconnection.query(sql, [mail, userKey] ,(err, data) => {
-            if (err) {
-                console.log(err)
-                resolve("fetc error");
-            }
-            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
-                resolve(data);
-            }
-            else {
-                resolve("data error");
-            }
-        });
-    });
-};
-
-function SelectInstructorPrograms( mail, userKey) {
-
-
-    return new Promise((resolve) => {
-        
-
-        var sql = 'CALL spSelectInstructorPrograms(?, ?)';
-
-        dbconnection.query(sql, [mail, userKey] ,(err, data) => {
-            if (err) {
-                console.log(err)
-                resolve("fetc error");
-            }
-            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
-                resolve(data);
-            }
-            else {
-                resolve("data error");
             }
         });
     });

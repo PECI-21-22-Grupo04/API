@@ -1,23 +1,12 @@
  <script>
      export let current;
      export let exercise;
-     let name = '';
-     let  targetmuscle='';
-     let  difficulty='';
-     let  description='';
-     let  thumbnail='/exercicio.png';
-     let  videopath='';
      export function next(){
         current = 1;
-        exercise = {
-            name: name,
-            targetmuscle:targetmuscle,
-            difficulty:difficulty,
-            description:description,
-            thumbnail:thumbnail,
-            videopath:videopath
-       }
-     }
+        exercise.thumbnail='/exercicio.png';
+
+       console.log(exercise)
+    }
  </script>
 <style>
 
@@ -46,6 +35,10 @@
     button{
         height: 36px;
         background-color: #eee;
+        width: fit-content;
+        margin: auto;
+        border: 1px solid black;
+        cursor: pointer;
     }
 
     button:hover{
@@ -56,13 +49,13 @@
 
 <div >
     <!-- bind:value={exercise.name} -->
-    Nome do Exercício  
-    <input type="text" bind:value={name}/><br>
-    Músculo  
-    <input type="text" bind:value={targetmuscle} /><br>
-    Dificuldade  
-    <input type="text" bind:value={difficulty} /><br>
-    Description: <textarea type="text" bind:value={description}  /><br><br>
-   <button on:click={next}> Next </button><br>
+    Nome do Exercício  {exercise.name}
+    <input type="text" bind:value={exercise.name}/><br>
+    Músculo  {exercise.targetmuscle}
+    <input type="text" bind:value={exercise.targetmuscle} /><br>
+    Dificuldade  : {exercise.difficulty}
+    <input type="text" bind:value={exercise.difficulty} /><br>
+    Description: <textarea type="text" bind:value={exercise.description}  /><br><br>
+   <button on:click|preventDefault={next}> Next </button><br>
 
 </div>
