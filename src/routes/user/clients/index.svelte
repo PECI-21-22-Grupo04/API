@@ -34,12 +34,12 @@
 
     <h1>Clientes</h1>
     <div class="content">
-        {#each [...parsed_data] as exercise }
-            <Card >
+        {#each [...parsed_data] as client }
+            <Card path="/user/clients/{client.clientID}">
                 <div class="div-image">
                     <img class="m-auto img-card" src="/Profileicon.png" alt="" >
                 </div>
-                <div style="text-align: center;font-size: 1.2em;">{exercise.firstName} </div>
+                <div style="text-align: center;font-size: 1.2em;">{client.firstName} </div>
             </Card>
         {:else}
             <p>Loading</p>

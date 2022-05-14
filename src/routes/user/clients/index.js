@@ -11,11 +11,11 @@ export async function post({request}){
     let password = sessions[email].password;
     
     try{
-        const exercises = await db.selectAllClients(email);
-        // console.log(exercises)
-        let parsed_data = JSON.parse(JSON.stringify(exercises))[0];
+        const clients = await db.selectAllClients(email);
+        // console.log(clients)
+        let parsed_data = JSON.parse(JSON.stringify(clients))[0];
         console.log(parsed_data);
-        if (exercises) {
+        if (clients) {
             return {
                 body: {parsed_data}
             };

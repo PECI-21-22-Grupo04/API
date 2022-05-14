@@ -1,5 +1,4 @@
 import {db} from "$lib/database/dbFunctions.js";
-import fs from 'fs'
 
 
 export async function post({request}){
