@@ -3,69 +3,113 @@ import * as cookie from 'cookie';
 import {v4 as uuidv4} from 'uuid';
 import {db} from "$lib/database/dbFunctions.js";
 import fs from 'fs';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
+
+import { initializeApp } from "firebase/app";
+
+
+
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBHQxQkZSV4t20FD3j5l6Uw04KxcE70zQM",
+  authDomain: "runx-be658.firebaseapp.com",
+  projectId: "runx-be658",
+  storageBucket: "runx-be658.appspot.com",
+  messagingSenderId: "84913934296",
+  appId: "1:84913934296:web:39f8932c68556c41002cad",
+  measurementId: "G-5ZR565TEEL"
+};
+
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
 
 export async function post({request}){
     const body = await request.json();
-    console.log(body)
-    const newuser = await db.createInstructor(body.email, body.firstName, body.lastName, body.birth, body.sex, body.street,body.postcode,body.city,body.country,body.contact,body.paypalAcc,body.password);
-    console.log(newuser)
 
-    if(newuser == 0){
-        const cookieId = uuidv4()
-        
-        //we need a way to set a cookieId for a user in the database
-        let sessions={};
-        fs.exists('sessions.json',(exists)=>{
-            if(exists){
-                fs.readFile("sessions.json", 'utf8', function readFileCallback(err, data){
-                    if (err){
-                        console.log(err);
-                    } else {
-                        sessions = JSON.parse(data); //now it an object
-                        sessions[body.email] = {"session":cookieId,
-                                                "password": body.password
-                                            }; //add some data //add some data
-                        const json = JSON.stringify(sessions); //convert it back to json
-                        fs.writeFile("sessions.json", json, 'utf8', (error) => {
-                            if (error) throw new Error('listId does not exist')
-                            console.log('[write auth]: success');
-                        }); 
-                    }
-                });
-    
-            }else{
-                sessions[body.email] = cookieId; //add some data
-                const json = JSON.stringify(sessions);
-                fs.writeFile("sessions.json", json, 'utf8', (error) => {
-                    if (error) throw new Error('listId does not exist')
-                    console.log('[write auth]: success');
-                }); 
-            }
-        });
-        //cookie to the header
-        
-        const headers = {
-            'Set-Cookie': cookie.serialize('session_id', cookieId, {
-                httpOnly: true,
-                maxAge: 60*60*24 *7,
-                sameSite: 'lax',
-                path: '/'
-            })
-        }
-        return {
-            status: 200,
-            headers,
-            body: {
-                message: "Success"
-            }
-        }
-    }else{
-        return{
-            status: 409,
-            body: {
-                message: "DIDNt SUCCEDD"
-            }
-        }
+    if (!body.email || !body.password || !body.firstName || !body.lastName || !body.birth  || !body.sex  || !body.street ||!body.postcode ||!body.city ||!body.country || !body.contact || !body.paypalAcc )
+    {
+        console.log("Please insert all the required info.")
     }
+
+    else
+    {
+        let success_f=0;
+        //getFirestore(firebaseApp)
+        const auth = getAuth(app);
+    
+        await createUserWithEmailAndPassword(auth, body.email, body.password) 
+        .then((userCredential) => {
+    
+        // Signed in
+        const user = userCredential.user;
+    
+        console.log("we creating firebase");
+        success_f=1;
+        // ...
+        })
+        .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    
+        console.log(error.message)
+        // ..
+        });
+    
+        if (success_f===1)
+        {
+            const newuser = await db.createInstructor(body.email, body.firstName, body.lastName, body.birth, body.sex, body.street,body.postcode,body.city,body.country,body.contact,body.paypalAcc);
+            if(newuser == 0){
+    
+            
+                const cookieId = uuidv4()
+                
+                
+                const headers = {
+                    'Set-Cookie': cookie.serialize('CookieId', cookieId, {
+                        httpOnly: true,
+                        maxAge: 60*60,
+                        sameSite: 'lax',
+                        path: '/'
+                    })
+                }
+                return {
+                    status: 200,
+                    headers,
+                    body: {
+                        message: "Success, user was created"
+                    }
+                }
+            }
+            
+            else{
+                return{
+                    status: 409,
+                    body: {
+                        message: "An error occured during Registration"
+                    }
+                }
+            }
+        }
+        else
+        {
+            console.log("There was a problem with registration")
+            return{
+                status: 409,
+                body: {
+                    message: "An error occured during Registration"
+                }
+            }
+        }
+        console.log(body)
+    }
+   
+
+    // AFTER REGISTER, USER IS LOGGED IN  -> PASS THE COOKIE 
+
+
+    
+
 }

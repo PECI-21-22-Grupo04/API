@@ -1,7 +1,7 @@
 
 import {db} from "$lib/database/dbFunctions.js";
 import fs from 'fs'
-
+    
 
 export async function post({request}){
     const sessions = JSON.parse(fs.readFileSync("sessions.json", 'utf8'))
@@ -30,3 +30,4 @@ export async function post({request}){
         console.log(e);
     }
 }
+

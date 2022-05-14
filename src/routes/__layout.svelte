@@ -8,16 +8,19 @@
         }else{
             return{}
         }
+
+     
     }
 </script>
 
 <script>
     import "../styles/global.css"
     import { navigating } from '$app/stores'
-
     import { loading } from '$lib/loading'
     console.log(navigating)
     $: $loading = !!$navigating
+
+
 </script>
 
 

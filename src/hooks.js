@@ -1,38 +1,44 @@
 import * as cookie from 'cookie'
-import fs from 'fs'
-import { request } from 'http';
+import { getAuth } from "firebase/auth";
+import jwt  from 'jsonwebtoken';
+// import fs from 'fs'
+// import { request } from 'http';
+import app from '../src/routes/auth/register.js'
 
 export const handle = async({event,resolve})=>{
     const cookies = cookie.parse(event.request.headers.get('cookie')|| '');
+    
 
     event.locals.user = cookies || null;
     
     let response;
-    let sessions = {}
     let usermail;
-    if(!fs.existsSync('sessions.json')){
-        event.locals.user.authenticated = false
-        response = await resolve(event);
-        return response
-    }else{
-        var content = fs.readFileSync("sessions.json", 'utf8');
-        sessions = JSON.parse(content)
-        for (let key in sessions) {
-            if(sessions[key].session === cookies.session_id){
-                usermail = key;
-                break
-            }
-        }
-        console.log(usermail)
-        if(usermail){
-            event.locals.user.authenticated = true
-            event.locals.user.email = usermail
-        }else{
-            event.locals.user.authenticated = false
-            
-        }
 
-    }
+    var decoded = jwt.decode(cookies.CookieId);
+    console.log("FPDEBUG \n " + JSON.stringify(decoded))
+
+        jwt.verify( (cookies.CookieId), '697d7fb5dcde8cd048d3c9158b620b6910522b4d', function(err, decoded) {
+            if(decoded)
+            {
+                console.log("decoded  " +decoded)
+                event.locals.user.authenticated = true
+                console.log("true")
+       
+            }
+            else if (err){
+                
+                event.locals.user.authenticated = false
+                console.log("false")
+                
+        
+                
+        
+            }
+       
+      });
+
+
+   
             
     response = await resolve(event);
     return response

@@ -20,7 +20,8 @@ export const db = {
     createProgram,
     selectInstructorProgramFromID,
     addExercisetoProgram,
-    selectPlanExercises
+    selectPlanExercises,
+    selectInstructorClientFromID
 }
 
 // Connect to database (MUST USE LEGACY AUTHENTICATION METHOD (RETAIN MYSQL 5.X COMPATIBILITY))
@@ -30,13 +31,13 @@ const dbconnection = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
 });
-const dbKey = process.env.DB_ENCRYPTKEY;
 dbconnection.connect((error) => {
-
+    
     if (error) {
         console.log("ERROR: Problems connecting to database!");
     }
 });
+const dbKey = process.env.DB_ENCRYPTKEY;
 
 
 /*
@@ -44,7 +45,7 @@ dbconnection.connect((error) => {
             STORED PROCEDURES               
 *******************************************
 */
-function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,country,contact,paypalAcc, password) {
+function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,country,contact,paypalAcc) {
     const zero = 0;
     // console.log(mail + ' : ' +fName+' : ' +lName+ ' : ' +birth+ ' : ' +sex+ ' : ' +street + ' :'+postcode + ' :'+city + ' :'+country + ' :'+contact + ' :'+paypalAcc + ' :'+password );
     return new Promise((resolve) => {
@@ -67,6 +68,8 @@ function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,c
             dbKey], (err, data) => {
                 console.log(data)
                 if (err && err.errno==1062) {
+                console.log(err);
+
                     resolve(1);
                 }
                 else if (typeof data !== 'undefined') { 
@@ -374,6 +377,26 @@ function selectClientInfo(mail, userKey) {
             }
             else {
                 resolve(2);
+            }
+        });
+    });
+};
+
+function selectInstructorClientFromID(email,cid) {
+    return new Promise((resolve) => {
+
+
+        var sql = 'CALL spSelectInstructorClientsFromID(?,?,?)';
+
+        dbconnection.query(sql, [email,cid,dbKey], (err, data) => {
+            if (err) {
+                resolve("fetc error");
+            }
+            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+                resolve(data);
+            }
+            else {
+                resolve("data error");
             }
         });
     });

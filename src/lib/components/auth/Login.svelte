@@ -14,6 +14,7 @@
     }
     async function login(){
         error = undefined
+        //event.preventDefault();
         try {
             const res = await fetch('/auth/login', {
                 method: 'POST',
@@ -26,11 +27,6 @@
                 }
             })
             if(res.ok){
-                $session = {
-                    user: {
-                    authenticated: true,
-                    email: email
-                }}
                 dispatch('success')
             }else{
                 error= 'An error occurred'
@@ -77,7 +73,7 @@ form{
     <input type="email" bind:value={email} placeholder="Enter your email"><br>
     <input type="password" bind:value={password} placeholder="Enter your password"><br><br><br>
     
-    <button on:click={login}>Login</button><br>
+    <button on:click|preventDefault={login}>Login</button><br>
     <button on:click|preventDefault={register}>Register</button>
     
 </form>

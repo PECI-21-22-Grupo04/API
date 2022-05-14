@@ -3,19 +3,21 @@
     import { session } from '$app/stores';
     import { fade} from 'svelte/transition';
     const dispatch = createEventDispatcher();
+// Import the functions you need from the SDKs you need
+// Import the functions you need from the SDKs you need
 
-    let email
+let email
     let password
     let firstName
     let lastName
-    let birth = '2000-01-01'
-    let sex = 'M'
-    let street = 'mdfasystreet'
-    let postcode = '3000-500'
-    let city = 'citASDy'
-    let country = 'poASDrtugal'
-    let contact = 'contadSActNumber'
-    let paypalAcc = 'paypalDSAAccount'
+    let birth
+    let sex 
+    let street
+    let postcode
+    let city 
+    let country
+    let contact 
+    let paypalAcc
 
     let error
     export let current;
@@ -23,7 +25,9 @@
         current = 0;
     }
     async function register(){
+        console.log("we registering")
         error = undefined
+        event.preventDefault();
         try {
             const res = await fetch('/auth/register', {
                 method: 'POST',
@@ -100,6 +104,18 @@
     <input type="password" bind:value={password} placeholder="Enter your password"><br>
     <input type="firstName" bind:value={firstName} placeholder="Enter your First Name"><br>
     <input type="lastName" bind:value={lastName} placeholder="Enter your Last Name"><br><br><br>
+    <input type="contact" bind:value={contact} placeholder="Enter your Contact"><br><br><br>
+    <input type="paypal" bind:value={paypalAcc} placeholder="Enter your paypal email address"><br><br><br>
+    <input type="birth-date" bind:value={birth} placeholder="Enter your birth"><br><br><br>
+    <input type="sex" bind:value={sex} placeholder="Enter your gender"><br><br><br>
+    <input type="city" bind:value={city} placeholder="Enter your home city"><br><br><br>
+    <input type="street" bind:value={street} placeholder="Enter your address"><br><br><br>
+    <input type="country" bind:value={country} placeholder="Enter your country"><br><br><br>
+    <input type="postcode" bind:value={postcode} placeholder="Enter your postcode"><br><br><br>
+
+
+
+
     
     <button on:click={register}>Register</button><br>
     <button on:click|preventDefault={login}>Go to Login page</button><br>
