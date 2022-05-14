@@ -2,25 +2,50 @@ import {db} from "$lib/database/dbFunctions.js";
 import fs from 'fs'
 
 export async function post({params,request}){
-    const sessions = JSON.parse(fs.readFileSync("sessions.json", 'utf8'));
     const body = await request.json();
     const email = body.email
-    let pwd = sessions[email].password;
     const id = await params.id;
     
     try{
-        const exercises = await db.selectInstructorExerciseFromID(email,id,pwd);
-        const parsed_data = JSON.parse(JSON.stringify(exercises))[0];
-        console.log(parsed_data);
-        if (exercises) {
+
+        const exercises = await db.selectInstructorExerciseFromID(email,id);
+
+        if (exercises !=="data error")
+        {
+            if (exercises !== "fetch error")
+            {
+                let parsed_data = JSON.parse(JSON.stringify(exercises))[0];
+                return {
+                    status:200,
+                    body: {parsed_data} 
+
+                };
+            }
+            else
+            {
+                console.log("fetch error")
+                return {
+                    status:409,
+                    body: {
+                        message: "An error occured during query"
+                    }
+                    
+                };
+            }
+        }
+        else
+        {
+            console.log("fetch error")
             return {
-                body: {parsed_data}
-            };
-        } else {
-            return {
-                status : 404
+                status:409,
+                body: {
+                    message: "An error occured during query"
+                }
+                
             };
         }
+        
+
     }catch(e){
         console.log(e);
     }

@@ -3,6 +3,8 @@
      export let exercise;
      export function next(){
         current = 1;
+
+        
         exercise.thumbnail='/exercicio.png';
 
        console.log(exercise)

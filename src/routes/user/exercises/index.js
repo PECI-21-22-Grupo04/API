@@ -4,30 +4,65 @@ import fs from 'fs'
     
 
 export async function post({request}){
-    const sessions = JSON.parse(fs.readFileSync("sessions.json", 'utf8'))
+
     const body = await request.json();
     const email = body.email
     console.log("email: " + email)
-    let password = sessions[email].password;
+
     
     try{
-        const exercises = await db.selectAllExercises(email,password);
-        // console.log(exercises)
-        let parsed_data = JSON.parse(JSON.stringify(exercises))[0];
-        console.log(parsed_data);
-        if (exercises) {
-            return {
-                body: {parsed_data}
-            };
-        } else {
-            // @ts-ignore
-            parsed_data = {e_name: 'NENHUM EXERCICIO'}
-            return {
-                status : {}
-            };
+
+
+        const exercises = await db.selectAllExercises(email);
+
+        if (exercises !=="data error")
+        {
+            if(exercises !== "fetch error")
+            {
+                let parsed_data = JSON.parse(JSON.stringify(exercises))[0];
+                return {
+                    status:200,
+                    body: {parsed_data} 
+
+                };
+            }
+            else
+            {
+                //err
+
+                console.log("fetch error")
+                return {
+                    status:409,
+                    body: {
+                        message: "An error occured during query"
+                    }
+                    
+                };
+            }
         }
-    }catch(e){
+        else
+        {
+            //err
+            console.log("data error")
+            return {
+                status:409,
+                body: {
+                    message: "An error occured during fetch"
+                }
+        }
+
+    }
+        // console.log(exercises)
+
+
+      
+
+
+    } catch(e){
+
+        console.log('query went wrong')
         console.log(e);
+
     }
 }
 

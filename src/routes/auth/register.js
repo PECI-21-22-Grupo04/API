@@ -86,7 +86,7 @@ export async function post({request}){
             
             else{
                 return{
-                    status: 409,
+                    status: 500,
                     body: {
                         message: "An error occured during Registration"
                     }

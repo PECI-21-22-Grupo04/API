@@ -70,6 +70,7 @@ function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,c
                 if (err && err.errno==1062) {
                 console.log(err);
 
+                    
                     resolve(1);
                 }
                 else if (typeof data !== 'undefined') { 
@@ -77,11 +78,13 @@ function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,c
                 }
                 else {
                     resolve(2);
+                console.log(err);
+
                 }
         });
     });
 }
-function createClient(mail, fName, lName, userKey) {
+function createClient(mail, fName, lName) {
     return new Promise((resolve) => {
 
         var sql = 'CALL spCreateClient(?,?,?,?)';
@@ -138,7 +141,7 @@ function addExercisetoProgram(programID, exerciseID , nsets, nreps, duration) {
     });
 };
 
-function createExercise(email, ename, difficulty, edescription, pathologies, targetMuscle ,thumbnailPath,videoPath,userKey) {
+function createExercise(email, ename, difficulty, edescription, pathologies, targetMuscle ,thumbnailPath,videoPath) {
     return new Promise((resolve) => {
 
         var sql = 'CALL spCreateExercise(?,?,?,?,?,?,?,?,?)';
@@ -158,7 +161,7 @@ function createExercise(email, ename, difficulty, edescription, pathologies, tar
     });
 };
 
-function selectInstructor(mail, userKey) {
+function selectInstructor(mail) {
     return new Promise((resolve) => {
         
 
@@ -179,7 +182,7 @@ function selectInstructor(mail, userKey) {
         });
     });
 };
-function selectClient(mail, userKey) {
+function selectClient(mail) {
     return new Promise((resolve) => {
         
 
@@ -222,7 +225,7 @@ function selectAllClients( email) {
 };
 
 
-function selectAllExercises(email,userKey) {
+function selectAllExercises(email) {
     return new Promise((resolve) => {
         
 
@@ -234,7 +237,7 @@ function selectAllExercises(email,userKey) {
                 console.log(err)
                 resolve("fetch error");
             }
-            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+            else if (typeof data !== 'undefined' && data.length > 0) {
                 resolve(data);
             }
             else {
@@ -265,7 +268,7 @@ function selectPlanExercises(programID) {
     });
 };
 
-function selectAllPrograms(email,userKey ) {
+function selectAllPrograms(email ) {
     return new Promise((resolve) => {
         
 
@@ -285,7 +288,7 @@ function selectAllPrograms(email,userKey ) {
     });
 };
 
-function selectInstructorExerciseFromID(email,eid,userkey) {
+function selectInstructorExerciseFromID(email,eid) {
     return new Promise((resolve) => {
         
 
@@ -293,7 +296,7 @@ function selectInstructorExerciseFromID(email,eid,userkey) {
 
         dbconnection.query(sql, [email,eid,dbKey], (err, data) => {
             if (err) {
-                resolve("fetc error");
+                resolve("fetch error");
             }
             else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
                 resolve(data);
@@ -305,7 +308,7 @@ function selectInstructorExerciseFromID(email,eid,userkey) {
     });
 };
 
-function selectInstructorProgramFromID( email,pid,userKey) {
+function selectInstructorProgramFromID( email,pid) {
     return new Promise((resolve) => {
         
 
@@ -325,7 +328,7 @@ function selectInstructorProgramFromID( email,pid,userKey) {
     });
 };
 
-function deleteClient(mail, userKey) {
+function deleteClient(mail) {
     return new Promise((resolve) => {
 
         var sql = 'CALL spDeleteClient(?,?)';
@@ -344,7 +347,7 @@ function deleteClient(mail, userKey) {
     });
 };
 
-function addClientInfo(mail, age, height, weight, fitness, pathologies, userKey) {
+function addClientInfo(mail, age, height, weight, fitness, pathologies) {
     return new Promise((resolve) => {
 
         var sql = 'CALL spAddClientInfo(?,?,?,?,?,?,?)';
@@ -363,7 +366,7 @@ function addClientInfo(mail, age, height, weight, fitness, pathologies, userKey)
     });
 };
 
-function selectClientInfo(mail, userKey) {
+function selectClientInfo(mail) {
     return new Promise((resolve) => {
 
         var sql = 'CALL spSelectClientInfo(?,?)';

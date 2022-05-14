@@ -13,6 +13,7 @@ const uploadFiles = async (req) =>
     );
 
 export const uploadMiddleware = async (req, res, next) => {
+    console.log("FPDEBUG" + JSON.stringify(req))
             if (!req.url.startsWith("/upload")) return next();
 
             try {

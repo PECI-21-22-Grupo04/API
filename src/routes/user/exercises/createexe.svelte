@@ -15,8 +15,8 @@
             difficulty:"",
             description:"",
             pathologie:"",
-            thumbnail:"",
-            videopath:""
+            thumbnail:"", // this is the link for t
+            videopath:"" // later we will call a function generateVideoPAth - that creates a download link for a mp4, we store here and later give it to our player.
        }
     let stepsTextOnly = [
     { text: 'Step one' },
@@ -85,6 +85,8 @@
       <div style="text-align: center;font-size: 1.2em;">{exercise.name} </div>
       <div style="font-size: 0.8em;">{exercise.targetmuscle} </div>
       <div style="font-size: 0.8em;">{exercise.difficulty} </div>
+      <div style="font-size: 0.8em;">{exercise.difficulty} </div>
+
     </Card>
     
     <br>

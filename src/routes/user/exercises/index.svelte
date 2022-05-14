@@ -44,8 +44,7 @@
                 <div style="font-size: 0.8em;">{exercise.targetMuscle} </div>
                 <div style="font-size: 0.8em;">{exercise.difficulty} </div>
             </Card>
-        {:else}
-            <p>Loading</p>
+ 
         {/each}
     </div>
 
