@@ -8,20 +8,24 @@ import app from '../src/routes/auth/register.js'
 export const handle = async({event,resolve})=>{
     const cookies = cookie.parse(event.request.headers.get('cookie')|| '');
     
+   //console.log("FPDEBUGGSASASAA - " +  JSON.stringify(event))
 
     event.locals.user = cookies || null;
     
     let response;
     let usermail;
+    console.log("BEFOREEE \n " + JSON.stringify(cookies.CookieId))
 
     var decoded = jwt.decode(cookies.CookieId);
-    console.log("FPDEBUG \n " + JSON.stringify(decoded))
+
+    console.log("FPDEBUGTTTT \n " + JSON.stringify(decoded))
 
         jwt.verify( (cookies.CookieId), '697d7fb5dcde8cd048d3c9158b620b6910522b4d', function(err, decoded) {
             if(decoded)
             {
                 console.log("decoded  " +decoded)
                 event.locals.user.authenticated = true
+                event.locals.user.email = cookies.usermail
                 console.log("true")
        
             }

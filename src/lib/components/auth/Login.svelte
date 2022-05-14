@@ -27,7 +27,13 @@
                 }
             })
             if(res.ok){
+                $session = {
+                    user: {
+                    authenticated: true,
+                    email: email
+                }}
                 dispatch('success')
+                
             }else{
                 error= 'An error occurred'
             }
