@@ -34,19 +34,21 @@
 
     let repeats = {};
     let sets = {};
+    let durations = {};
     function select(exercise){
         for (let index = 0; index < plan.exercises.length; index++) {
             if(plan.exercises[index].exercise.exerciseID == exercise.exerciseID 
             || repeats[exercise.exerciseID] === undefined 
             || sets[exercise.exerciseID] === undefined 
+            || durations[exercise.exerciseID] === undefined 
             ){
                 return;
             }
             
         }
-        if (repeats != {} && sets!={}) {
+        if (repeats != {} && sets!={} && durations != {}) {
             
-            plan.exercises = [...plan.exercises, {exercise ,reps: repeats[exercise.exerciseID], sets: sets[exercise.exerciseID]}]
+            plan.exercises = [...plan.exercises, {exercise ,reps: repeats[exercise.exerciseID], sets: sets[exercise.exerciseID], durations:durations[exercise.exerciseID]}]
         }
     }
     function deleteExercise(exercise){
@@ -182,6 +184,8 @@
             <input type="number" bind:value={sets[exercise.exerciseID]}>
             Repeats:
             <input type="number" bind:value={repeats[exercise.exerciseID]}>
+            Duration:
+            <input type="number" bind:value={durations[exercise.exerciseID]}>
             
             <button on:click={() => select(exercise)}> select</button>
         </Card>
@@ -192,12 +196,21 @@
     <div class="timeline">
         
         {#each plan.exercises as selected}
-        <div class="selected">
+        <div class="selected" style="border:1px solid;">
             
-            <img style="margin:10px" src={'/exercises/' + selected.exercise.thumbnailPath} alt="">
-            <p></p>
-            <p>reps:  {selected.reps}  </p>
-            <p>steps:  {selected.sets}  </p>
+            <img style="margin:10px;" src={'/exercises/' + selected.exercise.thumbnailPath} alt="">
+            <div style="margin:1px" >
+                <p>  {selected.reps} rep </p>
+
+            </div>
+            <div style="margin:1px">
+
+                <p style="margin:1px">  {selected.sets} steps </p>
+            </div>
+            <div style="margin:1px">
+
+                <p>  {selected.durations} dur </p>
+            </div>
             <div class="delete" on:click={()=> deleteExercise(selected.exercise)}>X</div>
         </div>
         {/each}

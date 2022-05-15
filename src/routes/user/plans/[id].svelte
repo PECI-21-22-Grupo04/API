@@ -15,11 +15,13 @@
     import { page, session } from '$app/stores';
     import { goto } from "$app/navigation";
 import CreatePlanSelectExe from "$lib/components/plans/CreatePlanSelectExe.svelte";
+import Card from "$lib/components/Card.svelte";
+
     let plan = {}
     let parsed_data={};
     export let url;
     let toggle=0;
-    let exer;
+    let exer = [];
     onMount(async ()=>{
         console.log(url)
         const res = await fetch(url, {
@@ -52,7 +54,7 @@ import CreatePlanSelectExe from "$lib/components/plans/CreatePlanSelectExe.svelt
             })
         const data2 = await res2.json();
         
-        exer = data2.parsed_data;
+        exer = data2.arr;
         plan["exercises"] = []
 
         
@@ -105,8 +107,8 @@ import CreatePlanSelectExe from "$lib/components/plans/CreatePlanSelectExe.svelt
     
     }
 </style>
-{#if toggle == 0}
-    {JSON.stringify(exer)}
+
+   
     <div   class="wrapper">
             <div  class="detailedPlan">
                 <h1 class="col" style="text-align: center;"  >{plan.pName}</h1>
@@ -118,8 +120,31 @@ import CreatePlanSelectExe from "$lib/components/plans/CreatePlanSelectExe.svelt
         
         
     </div>
+
+    {#if toggle == 0}
+    <div>
+        <h1>
+            Exercises in this plan:
+        </h1> 
+        {#each [...exer] as exercise }
+        <Card>
+            <div class="div-image">
+                <img class="m-auto img-card" src={'/exercises/' + exercise.thumbnailPath } alt="" >
+            </div>
+            <div style="text-align: center;font-size: 1.2em;">{exercise.eName} </div>
+            <div style="font-size: 0.8em;">{exercise.targetMuscle} </div>
+            <div style="font-size: 0.8em;">{exercise.difficulty} </div>
+        </Card>
+
+        {/each}
+    </div>
 {:else}
     <CreatePlanSelectExe bind:plan/>
 {/if}
+<div>
+    <p>
+
+    </p>
+</div>
   <button on:click={AddExerc}> Add Exercises to Plan</button>
   <button on:click={plandetails}> Plan</button>
