@@ -12,7 +12,7 @@ export async function post({request}){
     
     try{
 
-
+        console.log("are we coming here")
         const exercises = await db.selectAllExercises(email);
 
         if (exercises !=="data error")

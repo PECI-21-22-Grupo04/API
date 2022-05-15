@@ -1,5 +1,4 @@
 <script>
-    export let parsed_data;
     import Card from "$lib/components/Card.svelte";
     import Form from "$lib/components/exercises/Form.svelte"
     import {Steps} from 'svelte-steps'
@@ -8,6 +7,7 @@
     import { session } from '$app/stores';
     const components = [Form,Upload]
     let current=0;
+    let exp
     let exercise = {
             email:$session.user.email,
             name:"",
@@ -15,8 +15,9 @@
             difficulty:"",
             description:"",
             pathologie:"",
-            thumbnail:"", // this is the link for t
-            videopath:"" // later we will call a function generateVideoPAth - that creates a download link for a mp4, we store here and later give it to our player.
+            thumbnail:"", // this is the link for
+            videopath:"", // later we will call a function generateVideoPAth - that creates a download link for a mp4, we store here and later give it to our player.
+            exp:null
        }
     let stepsTextOnly = [
     { text: 'Step one' },
@@ -28,13 +29,14 @@
   }
   async function confirm(){
         let error = undefined
+        let nnn = JSON.stringify(                    
+                    exercise,
+                )
         console.log(exercise)
         try {
             const res = await fetch('/user/exercises/createexe', {
                 method: 'POST',
-                body:JSON.stringify(                    
-                    exercise,
-                ),
+                body:nnn,
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -74,7 +76,7 @@
 {#if current == 0 }
   <Form bind:current bind:exercise />
 {:else if current == 1}
-  <Upload bind:current />
+  <Upload bind:current bind:exercise />
 {:else}
   <div class="card-center">
     

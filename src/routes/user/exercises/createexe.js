@@ -6,6 +6,11 @@ export async function post({request}){
     const email = body.email
 
 
+    console.log("this is body " + JSON.stringify(body))
+
+
+
+
 
     try{
 
@@ -25,6 +30,23 @@ export async function post({request}){
         {   
             if(exercise!==2)
             {
+                var data = body.exp.replace(/^data:image\/\w+;base64,/, "");
+                var buf = Buffer.from(data, 'base64');
+                
+                // handle png aswell 
+  
+                    fs.writeFile("static/exercises/"  + body.thumbnail + ".jpeg",buf, (err)=>{
+        
+                        if (!err)
+                        {
+                        console.log('File is created successfully.');
+                            
+                        }
+                        else{
+                            console.log(err)
+                        }
+                    })
+          
 
                 return{
                     headers:{location:'/user/exercises'},
@@ -56,6 +78,7 @@ export async function post({request}){
             }
         }
 
+
     }catch(e)
     {
         //err
@@ -65,6 +88,7 @@ export async function post({request}){
   
     
 
+  
     
   
   

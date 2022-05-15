@@ -4,8 +4,8 @@
      export function next(){
         current = 1;
 
-        
-        exercise.thumbnail='/exercicio.png';
+
+        //exercise.thumbnail='/exercicio.png';
 
        console.log(exercise)
     }

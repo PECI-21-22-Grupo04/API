@@ -1,85 +1,67 @@
-<script>
-  import { onMount, onDestroy } from 'svelte'
-  import DashboardPlugin from '@uppy/dashboard'
-  import Uppy from '@uppy/core'
-  import XHRUpload from '@uppy/xhr-upload'
-  export let current=1;
 
+<script>
+  export let current=1;
+  export let exercise;
+ 
   function next(){
     current=2;
   }
   function back(){
     current=0;
   }
+	let  avatar, fileinput;
 
-  let container;
-  let plugin;
-
-  let uppy = new Uppy();
-  let plugins = [];
-
-  const installPlugin = () => {
-    const options = {
-      id: 'svelte:Dashboard',
-      inline: true,
-      plugins,
-      target: container,
-      height: 280,
-    }
-
-    uppy.use(XHRUpload, {
-        endpoint: '/upload'
-    })
-    uppy.use(DashboardPlugin, options);
-    plugin = uppy.getPlugin(options.id);
-  }
-
-  const uninstallPlugin = (uppyInstance= uppy) => {
-    uppyInstance.removePlugin(plugin);
-  }
-
-  onMount(() => installPlugin())
-
-  $: {
-    const options = {
-      id: 'svelte:Dashboard',
-      inline: true,
-      plugins,
-      target: container
-    }
-    uppy.setOptions(options)
-  }
+	const onFileSelected =(e)=>{
+    let exp = e.target.files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL( exp);
+            reader.onload = e => {
+              avatar = e.target.result
+              exercise.exp= e.target.result;
+            };
+            exercise.thumbnail= exercise.name
+            
+}
+	
 </script>
+<div id="app">
+	<h1>Upload Image</h1>
+  
+        {#if avatar}
+        <img class="avatar" src="{avatar}" alt="d" />
+        {:else}
+        <img class="avatar" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" alt="" /> 
+        {/if}
+				<img class="upload" src="https://static.thenounproject.com/png/625182-200.png" alt="" on:click={()=>{fileinput.click();}} />
+        <div class="chan" on:click={()=>{fileinput.click();}}>Choose Image</div>
+        <input style="display:none" type="file" accept=".jpg, .jpeg, .png" on:change={(e)=>onFileSelected(e)} bind:this={fileinput} >
 
-<style>
-@import '@uppy/core/dist/style.css';
-@import '@uppy/dashboard/dist/style.css';
-.conteiner{
-        margin: 20px auto ;
-        margin-right: auto;
-        display: flex;
-        width: fit-content;
-        background-color: white;
-        /* border: 1px solid black; */
-        padding: 1em;
-        flex-direction: column;
-        box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
-    }
-button{
-  margin: auto;
-  width: 300px;
-    height: 36px;
-    background-color: #eee;
-}
-
-button:hover{
-    background-color: #222;
-    color: #fff
-}
-</style>
-<div class="conteiner">
-
-  <div bind:this={container} /><br><br><br>
-  <button on:click={next}>Next</button><br>
-  <button on:click={back} >Back</button>
 </div>
+<div>
+  <button>
+    dsadsadsa
+  </button>
+</div>
+<style>
+	#app{
+	display:flex;
+		align-items:center;
+		justify-content:center;
+		flex-flow:column;
+}
+ 
+	.upload{
+		display:flex;
+	height:50px;
+		width:50px;
+		cursor:pointer;
+	}
+	.avatar{
+		display:flex;
+		height:200px;
+		width:200px;
+	}
+</style>
+
+ 
+
