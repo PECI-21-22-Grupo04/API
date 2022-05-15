@@ -2,7 +2,36 @@
     import { fade, slide } from 'svelte/transition';
     export let current;
     export let plan;
-    function next(){
+    async function next(){
+
+       console.log("are we even here")
+
+        try {
+            const res = await fetch('/user/plans/createplan', {
+                method: 'POST',
+                body:JSON.stringify(                    
+                    plan,
+                ),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "accept": "application/json"
+                }
+            })
+            const data = await res.json();
+            console.log("this is body " + JSON.stringify(data))
+            if(res.status == 200){
+                console.log("we receiving")
+                plan.planid=data.pid
+
+            }else{
+                console.log('An error occurred')
+            }
+        } catch (err) {
+            console.log(err)
+            console.log("problems")
+           
+        }
+
         current = 1;
     }
 </script>

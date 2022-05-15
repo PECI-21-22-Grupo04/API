@@ -34,8 +34,9 @@ export async function post({request}){
                 var buf = Buffer.from(data, 'base64');
                 
                 // handle png aswell 
+                // handle id of the exercise
   
-                    fs.writeFile("static/exercises/"  + body.thumbnail + ".jpeg",buf, (err)=>{
+                    fs.writeFile("static/exercises/"  + body.thumbnail ,buf, (err)=>{
         
                         if (!err)
                         {

@@ -15,10 +15,11 @@
         pthumbnailPath: "",
         pvideoPath: "",
         showcase: 0,
-        exercises: []
+        exercises: [],
+        planid:null
     }
     let current = 0;
-    const components = [CreatePlanForm,CreatePlanSelectExe,CreatePlanFinish]
+    //const components = [CreatePlanForm,CreatePlanSelectExe,CreatePlanFinish]
     const stepsTextOnly = [
     { text: 'Nomear o plano' },
     { text: 'Escolher exercicios' },

@@ -46,8 +46,8 @@
             <div style="font-size: 0.8em;">{plan.exercises} </div>
               
         </Card>
-    {:else}
-        <p>Loading</p>
+
+        
     {/each}
 </div>
 

@@ -13,7 +13,7 @@ async function createProgram(){
     let error = undefined
         console.log(plan)
         try {
-            const res = await fetch('/user/plans/createplan', {
+            const res = await fetch('/user/plans/exercisestoplan', {
                 method: 'POST',
                 body:JSON.stringify(                    
                     plan,
@@ -96,7 +96,7 @@ function back(){
         {#each [...plan.exercises] as selected}
             <Card path = "/user/exercises/{selected.exercise.exerciseID}" details={0} >
                 <div class="div-image">
-                    <img class="m-auto img-card" src={selected.exercise.thumbnailPath} alt="" >
+                    <img class="m-auto img-card" src={ '/exercises/' + selected.exercise.thumbnailPath} alt="" >
                 </div>
                 <div style="text-align: center;font-size: 1.2em;">{selected.exercise.eName} </div>
                 <div style="font-size: 0.8em;">Sets : {selected.sets} </div>
@@ -105,6 +105,9 @@ function back(){
     
         {/each}
     </div>
-    <button on:click={createProgram} >Confirm</button>
-    <button on:click={back} >Back</button>
+    <div style="display:flex;align-items:justify-content">
+        <button on:click={back} >Back</button>
+        <button on:click={createProgram} >Confirm</button>
+    </div>
+   
 </div>

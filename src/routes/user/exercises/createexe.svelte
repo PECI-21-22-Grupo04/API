@@ -8,6 +8,7 @@
     const components = [Form,Upload]
     let current=0;
     let exp
+    let avatar
     let exercise = {
             email:$session.user.email,
             name:"",
@@ -76,13 +77,13 @@
 {#if current == 0 }
   <Form bind:current bind:exercise />
 {:else if current == 1}
-  <Upload bind:current bind:exercise />
+  <Upload bind:current bind:exercise bind:avatar />
 {:else}
   <div class="card-center">
     
-    <Card>
+    <Card details_create={1}>
       <div class="div-image">
-        <img class="m-auto img-card" src="{exercise.thumbnail}" alt="" >
+        <img class="m-auto img-card" src="{ avatar}" alt="" >
       </div>
       <div style="text-align: center;font-size: 1.2em;">{exercise.name} </div>
       <div style="font-size: 0.8em;">{exercise.targetmuscle} </div>

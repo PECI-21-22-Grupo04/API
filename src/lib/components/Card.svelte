@@ -2,7 +2,7 @@
 <script>
     export let starter = 0;
     export let path="";
-    export let details = 1;
+    export let details_create = 0;
     console.log(starter)
 </script>
 <style>
@@ -116,9 +116,9 @@
       {:else}
       <label class="card card-body mb-3 ">
         <slot></slot>
-        {#if details==1}
+        {#if details_create==1}
           <div class="card-footer">
-            Mais detalhes<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
+            Add more info to your new Exercise<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
             
           </div>
           
@@ -140,9 +140,9 @@
   {:else}
   <label class="card card-body mb-3 ">
     <slot></slot>
-    {#if details==1}
+    {#if details_create==1}
       <div class="card-footer">
-        Mais detalhes<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
+        Add more info to your new Exercise<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
         
       </div>
       

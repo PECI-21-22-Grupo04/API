@@ -276,9 +276,9 @@ function selectAllPrograms(email ) {
 
         dbconnection.query(sql,[email,dbKey] , (err, data) => {
             if (err) {
-                resolve("fetc error");
+                resolve("fetch error");
             }
-            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+            else if (typeof data !== 'undefined' && data.length > 0) {
                 resolve(data);
             }
             else {

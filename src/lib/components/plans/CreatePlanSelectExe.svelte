@@ -24,10 +24,14 @@
             "accept": "application/json"
         }
     })
+
+
     const data = await res.json();
     parsed_data = data.parsed_data
     console.log(parsed_data)
     })
+
+
     let repeats = {};
     let sets = {};
     function select(exercise){
@@ -164,13 +168,12 @@
     }
     
 </style>
-<button on:click={confirm} >Confirm</button>
 <div class="flex-container">
     <div id="card" class="exercises" in:slide="{{delay: 300, duration: 300}}" out:fade="{{duration: 300}}" >
         {#each [...parsed_data] as exercise }
         <Card path = "" details={details} >
             <div class="div-image">
-                <img class="m-auto img-card" src={exercise.thumbnailPath} alt="" >
+                <img class="m-auto img-card" src={'/exercises/'+exercise.thumbnailPath} alt="" >
             </div>
             <div style="text-align: center;font-size: 1.2em;">{exercise.eName} </div>
             <div style="font-size: 0.8em;">{exercise.targetMuscle} </div>
@@ -179,7 +182,7 @@
             <input type="number" bind:value={sets[exercise.exerciseID]}>
             Repeats:
             <input type="number" bind:value={repeats[exercise.exerciseID]}>
-
+            
             <button on:click={() => select(exercise)}> select</button>
         </Card>
         {:else}
@@ -189,13 +192,16 @@
     <div class="timeline">
         
         {#each plan.exercises as selected}
-            <div class="selected">
-                <img src={selected.exercise.thumbnailPath} alt="">
-                <p>reps:  {selected.reps}  </p>
-                <p>steps:  {selected.sets}  </p>
-                <div class="delete" on:click={()=> deleteExercise(selected.exercise)}>X</div>
-            </div>
+        <div class="selected">
+            
+            <img style="margin:10px" src={'/exercises/' + selected.exercise.thumbnailPath} alt="">
+            <p></p>
+            <p>reps:  {selected.reps}  </p>
+            <p>steps:  {selected.sets}  </p>
+            <div class="delete" on:click={()=> deleteExercise(selected.exercise)}>X</div>
+        </div>
         {/each}
+
     </div>
 </div>
 <div class="flex-container">

@@ -32,13 +32,15 @@
     }
 </style>
 
-    <h1>Exercicios</h1>
+    <!-- <h1>Exercicios</h1> -->
+    
     <div class="content">
         <Card path="/user/exercises/createexe" starter={1}/>
         {#each [...parsed_data] as exercise }
             <Card path = "/user/exercises/{exercise.exerciseID}">
                 <div class="div-image">
-                    <img class="m-auto img-card" src={exercise.thumbnailPath} alt="" >
+                    <!-- HANDLE PNG ASWELL  -->
+                    <img class="m-auto img-card" src={'/exercises/' + exercise.thumbnailPath } alt="" >
                 </div>
                 <div style="text-align: center;font-size: 1.2em;">{exercise.eName} </div>
                 <div style="font-size: 0.8em;">{exercise.targetMuscle} </div>
