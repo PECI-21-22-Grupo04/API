@@ -83,6 +83,9 @@
 <div   class="wrapper"> 
     {#each [...parsed_data] as exercise}
         <div  class="detailedPlan">
+            <div class="div-image">
+                <img class="m-auto img-card" src={'/exercises/' + exercise.thumbnailPath } alt="" >
+            </div>
             <h1 class="col" style="text-align: center;"  >{exercise.eName}</h1>
             <h1 class="col"> targetMuscle: {exercise.targetMuscle} </h1>
             <h1 class="col"> Difficulty: {exercise.difficulty} </h1>

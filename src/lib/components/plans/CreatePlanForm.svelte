@@ -4,7 +4,6 @@
     export let plan;
     async function next(){
 
-       console.log("are we even here")
 
         try {
             const res = await fetch('/user/plans/createplan', {

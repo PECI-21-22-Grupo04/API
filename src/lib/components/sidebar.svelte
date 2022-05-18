@@ -22,7 +22,7 @@
     height: calc(100vh - var(--header-height));
     overflow-y: auto;
     overflow-x: hidden;
-    background-color: #222;
+    background: #095776;
     transition: width var(--sidebar-animation-time) var(--sidebar-animation-curve);
 }
 .sidebar.open{
@@ -62,7 +62,7 @@ ul {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
 }
 .nav-link:hover {
-  background: linear-gradient(to right, #666, #222222);
+  background: linear-gradient(to right, #095776, #8EB5CD);
 }
 </style>
 
@@ -74,31 +74,25 @@ ul {
       <li class="nav-item">
         <a href="/" class="nav-link text-white  " aria-current="page" style="display: flex;">
           <span class="bi bi-house" style="padding-right: 10px" ></span>
-          Home
+          Página Incial
         </a>
       </li>
       <li>
         <a href="/user/exercises" class="nav-link text-white" style="display: flex;">
           <span class='bi bi-bicycle'  style="padding-right: 10px"></span>              
-          Exercises
+          Exercícios
         </a>
       </li>
       <li>
         <a href="/user/plans" class="nav-link text-white" style="display: flex;">
           <span class='bi bi-collection-play' style="padding-right: 10px"></span>
-          Plans
+          Planos
         </a>
       </li>
       <li>
         <a href="/user/clients" class="nav-link text-white " style="display: flex;">
           <span class='bi bi-people-fill' style="padding-right: 10px"></span>
-          Customers
-        </a>
-      </li>
-      <li>
-        <a href="/user/test" class="nav-link text-white " style="display: flex;">
-          <span class='bi bi-people-fill' style="padding-right: 10px"></span>
-          test
+          Clientes
         </a>
       </li>
     </ul>

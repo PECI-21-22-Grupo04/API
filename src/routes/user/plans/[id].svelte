@@ -113,14 +113,12 @@ import Card from "$lib/components/Card.svelte";
             <div  class="detailedPlan">
                 <h1 class="col" style="text-align: center;"  >{plan.pName}</h1>
                 <h1 class="col"> Description: {plan.pDescription} </h1>
-                <h1 class="col">Exerc : {plan.thumbnailPath} </h1>
-                <a href="/user/plans">Back</a>
+             
                 <!-- <div class="bck-btt">  <button  onclick="window.location.href='/plans/single/edit/'" >Edit</button></div> -->
             </div>
         
         
     </div>
-
     {#if toggle == 0}
     <div>
         <h1>
@@ -135,12 +133,13 @@ import Card from "$lib/components/Card.svelte";
             <div style="font-size: 0.8em;">{exercise.targetMuscle} </div>
             <div style="font-size: 0.8em;">{exercise.difficulty} </div>
         </Card>
-
+        
         {/each}
     </div>
-{:else}
+    {:else}
     <CreatePlanSelectExe bind:plan/>
-{/if}
+    {/if}
+    <a href="/user/plans">Back</a>
 <div>
     <p>
 

@@ -31,8 +31,26 @@
         margin: 1px auto;
         /* top: 50px; */
     }
+
+
+    .xpto {
+  padding: 40px;
+  text-align: center;
+  background: #8EB5CD;
+  color: white;
+  font-size: 30px;
+}
+
 </style>
-<h1>Planos</h1>
+<div>
+
+    <h1 class="xpto">Planos</h1>
+</div>
+
+<div style="margin-bottom:300px;">
+ <p></p>
+</div>
+
 <div class="content">
     <Card path="/user/plans/createplan" starter= {1}/>
     {#each [...parsed_data] as plan }

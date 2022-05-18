@@ -6,10 +6,41 @@
     
     import SearchBar from '$lib/components/searchBar.svelte'
     import MenuIcon from '$lib/components/menuIcon.svelte'
+import { goto } from '$app/navigation';
     export let active;
     export let email;
+    export let firebase;
+
+
+    async function dropdown ()
+    {
+       // goto("/user/details")
+       // dropdown with differnt ooptions
+       //   logout
+       // details
+       // notifications ...
+       // etc
+    }
+    async function logout()
+    {
+
+        // return firebase.auth().signOut().then(() => {
+        //    // goto('/login');
+        //    console.log('"3 lossing')
+        // });
+    }
+
 </script>
 <style>
+
+
+    h1:hover {
+  background-color: #8EB5CD;;
+  color: black;
+  border-radius: 25px;
+
+;
+}
     .header{
         display:flex;
         flex-direction: row;
@@ -20,12 +51,14 @@
         left: 0;
         width: 100%;
         z-index: 5050;
-        background-color: #222;
+        background-color:#095776;
         height: var(--header-height);
         justify-content: space-between;
     }
     h1{
-        color: white
+        color: white;
+        padding: 6px;
+        cursor:pointer;
     }
 
     .avatar {
@@ -44,16 +77,23 @@
 <header class="header">
       
     <MenuIcon {active}/>
-    <h1>{email}</h1>
-    <SearchBar/>
-    <div class="messageicon" event-message-click>   
+    <h1  on:click={logout} style="margin-right:5px;">{email}</h1>
+    <!-- <SearchBar/> -->
+    <!-- <div   style="margin:2px;" class="messageicon" event-message-click>   
         <img src="../../static/messageicon.png"  alt="Avatar" class="avatar-img" >
-    </div>
-    <div class="avatar" event-avatar-click>   
+    </div> -->
+    <!-- <div class="avatar" event-avatar-click>   
         <img src="../../static/Profileicon.png"  alt="Avatar" class="avatar-img" >
-    </div>
+    </div> -->
+    <!-- <div class="avatar" event-logout-click>   
+        <img on:click={logout} src="../../static/logout.png"  alt="Avatar" class="avatar-img" >
+    </div> -->
     <div class="avatar-dropdown" data-avatar-dropdown>
         <ul>
         </ul>
     </div>
 </header>
+
+
+
+

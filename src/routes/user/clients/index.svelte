@@ -30,9 +30,20 @@
 
         /* top: 50px; */
     }
+
+    .xpto {
+  padding: 40px;
+  text-align: center;
+  background: #8EB5CD;
+  color: white;
+  font-size: 30px;
+}
 </style>
 
-    <h1>Clientes</h1>
+<div>
+
+    <h1 class="xpto">Clientes</h1>
+</div>
     <div class="content">
         {#each [...parsed_data] as client }
             <Card path="/user/clients/{client.clientID}">
