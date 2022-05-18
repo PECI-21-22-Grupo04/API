@@ -6,7 +6,7 @@ import { onMount } from "svelte";
 export let plan;
 export let current;
 onMount(()=>{
-    console.log(plan.exercises)
+    console.log( "SIAOSAOSOAOSA " +  plan.exercises)
 
 })
 async function createProgram(){

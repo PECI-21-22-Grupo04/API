@@ -49,28 +49,15 @@
     }
     
     .detailedPlan {
-
-/* 
-    width: 130px;
-    height: 130px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    background-color: gray;
-    border-radius: 100%; 
-      top: 50%;
-    left: 50%;
-     transform: translate(-50%, -50%);
-    */
+    width: 60%;
+    height: 80%;
     display: flex;
     flex-direction: column;
     position: absolute;
     padding: 1rem 1rem 2rem 2rem;
     background: #fff;
-    max-width: 400px;
+    justify-content:center;
+    text-align: center;
     border-radius: 10px;
     top: 50%;
     left: 50%;
@@ -79,22 +66,28 @@
     margin: 0 auto;
     
     }
+    .div-image{
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
 </style>
 <div   class="wrapper"> 
     {#each [...parsed_data] as exercise}
         <div  class="detailedPlan">
-            <div class="div-image">
-                <img class="m-auto img-card" src={'/exercises/' + exercise.thumbnailPath } alt="" >
+            <div style="display:flex;justify-content:center;"class="div-image">
+                <img class="m-auto img-card" style=" width:300px" src={'/exercises/' + exercise.thumbnailPath } alt="" >
             </div>
+            <p></p>
             <h1 class="col" style="text-align: center;"  >{exercise.eName}</h1>
             <h1 class="col"> targetMuscle: {exercise.targetMuscle} </h1>
             <h1 class="col"> Difficulty: {exercise.difficulty} </h1>
             <h1 class="col"> Description: {exercise.eDescription} </h1>
             <h1 class="col"> Pathologies: {exercise.forPathology} </h1>
             <h1 class="col">Exerc : {exercise.thumbnailPath} </h1>
-            <a href="/user/exercises">Back</a>
             <!-- <div class="bck-btt">  <button  onclick="window.location.href='/plans/single/edit/'" >Edit</button></div> -->
         </div>
-    {/each}
+        {/each}
         
-  </div>
+    </div>
+<a href="/user/exercises">Back</a>

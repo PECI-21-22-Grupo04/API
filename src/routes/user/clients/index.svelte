@@ -19,7 +19,7 @@
             })
         const data = await res.json();
         parsed_data = data.parsed_data
-        console.log(parsed_data)
+        console.log("JASJSJSA" +parsed_data)
     })
 
 </script>
@@ -48,12 +48,11 @@
         {#each [...parsed_data] as client }
             <Card path="/user/clients/{client.clientID}">
                 <div class="div-image">
-                    <img class="m-auto img-card" src="/Profileicon.png" alt="" >
+                    <img class="m-auto img-card" src="/Profileicon.png" alt="ProfilePic" >
                 </div>
                 <div style="text-align: center;font-size: 1.2em;">{client.firstName} </div>
             </Card>
-        {:else}
-            <p>Loading</p>
+
         {/each}
     </div>
 

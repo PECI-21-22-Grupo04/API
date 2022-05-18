@@ -113,7 +113,7 @@ function createProgram(email, pname , pdescription, pathology,pthumbnailPath, pv
             if (err && err.errno==1062) {
                 resolve(1);
             }
-            else if (typeof data !== 'undefined' && data["affectedRows"] == 1) { 
+            else if (typeof data !== 'undefined') { 
                 resolve(0);
             }
             else {
@@ -214,7 +214,7 @@ function selectAllClients( email) {
             if (err) {
                 resolve(1);
             }
-            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+            else if (typeof data !== 'undefined' && data.length > 0) {
                 resolve(data);
             }
             else {
@@ -258,7 +258,7 @@ function selectPlanExercises(programID) {
                 console.log(err)
                 resolve("fetch error");
             }
-            else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+            else if (typeof data !== 'undefined' && data.length > 0) {
                 resolve(data);
             }
             else {

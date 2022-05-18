@@ -5,8 +5,9 @@ export async function post({request}){
     const body = await request.json();
     let arr = []
     try{
+        console.log("PID" + body.programID);
         const exercises = await db.selectPlanExercises(body.programID);
-        // console.log(exercises)
+        console.log("query nova " + exercises)
         let parsed_data = JSON.parse(JSON.stringify(exercises))[0];
         console.log(parsed_data);
 
@@ -18,10 +19,10 @@ export async function post({request}){
                 body: {arr}
             };
         } else {
-            // @ts-ignore
-            parsed_data = {e_name: 'NENHUM EXERCICIO'}
+          
+          
             return {
-                status : {}
+              
             };
         }
     }catch(e){

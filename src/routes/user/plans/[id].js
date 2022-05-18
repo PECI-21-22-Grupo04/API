@@ -9,7 +9,7 @@ export async function post({params,request}){
     try{
         const plans = await db.selectInstructorProgramFromID(email,id);
         const parsed_data = JSON.parse(JSON.stringify(plans))[0];
-        console.log(parsed_data);
+        console.log( parsed_data);
         if (plans) {
             return {
                 body: {parsed_data}

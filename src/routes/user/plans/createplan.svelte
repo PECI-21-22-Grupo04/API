@@ -27,7 +27,9 @@
   ]
 </script>
 
-<br><br/>
+<p>
+
+</p>
 <Steps bind:current steps={stepsTextOnly} borderRadius="0" primary="#000000" secondary="#ffaaaa"/>
 {#if current == 0 }
   <CreatePlanForm bind:current bind:plan />

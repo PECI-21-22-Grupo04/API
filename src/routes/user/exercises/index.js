@@ -20,7 +20,7 @@ export async function post({request}){
             if(exercises !== "fetch error")
             {   
                 let parsed_data = JSON.parse(JSON.stringify(exercises))[0];
-                console.log("difficultydifficulty - " + JSON.stringify(parsed_data))
+                console.log("body - " + JSON.stringify(parsed_data))
                 return {
                     status:200,
                     body: {parsed_data} 

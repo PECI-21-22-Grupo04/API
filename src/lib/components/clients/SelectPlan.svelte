@@ -161,7 +161,6 @@
     }
     
 </style>
-<button on:click={confirm} >Confirm</button>
 <div class="flex-container">
     <div id="card" class="exercises" in:slide="{{delay: 300, duration: 300}}" out:fade="{{duration: 300}}" >
         {#each [...parsed_data] as plan }
@@ -170,7 +169,7 @@
                 <img class="m-auto img-card" src="/planosdummy.jpg" alt="" >
             </div>
             <div style="text-align: center;font-size: 1.2em;">{plan.pName} </div>
-
+            
             <button on:click={() => select(plan)}> select</button>
         </Card>
         {:else}
@@ -180,14 +179,17 @@
     <div class="timeline">
         
         {#each plans as selected}
-
-            <div class="selected">
-                {JSON.stringify(selected.programID)}
-                <img src="/planosdummy.jpg" alt="/planosdummy.jpg">
-                <div class="delete" on:click={()=> deleteExercise(selected)}>X</div>
-            </div>
+        
+        <div class="selected">
+            {JSON.stringify(selected.programID)}
+            <img src="/planosdummy.jpg" alt="/planosdummy.jpg">
+            <div class="delete" on:click={()=> deleteExercise(selected)}>X</div>
+        </div>
         {/each}
     </div>
+    
 </div>
-<div class="flex-container">
+<div style="display:flex;align-items:center;">
+
+    <button on:click={confirm} >Confirm</button>
 </div>

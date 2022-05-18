@@ -145,5 +145,7 @@ import Card from "$lib/components/Card.svelte";
 
     </p>
 </div>
-  <button on:click={AddExerc}> Add Exercises to Plan</button>
-  <button on:click={plandetails}> Plan</button>
+<div>
+    <button on:click={AddExerc}> Add Exercises to Plan</button>
+
+</div>

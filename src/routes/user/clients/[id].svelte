@@ -65,22 +65,84 @@
         box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
         margin: 0 auto;
     
+        
     }
+
+    .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
 </style>
+
+ <!-- Add icon library -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
 {#if toggle == 0}
-    <div   class="wrapper">
+<div class="card">
+    <img src="/Profileicon.png" alt="ProfilePic" style="width:100%">
+    <h1>{client.firstName} {client.lastName}</h1>
+    <p class="title">{client.mail}</p>
+    <h3>{client.sex}</h3>
+    <h1>Data de Nascimento: {client.birthdate}</h1>
+    <h1>Este utilizador associou se em: {client.birthdate}</h1>
+    <p>
+
+    </p>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <a href="#"><i class="fa fa-facebook"></i></a>
+    <p></p>
+    <button on:click={AddExerc}> Partilhar planos</button>
+  </div> 
+    <!-- <div   class="wrapper">
             <div  class="detailedPlan">
-                <h1 class="col" style="text-align: center;"  >{client.firstName}</h1>
-                <h1 class="col">{client.lastName} </h1>
-                <h1 class="col">{client.birthdate} </h1>
+                <h1 class="col" style="text-align: center;"  >{client.firstName} {client.lastName}</h1>
+                <h1 class="col"> </h1>
+                <h1 class="col">Data de Nascimento: {client.birthdate} </h1>
+                <h1 class="col"> Este utilizador associou se em:{client.clientSince} </h1>
+
                 <a href="/user/clients">Back</a>
-                <!-- <div class="bck-btt">  <button  onclick="window.location.href='/plans/single/edit/'" >Edit</button></div> -->
+
             </div>
         
         
-    </div>
+    </div> -->
 {:else}
     <SelectPlan/>
 {/if}
-  <button on:click={AddExerc}> Add Exercises to Plan</button>
-  <button on:click={plandetails}> Plan</button>
+<div>
+
+</div>

@@ -69,8 +69,17 @@
     background-color: #222;
     color: #fff
   }
+
+  .line{
+    width: 112px;
+    height: 47px;
+    border-bottom: 1px solid black;
+    position: absolute;
+    }
 </style>
-<br>
+<p>
+  
+</p>
 <Steps bind:current steps={stepsTextOnly} />
 <!-- <svelte:component this={components[current]} {parsed_data}/> -->
 
@@ -85,15 +94,25 @@
       <div class="div-image">
         <img class="m-auto img-card" src="{ avatar}" alt="" >
       </div>
+      
       <div style="text-align: center;font-size: 1.2em;">{exercise.name} </div>
-      <div style="font-size: 0.8em;">{exercise.targetmuscle} </div>
-      <div style="font-size: 0.8em;">{exercise.difficulty} </div>
-      <div style="font-size: 0.8em;">{exercise.difficulty} </div>
+      <hr style="width:100%;text-align:left;margin-left:0">
+
+      <div style="text-align: center;font-size: 0.8em;">{exercise.targetmuscle} </div>
+
+
+      <div style="text-align: center;">{exercise.difficulty} </div> <p></p>
+ 
+      <div style="font-size: 0.8em;border:1px solid black;">{exercise.description} </div>
 
     </Card>
     
-    <br>
-    <br>
+    <p>
+
+    </p>
+    <p>
+
+    </p>
     <button on:click={confirm} >Confirm </button>
     <button on:click={back} >Back </button>
   </div>

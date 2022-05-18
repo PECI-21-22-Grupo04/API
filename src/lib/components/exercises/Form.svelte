@@ -26,6 +26,7 @@
    
     input{
         height: 36px;
+        margin-bottom:15px;
     }
 
     textarea{
@@ -51,13 +52,13 @@
 
 <div >
     <!-- bind:value={exercise.name} -->
-    Nome do Exercício  {exercise.name}
-    <input type="text" bind:value={exercise.name}/><br>
-    Músculo  {exercise.targetmuscle}
-    <input type="text" bind:value={exercise.targetmuscle} /><br>
-    Dificuldade  : {exercise.difficulty}
-    <input type="text" bind:value={exercise.difficulty} /><br>
-    Description: <textarea type="text" bind:value={exercise.description}  /><br><br>
-   <button on:click|preventDefault={next}> Next </button><br>
+    Nome do Exercício: 
+    <input type="text" bind:value={exercise.name}/>
+    Área Múscular: 
+    <input type="text" bind:value={exercise.targetmuscle} />
+    Dificuldade do Exercício:
+    <input type="text" bind:value={exercise.difficulty} />
+    Descrição: <textarea style="margin-bottom:15px;"type="text" bind:value={exercise.description}  />
+   <button on:click|preventDefault={next}> Next </button>
 
 </div>

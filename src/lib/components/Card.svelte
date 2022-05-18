@@ -116,13 +116,7 @@
       {:else}
       <label class="card card-body mb-3 ">
         <slot></slot>
-        {#if details_create==1}
-          <div class="card-footer">
-            Add more info to your new Exercise<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
-            
-          </div>
-          
-        {/if}
+
       </label>
     {/if}
   </a>
@@ -140,13 +134,7 @@
   {:else}
   <label class="card card-body mb-3 ">
     <slot></slot>
-    {#if details_create==1}
-      <div class="card-footer">
-        Add more info to your new Exercise<span class="vfi vfi-fleche-droite" aria-hidden="true"></span>
-        
-      </div>
-      
-    {/if}
+
   </label>
   {/if}
 {/if}  
