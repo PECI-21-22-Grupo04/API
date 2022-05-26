@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import jwt  from 'jsonwebtoken';
 // import fs from 'fs'
 // import { request } from 'http';
-import app from '../src/routes/auth/register.js'
+
 
 export const handle = async({event,resolve})=>{
     const cookies = cookie.parse(event.request.headers.get('cookie')|| '');
