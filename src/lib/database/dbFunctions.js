@@ -20,6 +20,7 @@ export const db = {
     createProgram,
     selectInstructorProgramFromID,
     addExercisetoProgram,
+    addProgramtoClient,
     selectPlanExercises,
     selectInstructorClientFromID
 }
@@ -128,6 +129,26 @@ function addExercisetoProgram(programID, exerciseID , nsets, nreps, duration) {
         var sql = 'CALL spAddExerciseToProgram(?,?,?,?,?)';
 
         dbconnection.query(sql, [programID, exerciseID , nsets, nreps, duration], (err, data) => {
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined' && data["affectedRows"] == 1) { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+
+function addProgramtoClient(clientEmail,programID) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spAssociateProgramToClient(?,?,?)';
+        console.log(programID)
+        dbconnection.query(sql, [clientEmail,programID,dbKey], (err, data) => {
+            console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);
             }

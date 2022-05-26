@@ -141,7 +141,7 @@ button:hover, a:hover {
         
     </div> -->
 {:else}
-    <SelectPlan/>
+    <SelectPlan clientmail={client.mail}/>
 {/if}
 <div>
 

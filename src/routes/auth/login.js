@@ -2,11 +2,21 @@ import * as cookie from "cookie";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "$lib/database/dbFunctions.js";
 import fs from "fs";
-import app from "./register.js";
+// import app from "./register.js";
 import jwt from "jsonwebtoken";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
+import { initializeApp } from "firebase/app";
+const firebaseConfig = {
+  apiKey: "AIzaSyBHQxQkZSV4t20FD3j5l6Uw04KxcE70zQM",
+  authDomain: "runx-be658.firebaseapp.com",
+  projectId: "runx-be658",
+  storageBucket: "runx-be658.appspot.com",
+  messagingSenderId: "84913934296",
+  appId: "1:84913934296:web:39f8932c68556c41002cad",
+  measurementId: "G-5ZR565TEEL"
+};
+const app = initializeApp(firebaseConfig);
 export async function post({ request }) {
   const body = await request.json();
   const auth = await getAuth(app);

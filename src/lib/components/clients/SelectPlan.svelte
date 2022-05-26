@@ -9,6 +9,7 @@
     export let plans = [];
     let details = 0
     let alert = 0;
+    export let clientmail = "";
     import { session } from '$app/stores';
 
 
@@ -53,26 +54,26 @@
         }
     }
     async function confirm(){
-        // let error = undefined;
-        // try {
-        //     const res = await fetch('/user/plans/exercisestoplan', {
-        //         method: 'POST',
-        //         body:JSON.stringify(                    
-        //             plan,
-        //         ),
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         }
-        //     })
-        //     if(res.ok){
-        //         goto('/user/plans')
-        //     }else{
-        //         error= 'An error occurred'
-        //     }
-        // } catch (err) {
-        //     console.log(err)
-        //     error = 'An error occurred'
-        // }
+        let error = undefined;
+        try {
+            const res = await fetch('/user/clients/planstoclient', {
+                method: 'POST',
+                body:JSON.stringify(                    
+                    {plans,clientmail}
+                ),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(res.ok){
+                goto('/user/clients')
+            }else{
+                error= 'An error occurred'
+            }
+        } catch (err) {
+            console.log(err)
+            error = 'An error occurred'
+        }
     }   
 </script>
 
@@ -161,6 +162,7 @@
     }
     
 </style>
+<button on:click={confirm} >Confirm</button>
 <div class="flex-container">
     <div id="card" class="exercises" in:slide="{{delay: 300, duration: 300}}" out:fade="{{duration: 300}}" >
         {#each [...parsed_data] as plan }
@@ -169,7 +171,7 @@
                 <img class="m-auto img-card" src="/planosdummy.jpg" alt="" >
             </div>
             <div style="text-align: center;font-size: 1.2em;">{plan.pName} </div>
-            
+
             <button on:click={() => select(plan)}> select</button>
         </Card>
         {:else}
@@ -177,17 +179,16 @@
         {/each}
     </div>
     <div class="timeline">
-        
+        {clientmail}
         {#each plans as selected}
-        
-        <div class="selected">
-            {JSON.stringify(selected.programID)}
-            <img src="/planosdummy.jpg" alt="/planosdummy.jpg">
-            <div class="delete" on:click={()=> deleteExercise(selected)}>X</div>
-        </div>
+
+            <div class="selected">
+                {JSON.stringify(selected.programID)}
+                <img src="/planosdummy.jpg" alt="/planosdummy.jpg">
+                <div class="delete" on:click={()=> deleteExercise(selected)}>X</div>
+            </div>
         {/each}
     </div>
-    
 </div>
 <div style="display:flex;align-items:center;">
 
