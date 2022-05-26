@@ -9,6 +9,7 @@
         const res = await fetch('/user/plans', {
                 method: 'POST',
                 body:JSON.stringify({                    
+                    // @ts-ignore
                     email: $session.user.email
                 }),
                 headers: {
@@ -23,7 +24,7 @@
 
 
 
-    let thumbnail = '../../static/planosdummy.jpg';
+    let thumbnail = '/planosdummy.jpg';
 </script>
 
 <style>
