@@ -36,6 +36,7 @@
                 
             }else{
                 error= 'An error occurred'
+                alert("Wrong Credentials")
             }
         } catch (err) {
             console.log(err)

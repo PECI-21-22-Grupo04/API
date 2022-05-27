@@ -1,33 +1,41 @@
-<script context="module">
-    
-</script>
+
 
 <script>
-    
+import { session } from '$app/stores';    
     import SearchBar from '$lib/components/searchBar.svelte'
     import MenuIcon from '$lib/components/menuIcon.svelte'
 import { goto } from '$app/navigation';
     export let active;
     export let email;
-    export let firebase;
 
-
-    async function dropdown ()
+    async function logout ()
     {
-       // goto("/user/details")
-       // dropdown with differnt ooptions
-       //   logout
-       // details
-       // notifications ...
-       // etc
-    }
-    async function logout()
-    {
+        try {
+            const res = await fetch('/auth/logout', {
+                method: 'POST'
+            })
+            if(res.status==200){
+                // clean session? 
+                $session = {
+                    user: {
+                    authenticated: false,
+                    email: ""
+                    }
+                }
 
-        // return firebase.auth().signOut().then(() => {
-        //    // goto('/login');
-        //    console.log('"3 lossing')
-        // });
+                goto('/')
+                
+            }else{
+               
+                console.log("resstatus - " + res.status)
+                alert("Problem logging out")
+            }
+        } catch (err) {
+            console.log(err)
+           
+        }
+
+
     }
 
 </script>

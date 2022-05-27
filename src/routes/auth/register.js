@@ -97,7 +97,7 @@ export async function post({request}){
         else
         {
             // delete from firebase in case we cannot register in our DB
-            
+
             console.log("There was a problem with registration")
             return{
                 status: 409,
@@ -106,7 +106,7 @@ export async function post({request}){
                 }
             }
         }
-        console.log(body)
+        
     }
    
 
