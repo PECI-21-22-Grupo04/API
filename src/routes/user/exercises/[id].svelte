@@ -13,7 +13,7 @@
     import Chat from "$lib/components/chat.svelte";
     import {onMount} from 'svelte';
     import { page, session } from '$app/stores';
-    
+    let pause
     let parsed_data=[];
     export let url;
 
@@ -33,7 +33,9 @@
         parsed_data = data.parsed_data
     })
     console.log(parsed_data);
-
+    function play(){
+        pause = !pause;
+    }
 </script>
 <style>
     a{
@@ -66,25 +68,35 @@
     margin: 0 auto;
     
     }
-    .div-image{
+    .div-video{
         width: 100%;
         display: flex;
         align-items: center;
+    }
+    video{
+        max-width: 400px ;
     }
 </style>
 <div   class="wrapper"> 
     {#each [...parsed_data] as exercise}
         <div  class="detailedPlan">
-            <div style="display:flex;justify-content:center;"class="div-image">
-                <img class="m-auto img-card" style=" width:300px" src={'/exercises/' + exercise.thumbnailPath } alt="" >
+            <div class="div-video">
+                <video src={exercise.videoPath} poster={exercise.thumbnailPath} bind:paused={pause}>
+                    <track kind="captions">
+                </video>
+                <button on:click={play}>Play</button>
+
             </div>
+            <!-- <div style="display:flex;justify-content:center;"class="div-image">
+                <img class="m-auto img-card" style=" width:300px" src={ exercise.thumbnailPath } alt="" >
+            </div> -->
             <p></p>
             <h1 class="col" style="text-align: center;"  >{exercise.eName}</h1>
             <h1 class="col"> targetMuscle: {exercise.targetMuscle} </h1>
             <h1 class="col"> Difficulty: {exercise.difficulty} </h1>
             <h1 class="col"> Description: {exercise.eDescription} </h1>
             <h1 class="col"> Pathologies: {exercise.forPathology} </h1>
-            <h1 class="col">Exerc : {exercise.thumbnailPath} </h1>
+            <h1 class="col">Exerc : {exercise.videoPath} </h1>
             <!-- <div class="bck-btt">  <button  onclick="window.location.href='/plans/single/edit/'" >Edit</button></div> -->
         </div>
         {/each}

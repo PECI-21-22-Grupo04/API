@@ -11,7 +11,7 @@ export async function post({request}){
 
 
 
-
+    
     try{
 
         const exercise = await db.createExercise(
@@ -30,23 +30,23 @@ export async function post({request}){
         {   
             if(exercise!==2)
             {
-                var data = body.exp.replace(/^data:image\/\w+;base64,/, "");
-                var buf = Buffer.from(data, 'base64');
+                // var data = body.exp.replace(/^data:image\/\w+;base64,/, "");
+                // var buf = Buffer.from(data, 'base64');
                 
-                // handle png aswell 
-                // handle id of the exercise
+                // // handle png aswell 
+                // // handle id of the exercise
   
-                    fs.writeFile("static/exercises/"  + body.thumbnail ,buf, (err)=>{
+                //     fs.writeFile("static/exercises/"  + body.thumbnail ,buf, (err)=>{
         
-                        if (!err)
-                        {
-                        console.log('File is created successfully.');
+                //         if (!err)
+                //         {
+                //         console.log('File is created successfully.');
                             
-                        }
-                        else{
-                            console.log(err)
-                        }
-                    })
+                //         }
+                //         else{
+                //             console.log(err)
+                //         }
+                //     })
           
 
                 return{

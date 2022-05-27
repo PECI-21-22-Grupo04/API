@@ -5,6 +5,8 @@
     import Upload from '$lib/components/exercises/upload.svelte'
     import { goto } from "$app/navigation";
     import { session } from '$app/stores';
+    import { storage } from "$lib/database/firebase.js"
+    import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage"
     const components = [Form,Upload]
     let current=0;
     let exp
@@ -18,7 +20,8 @@
             pathologie:"",
             thumbnail:"", // this is the link for
             videopath:"", // later we will call a function generateVideoPAth - that creates a download link for a mp4, we store here and later give it to our player.
-            exp:null
+            expvideo:null,
+            expthumbnail:null
        }
     let stepsTextOnly = [
     { text: 'Step one' },
@@ -29,28 +32,73 @@
     current=1;
   }
   async function confirm(){
-        let error = undefined
-        let nnn = JSON.stringify(                    
-                    exercise,
-                )
-        console.log(exercise)
-        try {
-            const res = await fetch('/user/exercises/createexe', {
-                method: 'POST',
-                body:nnn,
-                headers: {
-                    'Content-Type': 'application/json'
+        let error = undefined;
+        const date = Date.now();
+        const image = exercise.expthumbnail;
+        const video = exercise.expvideo;
+        const storageVideoRef = ref(storage, `videos/${date}`);
+        const storageImageRef = ref(storage, `images/${date}`);
+
+        const uploadVideo = uploadBytesResumable(storageVideoRef, video);
+        const resvideo =  await uploadVideo.on("state_changed",
+          (snapshot) => {
+
+          },
+          (error) => {
+            alert("Houve um erro com o upload do video");
+          },
+          () => {
+            getDownloadURL(uploadVideo.snapshot.ref).then(async (downloadURL) => {
+              console.log(downloadURL)
+              exercise.videopath = downloadURL;
+              const uploadImage = uploadBytesResumable(storageImageRef, image);
+              uploadImage.on("state_changed",
+                (snapshot) => {
+
+                },
+                (error) => {
+                  alert("Houve um erro com o upload da imagem");
+                },
+                () => {
+                  getDownloadURL(uploadImage.snapshot.ref).then(async (downloadURL) => {
+                    exercise.thumbnail = downloadURL;
+                    delete exercise.expthumbnail;
+                    delete exercise.expvideo;
+
+
+                    let nnn = JSON.stringify(                    
+                                exercise,
+                            )
+                    console.log(exercise)
+                    try {
+                        const res = await fetch('/user/exercises/createexe', {
+                            method: 'POST',
+                            body:nnn,
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        if(res.ok){
+                            goto('/user/exercises')
+                        }else{
+                            error= 'An error occurred'
+                        }
+                    } catch (err) {
+                        console.log(err)
+                        error = 'An error occurred'
+                    }
+                  })
                 }
+              )
+              
+
+
+
             })
-            if(res.ok){
-                goto('/user/exercises')
-            }else{
-                error= 'An error occurred'
-            }
-        } catch (err) {
-            console.log(err)
-            error = 'An error occurred'
-        }
+          }
+        )
+          
+        
     }
 </script>
 <style>
