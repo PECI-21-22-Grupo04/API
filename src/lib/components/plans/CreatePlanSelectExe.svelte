@@ -175,7 +175,7 @@
         {#each [...parsed_data] as exercise }
         <Card path = "" details={details} >
             <div class="div-image">
-                <img class="m-auto img-card" src={'/exercises/'+exercise.thumbnailPath} alt="" >
+                <img class="m-auto img-card" src={exercise.thumbnailPath} alt="" >
             </div>
             <div style="text-align: center;font-size: 1.2em;">{exercise.eName} </div>
             <div style="font-size: 0.8em;">{exercise.targetMuscle} </div>

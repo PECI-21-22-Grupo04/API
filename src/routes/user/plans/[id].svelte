@@ -10,12 +10,12 @@
   }
 </script>
 <script>
-    import Chat from "$lib/components/chat.svelte";
+
     import {onMount} from 'svelte';
     import { page, session } from '$app/stores';
-    import { goto } from "$app/navigation";
 import CreatePlanSelectExe from "$lib/components/plans/CreatePlanSelectExe.svelte";
 import Card from "$lib/components/Card.svelte";
+
 
     let plan = {}
     let parsed_data={};
@@ -127,7 +127,7 @@ import Card from "$lib/components/Card.svelte";
         {#each [...exer] as exercise }
         <Card>
             <div class="div-image">
-                <img class="m-auto img-card" src={'/exercises/' + exercise.thumbnailPath } alt="" >
+                <img class="m-auto img-card" src={exercise.thumbnailPath } alt="" >
             </div>
             <div style="text-align: center;font-size: 1.2em;">{exercise.eName} </div>
             <div style="font-size: 0.8em;">{exercise.targetMuscle} </div>

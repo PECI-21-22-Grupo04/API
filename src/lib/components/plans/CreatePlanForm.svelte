@@ -84,8 +84,8 @@
 </style>
 
 <div  in:slide="{{delay: 300, duration: 300}}" out:fade="{{duration: 300}}" >
-    name: <input type="text" bind:value={plan.pname} /><br><br>
-    description: <textarea type="text" bind:value={plan.pdescription} /><br><br>
+    Name: <input type="text" bind:value={plan.pname} /><br><br>
+    Description: <textarea type="text" bind:value={plan.pdescription} /><br><br>
     <button on:click={next}> Next </button>
     
     

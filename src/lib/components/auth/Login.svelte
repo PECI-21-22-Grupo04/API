@@ -56,10 +56,16 @@ form{
         padding: 1em;
         flex-direction: column;
         box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
     }
+
+form > *:not(:last-child) {
+    margin-bottom: 10px;
+}
    
     input{
         height: 36px;
+        padding: 2.5px 10px;
     }
 
 
@@ -67,20 +73,26 @@ form{
         width: 300px;
     }
     button{
-        height: 36px;
-        background-color: #eee;
+        cursor: pointer;
+        width: 100%;
+        height: 36px;   
+        background-color: white;
+        border-radius: .4rem;
+        border: 2px solid rgb(107, 107, 107);
+        transition: .33s ease color, .33s ease background;
     }
 
     button:hover{
-        background-color: #222;
+        background-color: rgb(107, 107, 107);
         color: #fff
     }
 </style>
-<form in:fade="{{delay:200,duration: 200}}" out:fade="{{duration: 200}}" >
-    <input type="email" bind:value={email} placeholder="Enter your email"><br>
-    <input type="password" bind:value={password} placeholder="Enter your password"><br><br><br>
+<form on:submit|preventDefault={login} in:fade="{{delay:200,duration: 200}}" out:fade="{{duration: 200}}" >
+    <input required type="email" bind:value={email} placeholder="Enter your email">
+    <input required style="margin-bottom: 25px" type="password" bind:value={password} placeholder="Enter your password">
     
-    <button on:click|preventDefault={login}>Login</button><br>
-    <button on:click|preventDefault={register}>Register</button>
+
+    <button >Login</button>
+    <button  on:click|preventDefault={register}>Register</button>
     
 </form>
