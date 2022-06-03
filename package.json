@@ -15,6 +15,7 @@
     "@uppy/dashboard": "^2.1.1",
     "@uppy/xhr-upload": "^2.0.5",
     "cookie": "^0.4.2",
+    "daisyui": "^2.15.2",
     "dotenv": "^16.0.0",
     "firebase": "^9.8.1",
     "fs-extra": "^10.0.0",
@@ -27,14 +28,18 @@
     "svelte-file-dropzone": "^1.0.0-dev.1",
     "svelte-materialify": "^0.3.11",
     "svelte-steps": "^2.3.5",
+    "swiper": "^8.2.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.20.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
     "svelte": "^3.44.0",
-    "svelte-preprocess": "^4.9.4"
+    "svelte-preprocess": "^4.10.6",
+    "tailwindcss": "^3.0.24"
   },
   "type": "module"
 }
