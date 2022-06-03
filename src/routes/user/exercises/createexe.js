@@ -6,9 +6,10 @@ export async function post({request}){
     const email = body.email
 
 
+    console.log(email)
     console.log("this is body " + JSON.stringify(body))
 
-
+    
 
 
     

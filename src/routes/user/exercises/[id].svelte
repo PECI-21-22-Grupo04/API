@@ -11,12 +11,22 @@
 </script>
 <script>
     import Chat from "$lib/components/chat.svelte";
+    import VideoPlayer from 'svelte-video-player';
+
     import {onMount} from 'svelte';
     import { page, session } from '$app/stores';
+import { goto } from "$app/navigation";
     let pause
     let parsed_data=[];
     export let url;
-
+    let data = {
+    labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
+    datasets: [
+      {
+        values: [10, 12, 3, 9, 8, 15, 9]
+      }
+    ]
+  };
     onMount(async ()=>{
         console.log(url)
         const res = await fetch(url, {
@@ -36,70 +46,95 @@
     function play(){
         pause = !pause;
     }
+    async function back(){
+        goto("/user/exercises")
+    }
+
 </script>
 <style>
-    a{
+    button{
         text-decoration: none;
         color:black;
         padding: 10px;
         width: fit-content;
         border: 1px solid black;
+        
     }
-    a:hover{
+    button:hover{
         color: white;
         background-color: black;
     }
     
     .detailedPlan {
-    width: 60%;
-    height: 80%;
+        min-width: 400px;
+    width: 97%;
+    height: 50%;
+    /* height: fit-content; */
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: relative;
     padding: 1rem 1rem 2rem 2rem;
     background: #fff;
-    justify-content:center;
-    text-align: center;
+    
+    
     border-radius: 10px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    
+    /* transform: translate(-50%, -50%); */
     box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
-    margin: 0 auto;
+    margin: 20px auto 20px 20px;
     
     }
+    .exe-details{
+        width: 90%;
+        margin: 10px auto;
+    }
     .div-video{
-        width: 100%;
+        min-width: 400px;
+        
+        width: 47%;
+        margin: 20px auto 20px auto;
         display: flex;
-        align-items: center;
+        /* align-items: center; */
+        border-radius: none;
+        
     }
-    video{
-        max-width: 400px ;
-    }
+    .wrapper{
+       height:100% ;
+       margin-top: 0cm;
+       display: flex ;
+       align-items: inherit;
+       flex-direction: column;
+       /* flex-wrap:wrap; */
+        }
+   /*  h1{
+        text-align: center;
+    } */
 </style>
 <div   class="wrapper"> 
     {#each [...parsed_data] as exercise}
-        <div  class="detailedPlan">
-            <div class="div-video">
-                <video src={exercise.videoPath} poster={exercise.thumbnailPath} bind:paused={pause}>
-                    <track kind="captions">
-                </video>
-                <button on:click={play}>Play</button>
+    
+        <div class="div-video">
+            <VideoPlayer height={700} poster={exercise.thumbnailPath} source={exercise.videoPath} />
 
-            </div>
+        </div>
+         
+    
             <!-- <div style="display:flex;justify-content:center;"class="div-image">
                 <img class="m-auto img-card" style=" width:300px" src={ exercise.thumbnailPath } alt="" >
             </div> -->
-            <p></p>
-            <h1 class="col" style="text-align: center;"  >{exercise.eName}</h1>
-            <h1 class="col"> targetMuscle: {exercise.targetMuscle} </h1>
-            <h1 class="col"> Difficulty: {exercise.difficulty} </h1>
-            <h1 class="col"> Description: {exercise.eDescription} </h1>
-            <h1 class="col"> Pathologies: {exercise.forPathology} </h1>
-            <h1 class="col">Exerc : {exercise.videoPath} </h1>
+            <div class="detailedPlan">
+                <h1 class="col">{exercise.eName}</h1>
+                <h1 class="col"> targetMuscle: {exercise.targetMuscle} </h1>
+                <h1 class="col"> Difficulty: {exercise.difficulty} </h1>
+                <h1 class="col"> Description: {exercise.eDescription} </h1>
+                <h1 class="col"> Pathologies: {exercise.forPathology} </h1>
+                <h1 class="col">Exerc : {exercise.videoPath} </h1>
+
+            </div>
             <!-- <div class="bck-btt">  <button  onclick="window.location.href='/plans/single/edit/'" >Edit</button></div> -->
-        </div>
+        {:else}
+            loading
         {/each}
         
+        <button on:click={back} >Back</button>
     </div>
-<a href="/user/exercises">Back</a>

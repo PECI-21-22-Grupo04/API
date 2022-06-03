@@ -29,7 +29,8 @@
     "svelte-materialify": "^0.3.11",
     "svelte-steps": "^2.3.5",
     "swiper": "^8.2.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "svelte-video-player": "^1.2.5"
   },
   "devDependencies": {
     "@playwright/test": "^1.20.0",

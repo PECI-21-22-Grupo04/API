@@ -52,7 +52,7 @@ function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,c
     return new Promise((resolve) => {
 
        
-        var sql = 'CALL spCreateInstructor(?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        var sql = 'CALL spCreateInstructor(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
         dbconnection.query(sql, [
             mail, 
             fName, 
@@ -66,6 +66,7 @@ function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,c
             contact,
             paypalAcc,
             zero,
+            "about me",   // substituir por input
             dbKey], (err, data) => {
                 console.log(data)
                 if (err && err.errno==1062) {
