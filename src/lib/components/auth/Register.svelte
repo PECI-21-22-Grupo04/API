@@ -14,11 +14,13 @@
     let sex;
     let street;
     let postcode;
+    let postcode1;
+    let postcode2;
     let city;
     let country;
     let contact;
     let paypalAcc;
-
+    $ : postcode = postcode1 + "-" + postcode2
     let error;
     export let current;
     function login() {
@@ -68,50 +70,66 @@
 </script>
 
 <form on:submit|preventDefault={register} in:fade={{ delay: 200, duration: 200 }} out:fade={{ duration: 200 }}>
-    <input required type="email" bind:value={email} placeholder="Enter your email" />
-    <input required
+    <input class="border" required type="email" bind:value={email} placeholder="Enter your email" />
+    <input class="border" required
         type="password"
         bind:value={password}
         placeholder="Enter your password"
     />
-    <input required
-        type="firstName"
-        bind:value={firstName}
-        placeholder="Enter your First Name"
-    />
-    <input required
-        type="lastName"
-        bind:value={lastName}
-        placeholder="Enter your Last Name"
-    />
-    <input required
+
+    <div class="flex flex-row gap-4 ">
+        <input  class="border" required
+            type="firstName"
+            bind:value={firstName}
+            placeholder="Enter your First Name"
+        />
+        <input class="border" required
+            type="lastName"
+            bind:value={lastName}
+            placeholder="Enter your Last Name"
+        />
+    </div>
+    <input class="border" required
         type="contact"
         bind:value={contact}
         placeholder="Enter your Contact"
     />
-    <input required
+    <input class="border" required
         type="paypal"
         bind:value={paypalAcc}
         placeholder="Enter your paypal email address"
     />
-    <input required
-        type="birth-date"
+    <input class="border" required
+        type="date"
+        data-date=""
+        data-date-format="DD MMMM YYYY"
         bind:value={birth}
-        placeholder="Enter your birth"
+        placeholder="DD-MM-YYYY"
     />
-    <input required type="sex" bind:value={sex} placeholder="Enter your gender" />
-    <input required type="city" bind:value={city} placeholder="Enter your home city" />
-    <input required type="street" bind:value={street} placeholder="Enter your address" />
+    <input required class="border" type="sex" bind:value={sex} placeholder="Enter your gender" />
+    <input required class="border" type="city" bind:value={city} placeholder="Enter your home city" />
+    <input required class="border" type="street" bind:value={street} placeholder="Enter your address" />
     <input required
+        class="border" 
         type="country"
         bind:value={country}
         placeholder="Enter your country"
     />
-    <input style="margin-bottom: 25px"  required
-        type="postcode"
-        bind:value={postcode}
-        placeholder="Enter your postcode"
-    />
+    <div class="flex flex-row gap-5">
+        <input style="margin-bottom: 25px"  required
+            class="border" 
+            type="postcode"
+            bind:value={postcode1}
+            placeholder="Enter your postcode"
+        />
+        -
+        <input style="margin-bottom: 25px"  required
+            class="border" 
+            type="postcode"
+            bind:value={postcode2}
+            placeholder="Enter your postcode"
+        />
+    </div>
 
     <button >Register</button>
     <button on:click|preventDefault={login}>Go to Login page</button>
@@ -141,7 +159,7 @@
 
     input,
     button {
-        width: 300px;
+        width: 100%;
     }
     button{
         cursor: pointer;

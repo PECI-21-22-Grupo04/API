@@ -64,25 +64,26 @@ import { goto } from "$app/navigation";
         color: white;
         background-color: black;
     }
-    
+    .col{
+        margin-top: 30px;
+    }
     .detailedPlan {
         min-width: 400px;
-    width: 97%;
+    width: 47%;
     height: 50%;
-    /* height: fit-content; */
+    margin: 20px auto 20px auto;
     display: flex;
     flex-direction: column;
     position: relative;
     padding: 1rem 1rem 2rem 2rem;
     background: #fff;
+    color: black;
     
     
     border-radius: 10px;
     
-    /* transform: translate(-50%, -50%); */
+
     box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
-    margin: 20px auto 20px 20px;
-    
     }
     .exe-details{
         width: 90%;
@@ -105,7 +106,7 @@ import { goto } from "$app/navigation";
        align-items: inherit;
        flex-direction: column;
        /* flex-wrap:wrap; */
-        }
+    }
    /*  h1{
         text-align: center;
     } */
@@ -123,13 +124,12 @@ import { goto } from "$app/navigation";
                 <img class="m-auto img-card" style=" width:300px" src={ exercise.thumbnailPath } alt="" >
             </div> -->
             <div class="detailedPlan">
-                <h1 class="col">{exercise.eName}</h1>
+                <h1 class="text-5xl font-bold text-center ">{exercise.eName}</h1>
                 <h1 class="col"> targetMuscle: {exercise.targetMuscle} </h1>
                 <h1 class="col"> Difficulty: {exercise.difficulty} </h1>
-                <h1 class="col"> Description: {exercise.eDescription} </h1>
                 <h1 class="col"> Pathologies: {exercise.forPathology} </h1>
-                <h1 class="col">Exerc : {exercise.videoPath} </h1>
-
+                <h1 class="col"> Description: {exercise.eDescription} </h1>
+                
             </div>
             <!-- <div class="bck-btt">  <button  onclick="window.location.href='/plans/single/edit/'" >Edit</button></div> -->
         {:else}

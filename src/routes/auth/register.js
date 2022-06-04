@@ -6,7 +6,7 @@ import {app} from "$lib/database/firebase.js";
 import fs from 'fs';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-
+import jwt from "jsonwebtoken";
 // import { initializeApp } from "firebase/app";
 
 
@@ -65,17 +65,34 @@ export async function post({request}){
             if(newuser == 0){
     
             
-                const cookieId = uuidv4()
+                const cookieID = uuidv4()
                 
                 
                 const headers = {
-                    'Set-Cookie': cookie.serialize('CookieId', cookieId, {
+                    "Set-Cookie": [
+                      cookie.serialize("usermail", body.email, {
                         httpOnly: true,
-                        maxAge: 60*60,
-                        sameSite: 'lax',
-                        path: '/'
-                    })
-                }
+                        maxAge: 60 * 60,
+                        sameSite: "lax",
+                        path: "/",
+                      }),
+                      cookie.serialize(
+                        "CookieId",
+                        jwt.sign(
+                          {
+                            data: cookieID,
+                          },
+                          "697d7fb5dcde8cd048d3c9158b620b6910522b4d"
+                        ),
+                        {
+                          httpOnly: true,
+                          maxAge: 60 * 60,
+                          sameSite: "lax",
+                          path: "/",
+                        }
+                      ),
+                    ]
+                  }
                 return {
                     status: 200,
                     headers,

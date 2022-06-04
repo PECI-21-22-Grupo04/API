@@ -19,11 +19,12 @@
     import "../../styles/global.css"
     import Navbar from '$lib/components/navbar.svelte'
     import Sidebar from '$lib/components/sidebar.svelte'
+    import Settings from '$lib/components/Settings.svelte'
     import Chat from '$lib/components/chat.svelte'
     import {setContext} from 'svelte';
     setContext('changeState', changeState);
     export let email
-    let activeSidebar = true;    
+    let activeSidebar = false;    
     function changeState(){
         activeSidebar = !activeSidebar;
     }
@@ -33,8 +34,9 @@
 
 <Navbar active={activeSidebar} email={email} />
 <Sidebar active={activeSidebar} />
-
+<Settings/>
 <!-- <Chat /> -->
+
 <main class:open={activeSidebar}>
     
      <slot></slot>
