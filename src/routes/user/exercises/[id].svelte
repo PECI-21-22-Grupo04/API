@@ -10,7 +10,7 @@
   }
 </script>
 <script>
-    import Chat from "$lib/components/chat.svelte";
+
     import VideoPlayer from 'svelte-video-player';
 
     import {onMount} from 'svelte';

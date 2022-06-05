@@ -9,6 +9,25 @@
 
        console.log(exercise)
     }
+
+    exercise.difficulty="Fácil"
+
+    async function  bF()
+    {
+        exercise.difficulty="Fácil"
+    }
+
+    async function  bM()
+    {
+        exercise.difficulty="Média"
+
+    }
+
+    async function  bA()
+    {
+        exercise.difficulty="Avançado"
+
+    }
  </script>
 <style>
 
@@ -16,57 +35,46 @@
         margin: 20px auto ;
         margin-right: auto;
         display: flex;
+        align-items: center;
         width: fit-content;
-        background-color: white;
+  
         /* border: 1px solid black; */
         padding: 1em;
         flex-direction: column;
         box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
     }
-   
-    input{
-        height: 36px;
-        margin-bottom:15px;
-    }
 
-    textarea{
-        height: 100px;
-    }
-  
-    button{
-        height: 36px;
-        background-color: #eee;
-        width: fit-content;
-        margin: auto;
-        border: 1px solid black;
-        cursor: pointer;
-    }
 
-    button:hover{
-        background-color: #222;
-        color: #fff
-    }
+
+
+
 </style>
 
-<div class="form">
+<div  style="width:40%;padding:2% "class="form border-double bg-base-100 transform scale-90"   >
 
     
-    Nome do Exercício: 
-    <input required type="text"  bind:value={exercise.name}/>
-    Área Múscular: 
-    <input required type="text"  bind:value={exercise.targetmuscle} />
+    <h1  class="text-2xl font-bold" style="margin-bottom:20px;  margin-top:20px;">Nome do Exercício</h1>
+
+    <input type="text" placeholder="Escreve aqui" class="input input-bordered w-full max-w-s"  bind:value={exercise.name}  />
     
-    <h1 style="margin-bottom:20px;"> Dificuldade do Exercício:</h1>
+    <h1   class="text-2xl font-bold"   style="margin-bottom:20px; margin-top:20px;">Área Múscular</h1>
+
+    <input type="text" placeholder="Escreve aqui" class="input input-bordered w-full max-w-s"  bind:value={exercise.targetmuscle}  />
+
+    <h1  class="text-2xl font-bold" style="margin-bottom:20px; margin-top:20px;"> Dificuldade do Exercício</h1>
     <div class="btn-group ">
-        <input type="radio" name="options" data-title="Fácil" class="btn" />
-        <input type="radio" name="options" data-title="Médio" class="btn"  />
-        <input type="radio" name="options" data-title="Avançado" class="btn" />
+        <input on:click={bF} type="radio" name="options" data-title="Fácil" class="btn" checked />
+        <input on:click={bM} type="radio" name="options" data-title="Médio" class="btn"  />
+        <input on:click={bA} type="radio" name="options" data-title="Avançado" class="btn" />
 
       </div>
     
-    <!-- <input required type="text"  bind:value={exercise.difficulty} /> -->
-    Descrição: <textarea style="margin-bottom:15px;"type="text" required bind:value={exercise.description}  />
-   <button on:click|preventDefault={next}> Next </button>
+    <h1  class="text-2xl font-bold" style="margin-bottom:20px; margin-top:60px;">Descrição do Exercício</h1>
+    <textarea style="margin-bottom:50px" class=" w-full max-w-s textarea textarea-bordered"  required bind:value={exercise.description} placeholder="Escreva aqui a Descrição do Exercício..."></textarea>
+
+
+    <button on:click|preventDefault={next} class="btn btn-info">Next</button>
+
 
 
 </div>

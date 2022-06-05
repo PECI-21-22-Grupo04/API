@@ -19,7 +19,6 @@
         planid:null
     }
     let current = 0;
-    //const components = [CreatePlanForm,CreatePlanSelectExe,CreatePlanFinish]
     const stepsTextOnly = [
     { text: 'Nomear o plano' },
     { text: 'Escolher exercicios' },
@@ -27,10 +26,13 @@
   ]
 </script>
 
-<p>
 
-</p>
-<Steps bind:current steps={stepsTextOnly} borderRadius="0" primary="#000000" secondary="#ffaaaa"/>
+  <div style="margin-top:20px;margin-right:auto">
+    
+    <Steps  size={"2em"}  bind:current steps={stepsTextOnly} borderRadius="0" primary="#000000" secondary="#ffaaaa"/>
+  
+  </div>
+
 {#if current == 0 }
   <CreatePlanForm bind:current bind:plan />
 {:else if current == 1}

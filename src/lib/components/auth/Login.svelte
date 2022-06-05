@@ -48,15 +48,16 @@
 
 form{
         margin: 20px auto ;
+   
         margin-right: auto;
         display: flex;
         width: fit-content;
-        background-color: white;
+
         /* border: 1px solid black; */
         padding: 1em;
         flex-direction: column;
         box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
-        border-radius: 6px;
+
     }
 
 form > *:not(:last-child) {
@@ -72,27 +73,19 @@ form > *:not(:last-child) {
     input ,button{
         width: 300px;
     }
-    button{
-        cursor: pointer;
-        width: 100%;
-        height: 36px;   
-        background-color: white;
-        border-radius: .4rem;
-        border: 2px solid rgb(107, 107, 107);
-        transition: .33s ease color, .33s ease background;
-    }
 
-    button:hover{
-        background-color: rgb(107, 107, 107);
-        color: #fff
-    }
 </style>
-<form on:submit|preventDefault={login} in:fade="{{delay:200,duration: 200}}" out:fade="{{duration: 200}}" >
-    <input required type="email" bind:value={email} placeholder="Enter your email">
-    <input required style="margin-bottom: 25px" type="password" bind:value={password} placeholder="Enter your password">
+<form style="padding:40px;" class="border-double bg-base-100" on:submit|preventDefault={login} in:fade="{{delay:200,duration: 200}}" out:fade="{{duration: 200}}" >
+    <input required type="email" placeholder="Introduza o email"  bind:value={email}  class="input input-bordered w-full max-w-xs" />
+
+
+    <input   style="margin-bottom: 35px" required type="password" placeholder="Introduza a password"  bind:value={password} class="input input-bordered w-full max-w-xs" />
+
+
+
     
 
-    <button >Login</button>
-    <button  on:click|preventDefault={register}>Register</button>
+    <button class="btn btn-primary" >Login</button>
+    <button class="btn btn-accent" on:click|preventDefault={register}>Register</button>
     
 </form>

@@ -10,7 +10,7 @@
   }
 </script>
 <script>
-    import Chat from "$lib/components/chat.svelte";
+
     import {onMount} from 'svelte';
     import { page, session } from '$app/stores';
     import { goto } from "$app/navigation";

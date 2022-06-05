@@ -1,12 +1,17 @@
 <script>
     import Card from "$lib/components/Card.svelte"
-    import {fade} from 'svelte/transition'
-    import {onMount} from 'svelte';
+    import {fade } from 'svelte/transition'
+    import {onMount,onDestroy} from 'svelte';
     import { session } from '$app/stores';
+    import { page } from '$lib/store/store.js';
     
     let parsed_data=[];
+    
     onMount(async ()=>{
-
+     
+        page.update(n => 
+            n = "Clientes"
+        )
         const res = await fetch('/user/clients', {
                 method: 'POST',
                 body:JSON.stringify({                    
@@ -22,6 +27,13 @@
         console.log("JASJSJSA" +parsed_data)
     })
 
+    onDestroy(async ()=>{
+        page.update(n => 
+            n = ""
+        )
+
+
+    })
 </script>
          
 <style>
@@ -34,16 +46,11 @@
     .xpto {
   padding: 40px;
   text-align: center;
-  background: #8EB5CD;
-  color: white;
+
   font-size: 30px;
 }
 </style>
 
-<div>
-
-    <h1 class="xpto">Clientes</h1>
-</div>
     <div class="content">
         {#each [...parsed_data] as client }
             <Card path="/user/clients/{client.clientID}">

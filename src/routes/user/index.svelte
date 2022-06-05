@@ -1,7 +1,29 @@
 <script>
+        import {onMount, onDestroy} from 'svelte';
+    import { page } from '$lib/store/store.js';
+    onMount(async ()=>{
+        page.update(n => 
+            n = "Página Inicial"
+        )
+ 
+    }),    
 
+    onDestroy(async ()=>{
+        page.update(n => 
+            n = ""
+        )
+
+
+    })
 </script>
 <style>
+
+    .xpto {
+  padding: 40px;
+  text-align: center;
+
+  font-size: 30px;
+}
 
 </style>
 

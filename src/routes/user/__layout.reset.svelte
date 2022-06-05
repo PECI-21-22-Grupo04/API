@@ -17,10 +17,8 @@
 </script>
 <script>
     import "../../styles/global.css"
-    import Navbar from '$lib/components/navbar.svelte'
-    import Sidebar from '$lib/components/sidebar.svelte'
+    import Navbar from '$lib/components/Navbar.svelte'
     import Settings from '$lib/components/Settings.svelte'
-    import Chat from '$lib/components/chat.svelte'
     import {setContext} from 'svelte';
     setContext('changeState', changeState);
     export let email
@@ -30,15 +28,23 @@
     }
 </script>
 
+<style>
 
+main
+{
+
+    height:fit-content;
+
+}
+
+</style>
 
 <Navbar active={activeSidebar} email={email} />
-<Sidebar active={activeSidebar} />
 <Settings/>
-<!-- <Chat /> -->
 
-<main class:open={activeSidebar}>
+
+
+<main >
     
      <slot></slot>
 </main>
-

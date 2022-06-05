@@ -24,9 +24,9 @@
             expthumbnail:null
        }
     let stepsTextOnly = [
-    { text: 'Step one' },
-    { text: 'Step two' },
-    { text: 'Step three' },
+    { text: 'Detalhes' },
+    { text: 'Upload' },
+    { text: 'Confirmação' },
   ]
   function back(){
     current=1;
@@ -107,11 +107,6 @@
     position: relative;
     margin: 20px auto;
   }
-  button{
-    width: 100%;
-    height: 36px;
-    background-color: #fff;
-  }
 
   button:hover{
     background-color: #222;
@@ -128,40 +123,55 @@
 <p>
   
 </p>
-<Steps bind:current steps={stepsTextOnly} />
 <!-- <svelte:component this={components[current]} {parsed_data}/> -->
+<div style="margin-top:20px;margin-right:auto">
+  <Steps  size={"2em"} bind:current steps={stepsTextOnly} />
 
-{#if current == 0 }
-  <Form bind:current bind:exercise />
-{:else if current == 1}
-  <Upload bind:current bind:exercise bind:avatar />
-{:else}
-  <div class="card-center">
-    
-    <Card details_create={1}>
-      <div class="div-image">
-        <img class="m-auto img-card" src="{ avatar}" alt="" >
-      </div>
+</div>
+<div class="flex flex-row " style="align-items:center;" >
+
+
+
+  
+  {#if current == 0 }
+    <Form bind:current bind:exercise />
+    {:else if current == 1}
+    <Upload bind:current bind:exercise bind:avatar />
+
+    {:else}
+    <div class="card-center">
       
-      <div style="text-align: center;font-size: 1.2em;">{exercise.name} </div>
-      <hr style="width:100%;text-align:left;margin-left:0">
-
-      <div style="text-align: center;font-size: 0.8em;">{exercise.targetmuscle} </div>
+      <Card >
 
 
-      <div style="text-align: center;">{exercise.difficulty} </div> <p></p>
- 
-      <div style="font-size: 0.8em;border:1px solid black;">{exercise.description} </div>
+        <figure><img   src={avatar } alt="" /></figure>
+        <div class="card-body">
+        <h2 class="card-title">
+            {exercise.name}
 
-    </Card>
-    
-    <p>
+        </h2>
+        <div>
+            {exercise.description}
+        </div>
+        <div class="card-actions justify-end">
+            <div class="badge badge-outline">{exercise.difficulty}</div> 
+            <div class="badge badge-outline">{exercise.targetmuscle}</div>
+        </div>
+</div>
 
-    </p>
-    <p>
 
-    </p>
-    <button on:click={confirm} >Confirm </button>
-    <button on:click={back} >Back </button>
-  </div>
-{/if}
+      </Card>
+      
+      <p>
+        
+      </p>
+      <p>
+  
+      </p>
+      <button on:click={confirm} >Confirm </button>
+      <button on:click={back} >Back </button>
+    </div>
+    {/if}
+  
+
+</div>
