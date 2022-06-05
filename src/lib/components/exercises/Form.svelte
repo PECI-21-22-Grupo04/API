@@ -1,4 +1,7 @@
  <script>
+import { onMount } from "svelte";
+
+
      export let current;
      export let exercise;
      export function next(){
@@ -10,6 +13,9 @@
        console.log(exercise)
     }
 
+    onMount(()=>{
+        current = 0;
+    })
     exercise.difficulty="Fácil"
 
     async function  bF()

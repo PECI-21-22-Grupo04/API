@@ -59,7 +59,7 @@ import { goto } from "$app/navigation";
 
 img {
     flex-shrink: 0;
-    width: 300px;
+    width: 325px; 
     height: 200px;
 }
 
@@ -87,10 +87,11 @@ img {
             
           </div>
         <div class="dropdown dropdown-down dropdown-end dropdown-hover" style="margin-right:20px;">
+            <!-- svelte-ignore a11y-label-has-associated-control -->
             <label tabindex="0" class="btn m-1">Área Múscular</label>
             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-
               <li><a>Geral</a></li>
+              
               <li><a>Peito</a></li>
               <li><a>Pernas</a></li>
               <li><a>Costas</a></li>

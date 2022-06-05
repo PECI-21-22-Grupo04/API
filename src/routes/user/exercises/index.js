@@ -1,6 +1,6 @@
 
 import {db} from "$lib/database/dbFunctions.js";
-import fs from 'fs'
+
     
 
 export async function post({request}){
@@ -67,3 +67,47 @@ export async function post({request}){
     }
 }
 
+export async function del({request}){
+    const body = await request.json();
+    try{
+        const deleted_exercise = await db.deleteExercise(body.exerciseID);
+
+
+        if(deleted_exercise!==1)
+        {   
+            if(deleted_exercise!==2)
+            {
+                return{
+                    headers:{location:'/user/exercises'},
+                    status: 302
+                }
+            }
+            else
+            {
+                console.log("Data error")
+                return{
+                    status: 409,
+                    message:"Error occured"
+                }
+            }
+
+        }
+        else
+        {
+            console.log("Connection error")
+            return{
+                status: 409,
+                message:"Error occured"
+            }
+        }
+
+
+    }catch(e)
+    {
+        console.log(e);
+        console.log("Error in the query")
+    }
+
+
+
+}

@@ -32,7 +32,7 @@ export async function post({ request }) {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log("logged in");
+        console.log("logged in" + JSON.stringify(user));
         success_f = 1;
 
         user.getIdToken().then((id) => {

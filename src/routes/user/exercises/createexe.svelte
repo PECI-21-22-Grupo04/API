@@ -1,16 +1,20 @@
 <script>
     import Card from "$lib/components/Card.svelte";
     import Form from "$lib/components/exercises/Form.svelte"
+    import Finnish from "$lib/components/exercises/Finnish.svelte";
     import {Steps} from 'svelte-steps'
     import Upload from '$lib/components/exercises/upload.svelte'
     import { goto } from "$app/navigation";
     import { session } from '$app/stores';
     import { storage } from "$lib/database/firebase.js"
+    import { page } from '$lib/store/store.js';
     import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage"
+    import {  onDestroy, onMount } from "svelte";
     const components = [Form,Upload]
     let current=0;
     let exp
     let avatar
+    let video
     let exercise = {
             email:$session.user.email,
             name:"",
@@ -28,9 +32,20 @@
     { text: 'Upload' },
     { text: 'Confirmação' },
   ]
+  onMount(()=>{
+    page.update(n => 
+            n = "Criar Exercicío"
+        )
+  })
+  onDestroy(()=>{
+    page.update(n => 
+            n = ""
+        )
+  })
   function back(){
     current=1;
   }
+ 
   async function confirm(){
         let error = undefined;
         const date = Date.now();
@@ -113,12 +128,6 @@
     color: #fff
   }
 
-  .line{
-    width: 112px;
-    height: 47px;
-    border-bottom: 1px solid black;
-    position: absolute;
-    }
 </style>
 <p>
   
@@ -136,40 +145,17 @@
   {#if current == 0 }
     <Form bind:current bind:exercise />
     {:else if current == 1}
-    <Upload bind:current bind:exercise bind:avatar />
+    <Upload bind:current bind:exercise bind:avatar bind:video />
 
     {:else}
-    <div class="card-center">
-      
-      <Card >
+    <div class="flex flex-col mx-auto">
 
+      <Finnish bind:avatar bind:exercise bind:current/>
+      <div class="flex flex-row mt-10">
+        <button on:click={back} class="btn btn-error" >Back </button>
+        <button on:click={confirm} class="btn btn-success ml-auto">Confirm </button>
 
-        <figure><img   src={avatar } alt="" /></figure>
-        <div class="card-body">
-        <h2 class="card-title">
-            {exercise.name}
-
-        </h2>
-        <div>
-            {exercise.description}
-        </div>
-        <div class="card-actions justify-end">
-            <div class="badge badge-outline">{exercise.difficulty}</div> 
-            <div class="badge badge-outline">{exercise.targetmuscle}</div>
-        </div>
-</div>
-
-
-      </Card>
-      
-      <p>
-        
-      </p>
-      <p>
-  
-      </p>
-      <button on:click={confirm} >Confirm </button>
-      <button on:click={back} >Back </button>
+      </div>
     </div>
     {/if}
   

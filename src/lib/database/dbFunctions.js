@@ -22,7 +22,14 @@ export const db = {
     addExercisetoProgram,
     addProgramtoClient,
     selectPlanExercises,
-    selectInstructorClientFromID
+    selectInstructorClientFromID,
+    deleteExercise,
+    deleteProgram,
+    deleteExercisefromProgram,
+    updateExercise,
+    updateProgram,
+    updateProgramExercise,
+    addUserImage
 }
 
 // Connect to database (MUST USE LEGACY AUTHENTICATION METHOD (RETAIN MYSQL 5.X COMPATIBILITY))
@@ -46,15 +53,16 @@ const dbKey = process.env.DB_ENCRYPTKEY;
             STORED PROCEDURES               
 *******************************************
 */
-function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,country,contact,paypalAcc) {
+function createInstructor(mail,firebaseID, fName, lName, birth, sex, street,postcode,city,country,contact,paypalAcc) {
     const zero = 0;
     // console.log(mail + ' : ' +fName+' : ' +lName+ ' : ' +birth+ ' : ' +sex+ ' : ' +street + ' :'+postcode + ' :'+city + ' :'+country + ' :'+contact + ' :'+paypalAcc + ' :'+password );
     return new Promise((resolve) => {
 
        
-        var sql = 'CALL spCreateInstructor(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        var sql = 'CALL spCreateInstructor(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
         dbconnection.query(sql, [
-            mail, 
+            mail,
+            firebaseID,
             fName, 
             lName, 
             birth, 
@@ -63,7 +71,6 @@ function createInstructor(mail, fName, lName, birth, sex, street,postcode,city,c
             postcode,
             city,
             country,
-            // "firebaseID",
             contact,
             paypalAcc,
             zero,
@@ -427,6 +434,152 @@ function selectInstructorClientFromID(email,cid) {
         });
     });
 };
+
+function deleteExercise(exerID) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spDeleteExercise(?,?)';
+        
+        dbconnection.query(sql, [exerID,dbKey], (err, data) => {
+            console.log(data + "falhou")
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined') { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+function deleteProgram(planID) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spDeleteProgram(?,?)';
+        
+        dbconnection.query(sql, [planID,dbKey], (err, data) => {
+            console.log(data)
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined') { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+function deleteExercisefromProgram(planID,exerID) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spRemoveExerciseFromPlan(?,?)';
+        
+        dbconnection.query(sql, [planID,exerID], (err, data) => {
+            console.log(data)
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined') { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+
+function updateExercise(exerID, ename, difficulty, edescription, pathologies, targetMuscle ,thumbnailPath,videoPath) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spUpdateExercise(?,?,?,?,?,?,?,?,?)';
+        
+        dbconnection.query(sql, [exerID,ename, difficulty, edescription, pathologies,targetMuscle ,thumbnailPath,videoPath,dbKey], (err, data) => {
+            console.log(data)
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined') { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+
+function updateProgram(progID, pname , pdescription, pathology,pthumbnailPath, pvideoPath, showcase) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spUpdateProgramData(?,?,?,?,?,?,?,?)';
+
+        dbconnection.query(sql, [progID,pname, pdescription, pathology , pthumbnailPath, pvideoPath, showcase,dbKey], (err, data) => {
+            console.log(data)
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined') { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+
+function updateProgramExercise(programID, exerciseID , nsets, nreps, duration) {
+    return new Promise((resolve) => {
+
+        var sql = 'CALL spUpdateProgramExercise(?,?,?,?,?)';
+
+        dbconnection.query(sql, [programID, exerciseID , nsets, nreps, duration], (err, data) => {
+            if (err && err.errno==1062) {
+                resolve(1);
+            }
+            else if (typeof data !== 'undefined' && data["affectedRows"] == 1) { 
+                resolve(0);
+            }
+            else {
+                resolve(2);
+            }
+        });
+    });
+};
+
+function addUserImage(mail,image) {
+    // console.log(mail + ' : ' +fName+' : ' +lName+ ' : ' +birth+ ' : ' +sex+ ' : ' +street + ' :'+postcode + ' :'+city + ' :'+country + ' :'+contact + ' :'+paypalAcc + ' :'+password );
+    return new Promise((resolve) => {
+
+       
+        var sql = 'CALL spUserAddImage(?,?,?)';
+        dbconnection.query(sql, [
+            mail,
+            image,
+            dbKey], (err, data) => {
+                console.log(data)
+                if (err && err.errno==1062) {
+                console.log(err);
+
+                    
+                    resolve(1);
+                }
+                else if (typeof data !== 'undefined') { 
+                    resolve(0);
+                }
+                else {
+                    resolve(2);
+                console.log(err);
+
+                }
+        });
+    });
+}
 
 /*
 *******************************************

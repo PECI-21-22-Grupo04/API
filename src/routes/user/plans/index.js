@@ -38,3 +38,49 @@ export async function post({ request }) {
     console.log(e);
   }
 }
+
+
+export async function del({request}){
+  const body = await request.json();
+  try{
+      const deleted_program = await db.deleteProgram(body.programID);
+
+
+      if(deleted_program!==1)
+      {   
+          if(deleted_program!==2)
+          {
+              return{
+                  headers:{location:'/user/plans'},
+                  status: 302
+              }
+          }
+          else
+          {
+              console.log("Data error")
+              return{
+                  status: 409,
+                  message:"Error occured"
+              }
+          }
+
+      }
+      else
+      {
+          console.log("Connection error")
+          return{
+              status: 409,
+              message:"Error occured"
+          }
+      }
+
+
+  }catch(e)
+  {
+      console.log(e);
+      console.log("Error in the query")
+  }
+
+
+
+}

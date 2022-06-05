@@ -6,7 +6,8 @@
     import CreatePlanSelectExe from "$lib/components/plans/CreatePlanSelectExe.svelte";
     import { session } from '$app/stores';
     import {Steps} from 'svelte-steps'
-    
+    import { page } from '$lib/store/store.js';
+    import {  onDestroy, onMount } from "svelte";
     let plan = {
         email : $session.user.email,
         pname: "",
@@ -24,6 +25,16 @@
     { text: 'Escolher exercicios' },
     { text: 'Confirmação' },
   ]
+  onMount(()=>{
+    page.update(n => 
+            n = "Criar Plano"
+        )
+  })
+  onDestroy(()=>{
+    page.update(n => 
+            n = ""
+        )
+  })
 </script>
 
 

@@ -51,13 +51,6 @@ import { goto } from "$app/navigation";
     }
 
 
-    .xpto {
-  padding: 40px;
-  text-align: center;
-
-  font-size: 30px;
-}
-
 </style>
 
 

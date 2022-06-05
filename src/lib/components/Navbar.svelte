@@ -4,9 +4,7 @@
 
     import { session } from '$app/stores';    
     import { page } from '$lib/store/store.js';
-import { goto } from '$app/navigation';
-    export let active;
-    export let email;
+    import { goto } from '$app/navigation';
     async function logout ()
     {
         try {

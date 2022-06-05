@@ -29,7 +29,7 @@ import jwt from "jsonwebtoken";
 
 export async function post({request}){
     const body = await request.json();
-
+    let firebaseID = "";
     if (!body.email || !body.password || !body.firstName || !body.lastName || !body.birth  || !body.sex  || !body.street ||!body.postcode ||!body.city ||!body.country || !body.contact || !body.paypalAcc )
     {
         console.log("Please insert all the required info.")
@@ -46,8 +46,8 @@ export async function post({request}){
     
         // Signed in
         const user = userCredential.user;
-    
-        console.log("we creating firebase");
+        firebaseID = user.uid;
+        console.log("we creating firebase " + JSON.stringify(user));
         success_f=1;
         // ...
         })
@@ -61,7 +61,7 @@ export async function post({request}){
     
         if (success_f===1)
         {
-            const newuser = await db.createInstructor(body.email, body.firstName, body.lastName, body.birth, body.sex, body.street,body.postcode,body.city,body.country,body.contact,body.paypalAcc);
+            const newuser = await db.createInstructor(body.email, firebaseID, body.firstName, body.lastName, body.birth, body.sex, body.street,body.postcode,body.city,body.country,body.contact,body.paypalAcc);
             if(newuser == 0){
     
             
