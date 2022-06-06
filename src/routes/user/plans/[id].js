@@ -28,7 +28,7 @@ export async function del({params,request}){
     const body = await request.json();
     const id = await params.id;
     try{
-        const deleted_program = await db.deleteExercisefromProgram(body.programID, body.exerciseID);
+        const deleted_program = await db.deleteExercisefromProgram(id, body.exerciseID);
   
   
         if(deleted_program!==1)
@@ -69,3 +69,56 @@ export async function del({params,request}){
   
   
   }
+
+  export async function patch({params,request}){
+    const body = await request.json();
+    const id = await params.id;
+    try{
+        const update_exercise = await db.updateProgram(id, 
+                                                        body.pName,  
+                                                        body.pDescription, 
+                                                        body.pathology,  
+                                                        body.thumbnailPath, 
+                                                        body.videoPath,
+                                                        body.showcase 
+                                                        );
+  
+  
+        if(update_exercise!==1)
+        {   
+            if(update_exercise!==2)
+            {
+                return{
+                    headers:{location:`/user/plans/${id}`},
+                    status: 302
+                }
+            }
+            else
+            {
+                console.log("Data error")
+                return{
+                    status: 409,
+                    message:"Error occured"
+                }
+            }
+  
+        }
+        else
+        {
+            console.log("Connection error")
+            return{
+                status: 409,
+                message:"Error occured"
+            }
+        }
+  
+  
+    }catch(e)
+    {
+        console.log(e);
+        console.log("Error in the query")
+    }
+  
+  
+  
+}

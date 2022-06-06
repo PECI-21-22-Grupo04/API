@@ -542,7 +542,7 @@ function updateProgramExercise(programID, exerciseID , nsets, nreps, duration) {
             if (err && err.errno==1062) {
                 resolve(1);
             }
-            else if (typeof data !== 'undefined' && data["affectedRows"] == 1) { 
+            else if (typeof data !== 'undefined') { 
                 resolve(0);
             }
             else {
@@ -552,15 +552,15 @@ function updateProgramExercise(programID, exerciseID , nsets, nreps, duration) {
     });
 };
 
-function addUserImage(mail,image) {
-    // console.log(mail + ' : ' +fName+' : ' +lName+ ' : ' +birth+ ' : ' +sex+ ' : ' +street + ' :'+postcode + ' :'+city + ' :'+country + ' :'+contact + ' :'+paypalAcc + ' :'+password );
+function addUserImage(mail,imageURL) {
+    console.log("ollaalalalalal  " + mail +" "+ imageURL );
     return new Promise((resolve) => {
 
        
         var sql = 'CALL spUserAddImage(?,?,?)';
         dbconnection.query(sql, [
             mail,
-            image,
+            imageURL,
             dbKey], (err, data) => {
                 console.log(data)
                 if (err && err.errno==1062) {
@@ -574,7 +574,6 @@ function addUserImage(mail,image) {
                 }
                 else {
                     resolve(2);
-                console.log(err);
 
                 }
         });
