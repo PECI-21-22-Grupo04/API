@@ -73,7 +73,7 @@
                 }
             })
             if(res.ok){
-                goto(`/user/clients/${client.ID}`)
+                goto(`/user/clients/${client.clientID}`)
             }else{
                 error= 'An error occurred'
             }
