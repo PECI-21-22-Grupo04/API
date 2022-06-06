@@ -26,7 +26,7 @@
 
 <!-- <Chat /> -->
 <!-- {$loading} -->
-<main >
+<main class="bg-base-300" >
     
     
 

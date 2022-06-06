@@ -115,7 +115,7 @@ import { goto } from "$app/navigation";
     {#each [...parsed_data] as exercise}
     
         <div class="div-video">
-            <VideoPlayer height={700} poster={exercise.thumbnailPath} source={exercise.videoPath} />
+            <!-- <VideoPlayer height={700} poster={exercise.thumbnailPath} source={exercise.videoPath} /> -->
 
         </div>
          

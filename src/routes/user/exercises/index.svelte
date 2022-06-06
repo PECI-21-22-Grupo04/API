@@ -1,10 +1,10 @@
 <script>
     import Card from "$lib/components/Card.svelte"
-    import {fade} from 'svelte/transition'
     import {onMount, onDestroy} from 'svelte';
     import { session } from '$app/stores';
     import { page } from '$lib/store/store.js';
 import { goto } from "$app/navigation";
+import { validate_each_argument } from "svelte/internal";
     let parsed_data=[];
 
     async function createExe()
@@ -12,6 +12,31 @@ import { goto } from "$app/navigation";
         goto('/user/exercises/createexe')
      
     }
+
+    async function deleteExercise(id){
+        const res = await fetch('/user/exercises', {
+                method: 'DELETE',
+                body:JSON.stringify({                    
+                    exerciseID: id
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "accept": "application/json"
+                }
+            })
+        if(res.ok){
+            parsed_data = parsed_data.filter( function(value){
+                console.log(value)
+                if(value.exerciseID != id){ return value;}
+            } )
+                
+            console.log(JSON.stringify(parsed_data) + "ola")
+                
+        }
+    }
+    
+
+    
     onMount(async ()=>{
         page.update(n => 
             n = "Exercicíos"
@@ -27,7 +52,7 @@ import { goto } from "$app/navigation";
                 }
             })
         const data = await res.json();
-        parsed_data = data.parsed_data
+        parsed_data = [...data.parsed_data]
         console.log(parsed_data)
     })
 
@@ -113,26 +138,34 @@ img {
 
         <!-- <div  style="display:flex;flex-direction:row;"> -->
 
-            {#each [...parsed_data] as exercise }
+            {#each parsed_data as exercise }
 
             <div style="margin-left:20px"  >
-                <Card path = "/user/exercises/{exercise.exerciseID}">
+                <Card >
     
-    
+                    <a href="/user/exercises/{exercise.exerciseID}">
                     <figure><img   src={exercise.thumbnailPath } alt="" /></figure>
                     <div class="card-body">
                     <h2 class="card-title">
                         {exercise.eName}
                         <div class="badge badge-secondary">NEW</div>
                     </h2>
-                    <div style="font-size:small;    height:80px;width:230px;overflow:hidden; overflow-wrap: break-word;">
+                    <div style="font-size:small;    height:60px;width:230px;overflow:hidden; overflow-wrap: break-word;">
                         {exercise.eDescription}
                     </div>
-                    <div class="card-actions justify-end">
-                        <div class="badge badge-outline">{exercise.difficulty}</div> 
-                        <div class="badge badge-outline">{exercise.targetMuscle}</div>
-                    </div>
-            </div>
+                    </a>
+                        <div class="flex flex-row items-center mb-5 mx-5">
+                            <button class="btn p-2 z-99 bg-base-300" style="width:fit-content; heigth:fit-content" on:click={() => deleteExercise(exercise.exerciseID)}>
+    
+                                <img src="/delete.svg" alt="" style="width:30px; height:30px" >
+                            </button>
+                            <div class="card-actions justify-end ml-auto">
+                                <div class="badge badge-outline">{exercise.difficulty}</div> 
+                                <div class="badge badge-outline">{exercise.targetMuscle}</div>
+                            </div>
+
+                        </div>
+            
     
                     
     

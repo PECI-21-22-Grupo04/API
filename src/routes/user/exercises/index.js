@@ -78,8 +78,7 @@ export async function del({request}){
             if(deleted_exercise!==2)
             {
                 return{
-                    headers:{location:'/user/exercises'},
-                    status: 302
+                    status: 200
                 }
             }
             else

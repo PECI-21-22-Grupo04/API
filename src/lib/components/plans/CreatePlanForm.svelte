@@ -1,5 +1,4 @@
 <script>
-    import { fade, slide } from 'svelte/transition';
     export let current;
     export let plan;
     async function next(){

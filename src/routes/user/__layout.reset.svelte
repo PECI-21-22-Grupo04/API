@@ -16,6 +16,9 @@
     }
 </script>
 <script>
+// @ts-nocheck
+
+    import {fade} from 'svelte/transition'
     import "../../styles/global.css"
     import Navbar from '$lib/components/Navbar.svelte'
     import Settings from '$lib/components/Settings.svelte'
@@ -30,12 +33,7 @@
 
 <style>
 
-main
-{
 
-    height:fit-content;
-
-}
 
 </style>
 
@@ -44,7 +42,9 @@ main
 
 
 
-<main >
+<main class="bg-base-300" >
     
-     <slot></slot>
+        <slot></slot>
+
+    
 </main>

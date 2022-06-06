@@ -43,71 +43,83 @@ function back(){
     height: 90%;
     display:flex;
     flex-direction: column;
-    background-color: white;
     width: 90%;
     box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
 }
 .container{
     width: 90%;
-    background-color: white;
     display: flex;
     flex-direction: row;
     height: fit-content;
+    gap:20px;
     padding:10px;
     overflow-x: auto;
     margin: 20px auto; 
     
+    
     }
-    .container::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    .description
+    .container::-webkit-scrollbar-track, .description::-webkit-scrollbar-track {
+        /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
         border-radius: 10px;
-        background-color: #f5f5f5;
+       
     }
     
-    .container::-webkit-scrollbar {
+    .container::-webkit-scrollbar, .description::-webkit-scrollbar {
         width: 8px;
-        background-color: #f5f5f5;
+        
     }
     
-    .container::-webkit-scrollbar-thumb {
+    .container::-webkit-scrollbar-thumb, .description::-webkit-scrollbar-thumb {
         border-radius: 10px;
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
         background-color: #3d3d3d;
     }
-    button{
-        height: 36px;
-        background-color: #eee;
-        width: fit-content;
-        margin: auto;
-        border: 1px solid black;
-        cursor: pointer;
-    }
+    .description{
+        width: 300px;
+        
+        word-wrap: break-word;
 
-    button:hover{
-        background-color: #222;
-        color: #fff
     }
-    
 </style>
-<div class="details">
-    <p>Name : {plan.pname}</p>
-    <p>Description : {plan.pdescription}</p>
-    <div class="container">
-        {#each [...plan.exercises] as selected}
-            <Card path = "/user/exercises/{selected.exercise.exerciseID}" details={0} >
-                <div class="div-image">
-                    <img class="m-auto img-card" src={  selected.exercise.thumbnailPath} alt="" >
-                </div>
-                <div style="text-align: center;font-size: 1.2em;">{selected.exercise.eName} </div>
-                <div style="font-size: 0.8em;">Sets : {selected.sets} </div>
-                <div style="font-size: 0.8em;">Reps : {selected.reps} </div>
-            </Card>
+<div class="details bg-base-200">
     
-        {/each}
+    <p class="text-3xl font-bold mt-5 mx-auto">{plan.pname}</p>
+    <div class="flex flex-row gap-10 mx-10 items-center">
+        <div class="container">
+            {#each [...plan.exercises] as selected}
+    
+            <!-- <div class="bg-base-100"> -->
+                <Card path = "/user/exercises/{selected.exercise.exerciseID}" details={0} >
+                    <div class="div-image">
+                        <img class="m-auto h-[200px] w-[325px]" src={  selected.exercise.thumbnailPath} alt="" >
+                    </div>
+                    <div style="text-align: center;font-size: 1.2em;">{selected.exercise.eName} </div>
+                    
+                    <div class="card-actions">
+                        <div class="badge badge-primary  " >Sets</div>
+                        <div> {selected.sets} </div>
+                    </div>
+                    <div class="card-actions">
+                        <div class="badge badge-secondary " >Reps</div>
+                        <div> {selected.reps} </div>
+                    </div>
+                </Card>
+    
+           <!--  </div>  -->
+        
+            {/each}
+        </div>
+        <div class=" text-wrap h-[325px] flex flex-col " >
+            <p class="text-3xl font-bold mt-5 mx-auto " >Description </p>
+            <div class="description" style="overflow:auto" >{plan.pdescription}</div>
+
+        </div>
     </div>
-    <div style="display:flex;align-items:justify-content">
-        <button on:click={back} >Back</button>
-        <button on:click={createProgram} >Confirm</button>
+    
+    <div style="display:flex; overflow:auto">
+        <button class="btn btn-error ml-10 my-10" on:click={back} >Back</button>
+        <button class="btn btn-success ml-auto mr-10 my-10" on:click={createProgram} >Confirm</button>
     </div>
    
 </div>

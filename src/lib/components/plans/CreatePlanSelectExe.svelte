@@ -5,7 +5,6 @@
     import Card from "../Card.svelte";
     import { goto } from "$app/navigation";
     let parsed_data = [];
-    import { fade, slide } from 'svelte/transition';
     export let plan;
     let details = 0
     let alert = 0;
@@ -38,16 +37,17 @@
     function select(exercise){
         for (let index = 0; index < plan.exercises.length; index++) {
             if(plan.exercises[index].exercise.exerciseID == exercise.exerciseID 
-            || repeats[exercise.exerciseID] === undefined 
-            || sets[exercise.exerciseID] === undefined 
-            || durations[exercise.exerciseID] === undefined 
+            || repeats[exercise.exerciseID] == null 
+            || sets[exercise.exerciseID] == null 
             ){
                 return;
             }
             
         }
         if (repeats != {} && sets!={} && durations != {}) {
-            
+        /*     plan.exercises = plan.exercises.filter( (value) => {
+                if( value.exercise.exerciseID == exercise.exerciseID) 
+            }) */
             plan.exercises = [...plan.exercises, {exercise ,reps: repeats[exercise.exerciseID], sets: sets[exercise.exerciseID], durations:durations[exercise.exerciseID]}]
         }
     }
@@ -89,40 +89,45 @@
 <style>
     
     .exercises{
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(235px,235px));
-        gap:50px;
-        grid-auto-flow: row; 
-        background-color: white;
+        /* display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px,300px)); */
+        /* grid-templa
+        te-rows: repeat(auto-fill, minmax(300px,300px)); */
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
         padding: 20px;
         margin: 20px  auto;
         width: 100%;
-        height: 90%;
+        height: 100%;
+        overflow: hidden;
         overflow-y: auto;
         box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
     }
-    .exercises::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    .exercises::-webkit-scrollbar-track, .timeline::-webkit-scrollbar-track {
+        
         border-radius: 10px;
-        background-color: #f5f5f5;
+       
     }
     
-    .exercises::-webkit-scrollbar {
+    .exercises::-webkit-scrollbar, .timeline::-webkit-scrollbar {
         width: 8px;
-        background-color: #f5f5f5;
+       
     }
     
-    .exercises::-webkit-scrollbar-thumb {
+    .exercises::-webkit-scrollbar-thumb, .timeline::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        
         background-color: #3d3d3d;
     }
     .flex-container{
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: center;
         margin: 20px  auto;
-        height: 75%;
+        
+        height: 75vh;
         width: 90%;
     }
     
@@ -130,15 +135,16 @@
     .timeline {
         display: flex;
         width: 300px;
-        margin-top: 20px;
-        margin-left: 30px;
-        margin-right: 30px;
+        padding: 20px 10px;
+        row-gap: 10px;
+        margin: 20px  auto;
+        margin-left: 10px;
         flex-direction: column;
         left: var(--sidebar-width);
         height: 100%;
         overflow-y: auto;
-        background-color: #fff;
         transition: left var(--sidebar-animation-time) var(--sidebar-animation-curve);
+        box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
 }
     .selected{
         display: flex;
@@ -155,45 +161,43 @@
         width: 35px;
         height: fit-content;
     }
-    button{
-        height: 36px;
-        background-color: #eee;
-        width: fit-content;
-        margin: auto;
-        border: 1px solid black;
-        cursor: pointer;
-    }
 
-    button:hover{
-        background-color: #222;
-        color: #fff
-    }
     
 </style>
 <div class="flex-container">
-    <div id="card" class="exercises" in:slide="{{delay: 300, duration: 300}}" out:fade="{{duration: 300}}" >
+    <div id="card" class="exercises bg-base-200"  >
         {#each [...parsed_data] as exercise }
-        <Card path = "" details={details} >
-            <div class="div-image">
-                <img class="m-auto img-card" src={exercise.thumbnailPath} alt="" >
+        <Card >
+            <div class="div-image ">
+                <img class="m-auto img-card h-[200px] w-[325px]"  src={exercise.thumbnailPath} alt="" >
             </div>
-            <div style="text-align: center;font-size: 1.2em;">{exercise.eName} </div>
-            <div style="font-size: 0.8em;">{exercise.targetMuscle} </div>
-            <div style="font-size: 0.8em;">{exercise.difficulty} </div>
-            Sets:
-            <input type="number" bind:value={sets[exercise.exerciseID]}>
-            Repeats:
-            <input type="number" bind:value={repeats[exercise.exerciseID]}>
-            Duration:
-            <input type="number" bind:value={durations[exercise.exerciseID]}>
+            <div class="flex flex-col px-5">
+                <div style="text-align: center;font-size: 1.2em;">{exercise.eName} </div>
+                <div class="card-actions">
+                    <div class="badge badge-outline" style="font-size: 0.8em;">{exercise.targetMuscle} </div>
+                    <div class="badge badge-outline" style="font-size: 0.8em;">{exercise.difficulty} </div>
+
+                </div>
+                <label class="input-group mt-2">
+                    <span>Sets</span> 
+                    <input type="number" min="1" max="10" class=" input input-bordered w-full" bind:value={sets[exercise.exerciseID]}>
+                </label>
+                <label class="input-group my-2">
+                    <span> Repeats </span>
+                    <input type="number"  class=" input input-bordered w-full" min="1" max="20" bind:value={repeats[exercise.exerciseID]}>
+                </label>
+            </div>
             
-            <button on:click={() => select(exercise)}> select</button>
+            <button class="btn btn-info " on:click={() => select(exercise)}> select</button>
+     <!--        Duration:
+            <input type="number" bind:value={durations[exercise.exerciseID]}>
+             -->
         </Card>
         {:else}
-        <p>Loading</p>
+        <p>Não existem Exercicios</p>
         {/each}
     </div>
-    <div class="timeline">
+    <div class="timeline bg-base-200">
         
         {#each plan.exercises as selected}
         <div class="selected" style="border:1px solid;">
@@ -216,6 +220,4 @@
         {/each}
 
     </div>
-</div>
-<div class="flex-container">
 </div>
