@@ -1,7 +1,7 @@
 
 
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import Card from "../Card.svelte";
     import { goto } from "$app/navigation";
     let parsed_data = [];
@@ -11,9 +11,14 @@
     let alert = 0;
     export let clientmail = "";
     import { session } from '$app/stores';
-
-
+    import { page } from '$lib/store/store.js';
+    export let client;
+    export let toggle;
     onMount(async ()=>{
+        
+        page.update(n => 
+            n = `Associar Plano a ${client.firstName} ${client.lastName}`
+        )
         console.log(" : session email")
 
         const res = await fetch('/user/plans', {
@@ -26,6 +31,7 @@
             "accept": "application/json"
         }
     })
+    
     const data = await res.json();
     parsed_data = data.parsed_data
     console.log(parsed_data)
@@ -55,6 +61,7 @@
     }
     async function confirm(){
         let error = undefined;
+        console.log(client.clientID)
         try {
             const res = await fetch('/user/clients/planstoclient', {
                 method: 'POST',
@@ -66,7 +73,7 @@
                 }
             })
             if(res.ok){
-                goto('/user/clients')
+                goto(`/user/clients/${client.ID}`)
             }else{
                 error= 'An error occurred'
             }
@@ -75,63 +82,74 @@
             error = 'An error occurred'
         }
     }   
+    function back(){
+        page.update(n => 
+            n = `Cliente ${client.firstName} ${client.lastName}`
+        )
+        toggle=0;
+    }
+    
 </script>
 
 
 <style>
     
     .exercises{
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(235px,235px));
-        gap:50px;
-        grid-auto-flow: row; 
-        background-color: white;
+        /* display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px,300px)); */
+        /* grid-templa
+        te-rows: repeat(auto-fill, minmax(300px,300px)); */
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
         padding: 20px;
         margin: 20px  auto;
         width: 100%;
-        height: 90%;
+        height: 100%;
+        overflow: hidden;
         overflow-y: auto;
         box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
     }
-    .exercises::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    .exercises::-webkit-scrollbar-track, .timeline::-webkit-scrollbar-track {
+        
         border-radius: 10px;
-        background-color: #f5f5f5;
+       
     }
     
-    .exercises::-webkit-scrollbar {
+    .exercises::-webkit-scrollbar, .timeline::-webkit-scrollbar {
         width: 8px;
-        background-color: #f5f5f5;
+       
     }
     
-    .exercises::-webkit-scrollbar-thumb {
+    .exercises::-webkit-scrollbar-thumb, .timeline::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        
         background-color: #3d3d3d;
     }
-    .flex-container{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 20px  auto;
-        height: 75%;
-        width: 90%;
-    }
-    
-
     .timeline {
         display: flex;
         width: 300px;
-        margin-top: 20px;
-        margin-left: 30px;
-        margin-right: 30px;
+        padding: 20px 10px;
+        row-gap: 10px;
+        margin: 20px  auto;
+        margin-left: 10px;
         flex-direction: column;
         left: var(--sidebar-width);
         height: 100%;
         overflow-y: auto;
-        background-color: #fff;
         transition: left var(--sidebar-animation-time) var(--sidebar-animation-curve);
+        box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
 }
+    .flex-container{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin: 20px  auto;
+        
+        height: 75vh;
+        width: 90%;
+    }
     .selected{
         display: flex;
         flex-direction: row;
@@ -147,38 +165,24 @@
         width: 35px;
         height: fit-content;
     }
-    button{
-        height: 36px;
-        background-color: #eee;
-        width: fit-content;
-        margin: auto;
-        border: 1px solid black;
-        cursor: pointer;
-    }
-
-    button:hover{
-        background-color: #222;
-        color: #fff
-    }
-    
+   
 </style>
-<button on:click={confirm} >Confirm</button>
 <div class="flex-container">
-    <div id="card" class="exercises" in:slide="{{delay: 300, duration: 300}}" out:fade="{{duration: 300}}" >
+    <div id="card" class="exercises bg-base-200" >
         {#each [...parsed_data] as plan }
-        <Card path = "" details={details} >
-            <div class="div-image">
+        <Card path = "" >
+            <div class="div-image"> 
                 <img class="m-auto img-card" src="/planosdummy.jpg" alt="" >
             </div>
-            <div style="text-align: center;font-size: 1.2em;">{plan.pName} </div>
+            <div class="font-bold text-xl mx-auto my-5">{plan.pName} </div>
 
-            <button on:click={() => select(plan)}> select</button>
+            <button class="btn btn-info" on:click={() => select(plan)}> select</button>
         </Card>
         {:else}
         <p>Loading</p>
         {/each}
     </div>
-    <div class="timeline">
+    <div class="timeline bg-base-200">
         {clientmail}
         {#each plans as selected}
 
@@ -191,6 +195,6 @@
     </div>
 </div>
 <div style="display:flex;align-items:center;">
-
-    <button on:click={confirm} >Confirm</button>
+    <button on:click={back} class="btn btn-error ml-auto mr-5" >Back </button>
+    <button class="btn btn-success  ml-5 mr-auto" on:click={confirm} >Confirm</button>
 </div>

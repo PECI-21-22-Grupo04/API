@@ -3,9 +3,34 @@
     import {onMount, onDestroy} from 'svelte';
     import { session } from '$app/stores';
     import { page } from '$lib/store/store.js';
-import { goto } from "$app/navigation";
+    import { goto } from "$app/navigation";
     
     let parsed_data=[];
+
+    async function deletePlan(id){
+        
+        const res = await fetch('/user/plans', {
+                method: 'DELETE',
+                body:JSON.stringify({                    
+                    programID: id
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "accept": "application/json"
+                }
+            })
+        if(res.ok){
+            parsed_data = parsed_data.filter( function(value){
+                console.log(value)
+                if(value.programID != id){ return value;}
+            } )
+                
+            console.log(JSON.stringify(parsed_data) + "ola")
+                
+        }
+    }
+    
+
     onMount(async ()=>{
         page.update(n => 
             n = "Planos"
@@ -22,7 +47,7 @@ import { goto } from "$app/navigation";
                 }
             })
         const data = await res.json();
-        parsed_data = data.parsed_data
+        parsed_data = [...data.parsed_data]
         console.log(parsed_data)
     })
 
@@ -73,27 +98,34 @@ import { goto } from "$app/navigation";
 
 </div>
 <div class="content">
-    {#each [...parsed_data] as plan }
-    <Card  path="/user/plans/{plan.programID}">
-          
+    {#each parsed_data as plan }
+    <Card >
+        <a href="/user/plans/{plan.programID}">
             <figure><img   src={thumbnail} alt="" /></figure>
             <div class="card-body">
-            <h2 class="card-title">
-                {plan.pName}
+                <h2 class="card-title">
+                    {plan.pName}
 
-            </h2>
-            <div style="font-size:small;    height:80px;width:230px;overflow:hidden; overflow-wrap: break-word;">
-                {plan.pDescription}
+                </h2>
+                <div style="font-size:small;    height:80px;width:230px;overflow:hidden; overflow-wrap: break-word;">
+                    {plan.pDescription}
+                </div>
             </div>
-            <div class="card-actions justify-end">
-                <div class="badge badge-outline">{plan.forPathology}</div> 
-  
-            </div>
-    </div>
-
-        </Card>
-
+        </a>
+        <div class=" flex flex-row items-center mb-5 mx-5">
+            
+            <button class="btn p-2 z-99 bg-base-300" style="width:fit-content; heigth:fit-content" on:click={() => deletePlan(plan.programID)}>
         
+                <img src="/delete.svg" alt="" style="width:30px; height:30px" >
+            </button>
+                
+            <div class="card-actions justify-end ml-auto">
+                <div class="badge badge-outline">{plan.forPathology}</div>
+            </div>
+        </div>
+        
+        
+    </Card>
 
         
     {/each}

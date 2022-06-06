@@ -12,14 +12,20 @@
 <script>
 
     import {onMount} from 'svelte';
-    import { page, session } from '$app/stores';
+    import {session } from '$app/stores';
     import { goto } from "$app/navigation";
     import SelectPlan from "$lib/components/clients/SelectPlan.svelte";
+    import { page } from '$lib/store/store.js';
     let client = {}
     export let url;
     let toggle=0;
     let exer;
+    let birthdate;
+    let signday;
+    let signhour;
+
     onMount(async ()=>{
+        
         console.log(url)
         const res = await fetch(url, {
                 method: 'POST',
@@ -33,7 +39,13 @@
             })
         const data = await res.json();
         client = data.parsed_data[0];
-        
+        console.log(client.birthdate.substring(0,10))
+        birthdate = client.birthdate.substring(0,10)
+        signday = client.clientSince.substring(0,10)
+        signhour = client.clientSince.substring(11,19)
+        page.update(n => 
+            n = `Cliente ${client.firstName} ${client.lastName}`
+        )
     })
     function AddExerc(){
         toggle = 1;
@@ -71,7 +83,7 @@
     .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 400px;
-  margin: auto;
+  
   text-align: center;
 }
 
@@ -80,18 +92,7 @@
   font-size: 18px;
 }
 
-button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
+
 
 a {
   text-decoration: none;
@@ -99,9 +100,7 @@ a {
   color: black;
 }
 
-button:hover, a:hover {
-  opacity: 0.7;
-}
+
 </style>
 
  <!-- Add icon library -->
@@ -111,13 +110,13 @@ button:hover, a:hover {
 
 
 {#if toggle == 0}
-<div class="card">
+<div class="card bg-base-100 mx-auto mt-[50px] px-10">
     <img src="/Profileicon.png" alt="ProfilePic" style="width:100%">
     <h1>{client.firstName} {client.lastName}</h1>
     <p class="title">{client.mail}</p>
     <h3>{client.sex}</h3>
-    <h1>Data de Nascimento: {client.birthdate}</h1>
-    <h1>Este utilizador associou se em: {client.birthdate}</h1>
+    <h1>Data de Nascimento: {birthdate}</h1>
+    <h1>Este utilizador associou se em: {signhour} {signday}</h1>
     <p>
 
     </p>
@@ -125,7 +124,7 @@ button:hover, a:hover {
     <a href="#"><i class="fa fa-linkedin"></i></a>
     <a href="#"><i class="fa fa-facebook"></i></a>
     <p></p>
-    <button on:click={AddExerc}> Partilhar planos</button>
+    <button class="btn btn-info my-5" on:click={AddExerc}> Partilhar planos</button>
   </div> 
     <!-- <div   class="wrapper">
             <div  class="detailedPlan">
@@ -141,7 +140,7 @@ button:hover, a:hover {
         
     </div> -->
 {:else}
-    <SelectPlan clientmail={client.mail}/>
+    <SelectPlan bind:toggle client={client} clientmail={client.mail}/>
 {/if}
 <div>
 
