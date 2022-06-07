@@ -61,7 +61,6 @@
     }
     async function confirm(){
         let error = undefined;
-        console.log(client.clientID)
         try {
             const res = await fetch('/user/clients/planstoclient', {
                 method: 'POST',
@@ -73,7 +72,7 @@
                 }
             })
             if(res.ok){
-                goto(`/user/clients/${client.clientID}`)
+                toggle = 0;
             }else{
                 error= 'An error occurred'
             }

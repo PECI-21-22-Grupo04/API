@@ -59,7 +59,7 @@
     
     </div>
   
-    <div class="vertical-line" style="margin-top:auto;margin-bottom:auto; ">  </div>
+    <div class="vertical-line bg-base-content" style="margin-top:auto;margin-bottom:auto; ">  </div>
     <div id="app" style="margin-left:auto; margin-right:40px; ">
   
       {#if video}
@@ -91,7 +91,7 @@
   .vertical-line{
     height: 300px;
     width: 1px;
-    background-color: white;
+    
 
   }
   .flexcontainer{
