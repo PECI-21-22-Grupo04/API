@@ -8,16 +8,18 @@
     import { session } from '$app/stores';
     import { storage } from "$lib/database/firebase.js"
     import { page } from '$lib/store/store.js';
-    import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage"
+    import { ref, getDownloadURL, uploadBytesResumable, deleteObject } from "firebase/storage"
     import {  onDestroy, onMount } from "svelte";
     const components = [Form,Upload]
     let current=0;
+    let closeButton=0;
     let exp
     let avatar
     let video
     let exercise = {
             email:$session.user.email,
             name:"",
+            firebaseRef:"",
             targetmuscle:"",
             difficulty:"",
             description:"",
@@ -47,10 +49,12 @@
   }
  
   async function confirm(){
+        closeButton = 1;
         let error = undefined;
         const date = Date.now();
         const image = exercise.expthumbnail;
         const video = exercise.expvideo;
+        exercise.firebaseRef = `${date}`;
         const storageVideoRef = ref(storage, `videos/${date}`);
         const storageImageRef = ref(storage, `images/${date}`);
 
@@ -60,6 +64,7 @@
 
           },
           (error) => {
+            closeButton = 0;
             alert("Houve um erro com o upload do video");
           },
           () => {
@@ -72,6 +77,12 @@
 
                 },
                 (error) => {
+                  deleteObject(storageVideoRef).then(()=>{
+                    console.log("video apagado com sucesso")
+                  }).catch((error) => {
+                    console.log("houve um erro com o delete do video uploaded")
+                  })
+                  closeButton = 0;
                   alert("Houve um erro com o upload da imagem");
                 },
                 () => {
@@ -93,14 +104,31 @@
                                 'Content-Type': 'application/json'
                             }
                         })
-                        if(res.ok){
+                        console.log(res)
+                        if(res.redirected == true){
                             goto('/user/exercises')
+                            console.log(res.status)
+                            closeButton = 0;
                         }else{
+                          
+                          deleteObject(storageVideoRef).then(()=>{
+                              console.log("video apagado com sucesso")
+                            }).catch((error) => {
+                              console.log("houve um erro com o delete do video uploaded")
+                            })
+                          deleteObject(storageImageRef).then(()=>{
+                              console.log("imagem apagada com sucesso")
+                            }).catch((error) => {
+                              console.log("houve um erro com o delete da imagem uploaded")
+                            })  
+                          console.log("ahahah que smart")
                             error= 'An error occurred'
                         }
+                        closeButton = 0;
                     } catch (err) {
                         console.log(err)
                         error = 'An error occurred'
+                        closeButton = 0;
                     }
                   })
                 }
@@ -153,7 +181,13 @@
       <Finnish bind:avatar bind:exercise bind:current/>
       <div class="flex flex-row mt-10">
         <button on:click={back} class="btn btn-error" >Back </button>
-        <button on:click={confirm} class="btn btn-success ml-auto">Confirm </button>
+
+        {#if closeButton==1}
+          <button class="btn btn-success loading ml-auto">Confirm </button>
+        {:else}
+          <button on:click={confirm} class="btn btn-success  ml-auto">Confirm </button>
+        
+        {/if}
 
       </div>
     </div>

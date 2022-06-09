@@ -132,12 +132,12 @@ function createProgram(email, pname , pdescription, pathology,pthumbnailPath, pv
         });
     });
 };
-function addExercisetoProgram(programID, exerciseID , nsets, nreps, duration) {
+function addExercisetoProgram(programID, exerciseID, order , nsets, nreps, duration) {
     return new Promise((resolve) => {
 
-        var sql = 'CALL spAddExerciseToProgram(?,?,?,?,?)';
+        var sql = 'CALL spAddExerciseToProgram(?,?,?,?,?,?)';
 
-        dbconnection.query(sql, [programID, exerciseID , nsets, nreps, duration], (err, data) => {
+        dbconnection.query(sql, [programID, exerciseID ,order, nsets, nreps, duration], (err, data) => {
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -171,12 +171,12 @@ function addProgramtoClient(clientEmail,programID) {
     });
 };
 
-function createExercise(email, ename, difficulty, edescription, pathologies, targetMuscle ,thumbnailPath,videoPath) {
+function createExercise(email, ename, firebaseRef, difficulty, edescription, pathologies, targetMuscle ,thumbnailPath,videoPath) {
     return new Promise((resolve) => {
 
-        var sql = 'CALL spCreateExercise(?,?,?,?,?,?,?,?,?)';
+        var sql = 'CALL spCreateExercise(?,?,?,?,?,?,?,?,?,?)';
         
-        dbconnection.query(sql, [email,ename, difficulty, edescription, pathologies,targetMuscle ,thumbnailPath,videoPath,dbKey], (err, data) => {
+        dbconnection.query(sql, [email,ename,firebaseRef, difficulty, edescription, pathologies,targetMuscle ,thumbnailPath,videoPath,dbKey], (err, data) => {
             console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);

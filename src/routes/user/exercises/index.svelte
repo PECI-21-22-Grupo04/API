@@ -3,21 +3,23 @@
     import {onMount, onDestroy} from 'svelte';
     import { session } from '$app/stores';
     import { page } from '$lib/store/store.js';
-import { goto } from "$app/navigation";
-import { validate_each_argument } from "svelte/internal";
+    import { goto } from "$app/navigation";
+    import { validate_each_argument } from "svelte/internal";
+    import { storage } from "$lib/database/firebase.js"
+    import { ref, deleteObject} from "firebase/storage"
     let parsed_data=[];
-
+    
     async function createExe()
     {
         goto('/user/exercises/createexe')
      
     }
 
-    async function deleteExercise(id){
+    async function deleteExercise(exercise){
         const res = await fetch('/user/exercises', {
                 method: 'DELETE',
                 body:JSON.stringify({                    
-                    exerciseID: id
+                    exerciseID: exercise.exerciseID
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,11 +27,23 @@ import { validate_each_argument } from "svelte/internal";
                 }
             })
         if(res.ok){
+            const storageVideoRef = ref(storage, `videos/${exercise.firebaseRef}`);
+            const storageImageRef = ref(storage, `images/${exercise.firebaseRef}`);
+            deleteObject(storageVideoRef).then(()=>{
+                console.log("video apagado com sucesso")
+            }).catch((error) => {
+                console.log("houve um erro com o delete do video uploaded")
+            })
+            deleteObject(storageImageRef).then(()=>{
+                console.log("imagem apagada com sucesso")
+            }).catch((error) => {
+                console.log("houve um erro com o delete da imagem uploaded")
+            })  
             parsed_data = parsed_data.filter( function(value){
                 console.log(value)
-                if(value.exerciseID != id){ return value;}
+                if(value.exerciseID != exercise.exerciseID){ return value;}
             } )
-                
+            
             console.log(JSON.stringify(parsed_data) + "ola")
                 
         }
@@ -155,7 +169,7 @@ img {
                     </div>
                     </a>
                         <div class="flex flex-row items-center mb-5 mx-5">
-                            <button class="btn p-2 z-99 bg-base-300" style="width:fit-content; heigth:fit-content" on:click={() => deleteExercise(exercise.exerciseID)}>
+                            <button class="btn p-2 z-99 bg-base-300" style="width:fit-content; heigth:fit-content" on:click={() => deleteExercise(exercise)}>
     
                                 <img src="/delete.svg" alt="" style="width:30px; height:30px" >
                             </button>
