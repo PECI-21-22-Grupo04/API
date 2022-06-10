@@ -115,8 +115,13 @@ import { goto } from "$app/navigation";
     {#each [...parsed_data] as exercise}
     
         <div class="div-video">
+            
+            <video autoplay controls>
+                <source src={exercise.videoPath} type="video/mp4">
+                    
+                <track kind="captions">
+            </video>
             <!-- <VideoPlayer height={700} poster={exercise.thumbnailPath} source={exercise.videoPath} /> -->
-
         </div>
          
     

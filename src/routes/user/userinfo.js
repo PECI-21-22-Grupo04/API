@@ -1,19 +1,18 @@
 import {db} from "$lib/database/dbFunctions.js";
 
-export async function patch({request}){
+export async function post({request}){
     const body = await request.json();
     try{
-        const update_exercise = await db.addUserImage(body.email, 
-                                                        body.imageURL   
-                                                        );
+        const instructor = await db.selectInstructor(body.email);
   
   
-        if(update_exercise!==1)
+        if(instructor!==1)
         {   
-            if(update_exercise!==2)
+            if(instructor!==2)
             {
+                let parsed_data = JSON.parse(JSON.stringify(instructor))[0]
                 return{
-                    header:{location:"#"},
+                    body: {parsed_data},
                     status: 200
                 }
             }

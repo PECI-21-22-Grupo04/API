@@ -64,8 +64,19 @@ import { onMount } from "svelte";
     <input type="text" placeholder="Escreve aqui" class="input input-bordered w-full max-w-s"  bind:value={exercise.name}  />
     
     <h1   class="text-2xl font-bold"   style="margin-bottom:20px; margin-top:20px;">Área Múscular</h1>
-
-    <input type="text" placeholder="Escreve aqui" class="input input-bordered w-full max-w-s"  bind:value={exercise.targetmuscle}  />
+    
+    <select class="select w-full max-w-s select-bordered" bind:value={exercise.targetmuscle}>
+        
+        <option>Geral</option>  
+        <option>Peito</option>
+        <option>Pernas</option>
+        <option>Costas</option>
+        <option>Braços</option>
+        <option>Gluteos</option>
+        <option>Ombros</option>
+        <option>Abdominais</option>
+    </select>
+    <!-- <input type="text" placeholder="Escreve aqui" class="input input-bordered w-full max-w-s"  bind:value={exercise.targetmuscle}  /> -->
 
     <h1  class="text-2xl font-bold" style="margin-bottom:20px; margin-top:20px;"> Dificuldade do Exercício</h1>
     <div class="btn-group ">

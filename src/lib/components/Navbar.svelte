@@ -3,8 +3,9 @@
     export let path ='';
 
     import { session } from '$app/stores';    
-    import { page } from '$lib/store/store.js';
+    import { page, instrutorStore } from '$lib/store/store.js';
     import { goto } from '$app/navigation';
+  
     async function logout ()
     {
         try {
@@ -34,8 +35,13 @@
 
 
     }
+    /* let userImage = "";
+    instrutorStore.subscribe(value => {
+      userImage = value.imagePath;
+    }) */
     let pageName="" ;
     page.subscribe( value => {
+      console.log(value)
       pageName = value;
     })
 </script>
@@ -92,12 +98,12 @@
       <div class="dropdown dropdown-end">
 
         
-
+        
       </div>
       <div class=" dropdown dropdown-end">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
-            <img src="https://api.lorem.space/image/face?hash=33791" />
+            <img src={$instrutorStore.imagePath} />
           </div>
         </label>
         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-neutral rounded-box w-52">
