@@ -53,26 +53,28 @@ export async function post({params,request}){
 
 export async function patch({params,request}){
     const body = await request.json();
+    console.log(body)
     const id = await params.id;
     try{
         const update_exercise = await db.updateExercise(id, 
-                                                        body.eName, 
+                                                        body.eName,
+                                                        body.firebaseRef, 
                                                         body.difficulty, 
                                                         body.eDescription, 
-                                                        body.pathology, 
+                                                        body.forPathology, 
                                                         body.targetMuscle, 
                                                         body.thumbnailPath, 
                                                         body.videoPath 
                                                         );
   
-  
+        console.log(update_exercise)
         if(update_exercise!==1)
         {   
             if(update_exercise!==2)
             {
                 return{
-                    headers:{location:`/user/plans/${id}`},
-                    status: 302
+                    
+                    status: 200
                 }
             }
             else

@@ -60,7 +60,7 @@
 
 </style>
 
-<Navbar active={activeSidebar} email={email} />
+<Navbar />
 <Settings email={email}/>
 
 

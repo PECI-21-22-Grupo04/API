@@ -493,13 +493,13 @@ function deleteExercisefromProgram(planID,exerID) {
     });
 };
 
-function updateExercise(exerID, ename, difficulty, edescription, pathologies, targetMuscle ,thumbnailPath,videoPath) {
+function updateExercise(exerID, ename, firebaseref, difficulty, edescription, pathologies, targetMuscle ,thumbnailPath,videoPath) {
     return new Promise((resolve) => {
 
-        var sql = 'CALL spUpdateExercise(?,?,?,?,?,?,?,?,?)';
+        var sql = 'CALL spUpdateExercise(?,?,?,?,?,?,?,?,?,?)';
         
-        dbconnection.query(sql, [exerID,ename, difficulty, edescription, pathologies,targetMuscle ,thumbnailPath,videoPath,dbKey], (err, data) => {
-            console.log(data)
+        dbconnection.query(sql, [exerID,ename,firebaseref, difficulty, edescription, pathologies,targetMuscle ,thumbnailPath,videoPath,dbKey], (err, data) => {
+            console.log(data + "ola")
             if (err && err.errno==1062) {
                 resolve(1);
             }

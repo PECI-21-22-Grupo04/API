@@ -97,6 +97,7 @@
             })
         const data = await res.json();
         $exerciseList = allExercises = [...data.parsed_data]
+        console.log($exerciseList)
     })
 
     onDestroy(async ()=>{
@@ -148,7 +149,7 @@ img {
             {#if selector.difficulty == ""}
             <label tabindex="0" class="btn m-1">Dificuldade</label>
             {:else}
-            <label tabindex="0" class="btn m-1">{selector.difficulty}</label>
+            <label tabindex="0" class="btn btn-outline m-1">{selector.difficulty}</label>
             {/if}
             
             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -165,7 +166,7 @@ img {
             {#if selector.targetMuscle == ""}
             <label tabindex="0" class="btn m-1">Área Muscular</label>
             {:else}
-            <label tabindex="0" class="btn m-1">{selector.targetMuscle}</label>
+            <label tabindex="0" class="btn btn-outline m-1">{selector.targetMuscle}</label>
             {/if}
             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
               
@@ -197,7 +198,7 @@ img {
             <div style="margin-left:20px"  >
                 <Card >
     
-                    <a href="/user/exercises/{exercise.exerciseID}">
+                    <a sveltekit:prefetch href="/user/exercises/{exercise.exerciseID}">
                     <figure><img   src={exercise.thumbnailPath } alt="" /></figure>
                     <div class="card-body">
                     <h2 class="card-title">
