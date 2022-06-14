@@ -160,7 +160,7 @@
                         <label class="input-group my-5">
                             <span>Área Muscular</span>
                             <select class="select  select-bordered" bind:value={exercise.targetMuscle} >
-                                <option disable selected>Escolhe a Área Muscular</option>
+                                <option disabled selected>Escolhe a Área Muscular</option>
                                 <option>Geral</option>  
                                 <option>Peito</option>
                                 <option>Pernas</option>
@@ -174,7 +174,7 @@
                         <label class="input-group my-5">
                             <span>Difficuldade</span>
                             <select class="select  select-bordered" bind:value={exercise.difficulty} >
-                                <option disable selected>Escolhe a Dificuldade</option>
+                                <option disabled selected>Escolhe a Dificuldade</option>
                                 <option>Fácil</option>  
                                 <option>Média</option>
                                 <option>Avançado</option>
@@ -245,6 +245,6 @@
     {/each}
         <div class="flex w-full">
 
-            <button class="btn btn-error w-20 m-10 " on:click={back} >Back</button>
+            <button class="btn btn-error w-20 ml-10 " on:click={back} >Back</button>
         </div>
     </div>

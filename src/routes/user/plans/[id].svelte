@@ -77,26 +77,17 @@
     {plan.pName}
 </h1>
 
-<div style="display:flex;justify-content:center; margin-top:110px; ">
-    <div 
-        style="
-                width: 700px;
-                height:500px;
-                border: 2px dotted black;
-                padding: 50px;
-                margin-right: 220px;
-                border-color:#095776;
-                inline-size: 650px;
-                overflow-wrap: break-word;"
+<div style="display:flex;justify-content:center; margin-top:30px; ">
+    <div class="flex flex-col bg-base-200 w-[700px] h-[650px] text-center mr-10" style="box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);">
+        <h1
+        class="col mt-[20px]"
+        style="text-align:center;font-size:32px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;margin-bottom:30px"
+        >
+            Description
+        </h1>
+        <textarea class="w-[600px] h-[300px] m-auto input input-bordered" bind:value={plan.pDescription} disabled/>
+        
 
-    >
-    <h1
-    class="col"
-    style="text-align:center;font-size:32px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;margin-bottom:30px"
->
-    Description
-</h1>
-        {plan.pDescription}
     </div>
 
 
@@ -104,31 +95,44 @@
 {#if toggle == 0}
 
 
-    <div style="display:flex;justify-content:center;">
+    <div style="display:flex;justify-content:center; box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);" class=" bg-base-200 ">
 
-        <div class="snap-x overflow-x-auto" style="height:500px;">
+        <div class="snap-x overflow-x-hidden my-auto p-5 gap-5" style="height:600px;">
 
             {#each [...exer] as exercise}
  
-
-            <div class="snap-center ">
-                <div class = "transparent flex flex-row" style="height:150px; width:300px;margin-bottom:auto; border-radius: 25px; padding:25px; margin-top:10px;">
+                <div class = "bg-base-100 flex flex-row w-full " style="height:160px; border-radius: 25px; margin-top:20px;  box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);">
                     
-                    <div>
-                        <h1 style="font-size:x-large;font-weight:700;">{exercise.eName }</h1>
-                        <h1 style="margin:5px; font-size:large;font-weight:300;" >{exercise.difficulty }</h1>
-                        <h1  style=" font-size:x-large;font-weight:700;" > {exercise.targetMuscle }</h1>
-                    </div>
-                    <div style="margin-left:auto">
-                        <h1 style="font-size:x-large;font-weight:700;"> R:{exercise.numReps }</h1>
-                        <h1 style="font-size:x-large;font-weight:700;"> S:{exercise.numSets}</h1>
+                    <img src={exercise.thumbnailPath} alt="" class="w-[200px] h-full" style="border-radius: 25px;">
+                    <div class="w-[250px] overflow-hidden mx-auto py-5" >
+                        <h1 class="mx-auto w-full text-center" style="font-size:x-large;font-weight:700;">{exercise.eName }</h1>
+                        <div class="flex flex-row my-5 gap-2">
+                            {#if exercise.difficulty == "Fácil"}
+                                <h1 class="badge badge-outline badge-success badge-lg ml-auto" >{exercise.difficulty }</h1>
+                            {:else if exercise.difficulty == "Média" }    
+                                <h1 class="badge badge-outline badge-warning badge-lg ml-auto " >{exercise.difficulty }</h1>
+                            {:else}
+                                <h1 class="badge badge-outline badge-error badge-lg ml-auto " >{exercise.difficulty }</h1>
 
+                            {/if }
+                                <h1 class="badge badge-outline badge-lg mr-auto "  > {exercise.targetMuscle }</h1>
 
+                        </div>
+                        
+                        <div class="flex flex-row">
+
+                                <div class="badge badge-primary ml-auto " >Sets</div>
+                                <div class="ml-3"> {exercise.numSets} </div>
+                            
+                            
+                                <div class="badge badge-secondary ml-3" >Reps</div>
+                                <div class="ml-3 mr-auto" > {exercise.numReps} </div>
+                            
+                        </div>
                     </div>
 
                 </div>
 
-              </div>
              
             {/each}
          
@@ -145,20 +149,17 @@
 
 </div>
 
-<a href="/user/plans">Back</a>
-<div>
-    <p />
-</div>
+<a class="btn btn-error ml-10 relativ"  href="/user/plans">Back</a>
 
 <style>
-    a {
+    /* a {
         text-decoration: none;
         color: black;
         padding: 10px;
         width: fit-content;
         border: 1px solid black;
     }
-
+ */
     .detailedPlan {
         display: flex;
         flex-direction: column;
@@ -176,9 +177,7 @@
    
     }
 
-    .transparent {
-      background-color: rgba(255,255,255,0.91);
-    }
+
 
     .anchor > img {
     height: 100px;
