@@ -4,7 +4,8 @@ export async function patch({request}){
     const body = await request.json();
     try{
         const update_exercise = await db.updateProgramExercise(body.programID, 
-                                                        body.exerciseID,  
+                                                        body.exerciseID,
+                                                        body.exerciseOrder,
                                                         body.numSets, 
                                                         body.numReps,  
                                                         body.duration 

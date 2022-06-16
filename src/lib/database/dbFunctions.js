@@ -76,9 +76,9 @@ function createInstructor(mail,firebaseID, fName, lName, birth, sex, street,post
             zero,
             "about me",   // substituir por input
             dbKey], (err, data) => {
-                console.log(data)
+                // console.log(data)
                 if (err && err.errno==1062) {
-                console.log(err);
+                // console.log(err);
 
                     
                     resolve(1);
@@ -88,7 +88,7 @@ function createInstructor(mail,firebaseID, fName, lName, birth, sex, street,post
                 }
                 else {
                     resolve(2);
-                console.log(err);
+                // console.log(err);
 
                 }
         });
@@ -119,7 +119,7 @@ function createProgram(email, pname , pdescription, pathology,pthumbnailPath, pv
         var sql = 'CALL spcreateProgram(?,?,?,?,?,?,?,?)';
 
         dbconnection.query(sql, [email,pname, pdescription, pathology , pthumbnailPath, pvideoPath, showcase,dbKey], (err, data) => {
-            console.log(data)
+            // console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -157,7 +157,7 @@ function addProgramtoClient(clientEmail,programID) {
         var sql = 'CALL spAssociateProgramToClient(?,?,?)';
         console.log(programID)
         dbconnection.query(sql, [clientEmail,programID,dbKey], (err, data) => {
-            console.log(data)
+            // console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -177,7 +177,7 @@ function createExercise(email, ename, firebaseRef, difficulty, edescription, pat
         var sql = 'CALL spCreateExercise(?,?,?,?,?,?,?,?,?,?)';
         
         dbconnection.query(sql, [email,ename,firebaseRef, difficulty, edescription, pathologies,targetMuscle ,thumbnailPath,videoPath,dbKey], (err, data) => {
-            console.log(data)
+            // console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -198,7 +198,7 @@ function selectInstructor(mail) {
         var sql = 'CALL spSelectInstructor(?,?)';
 
         dbconnection.query(sql, [mail, dbKey], (err, data) => {
-            console.log(data);
+            // console.log(data);
             if (err) {
                 resolve(1);
             }
@@ -240,7 +240,7 @@ function selectAllClients( email) {
         var sql = 'CALL spSelectInstructorClients(?,?)';
 
         dbconnection.query(sql,  [email,dbKey], (err, data) => {
-            console.log(data)
+            // console.log(data)
             if (err) {
                 resolve(1);
             }
@@ -262,9 +262,9 @@ function selectAllExercises(email) {
         var sql = 'CALL spSelectInstructorExercises(?,?)';
 
         dbconnection.query(sql,[email,dbKey] ,(err, data) => {
-            // console.log(data);
+            // // console.log(data);
             if (err) {
-                console.log(err)
+                // console.log(err)
                 resolve("fetch error");
             }
             else if (typeof data !== 'undefined' && data.length > 0) {
@@ -283,9 +283,9 @@ function selectPlanExercises(programID) {
         var sql = 'CALL spSelectProgramExercises(?)';
 
         dbconnection.query(sql,[programID] ,(err, data) => {
-            // console.log(data);
+            // // console.log(data);
             if (err) {
-                console.log(err)
+                // console.log(err)
                 resolve("fetch error");
             }
             else if (typeof data !== 'undefined' && data.length > 0) {
@@ -460,7 +460,7 @@ function deleteProgram(planID) {
         var sql = 'CALL spDeleteProgram(?,?)';
         
         dbconnection.query(sql, [planID,dbKey], (err, data) => {
-            console.log(data)
+            // console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -479,7 +479,7 @@ function deleteExercisefromProgram(planID,exerID) {
         var sql = 'CALL spRemoveExerciseFromPlan(?,?)';
         
         dbconnection.query(sql, [planID,exerID], (err, data) => {
-            console.log(data)
+            // console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -519,7 +519,7 @@ function updateProgram(progID, pname , pdescription, pathology,pthumbnailPath, p
         var sql = 'CALL spUpdateProgramData(?,?,?,?,?,?,?,?)';
 
         dbconnection.query(sql, [progID,pname, pdescription, pathology , pthumbnailPath, pvideoPath, showcase,dbKey], (err, data) => {
-            console.log(data)
+            // console.log(data)
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -533,12 +533,12 @@ function updateProgram(progID, pname , pdescription, pathology,pthumbnailPath, p
     });
 };
 
-function updateProgramExercise(programID, exerciseID , nsets, nreps, duration) {
+function updateProgramExercise(programID, exerciseID , order , nsets, nreps, duration) {
     return new Promise((resolve) => {
 
-        var sql = 'CALL spUpdateProgramExercise(?,?,?,?,?)';
+        var sql = 'CALL spUpdateProgramExercise(?,?,?,?,?,?)';
 
-        dbconnection.query(sql, [programID, exerciseID , nsets, nreps, duration], (err, data) => {
+        dbconnection.query(sql, [programID, exerciseID , order ,  nsets, nreps, duration], (err, data) => {
             if (err && err.errno==1062) {
                 resolve(1);
             }
@@ -562,9 +562,9 @@ function addUserImage(mail,imageURL) {
             mail,
             imageURL,
             dbKey], (err, data) => {
-                console.log(data)
+                // console.log(data)
                 if (err && err.errno==1062) {
-                console.log(err);
+                // console.log(err);
 
                     
                     resolve(1);

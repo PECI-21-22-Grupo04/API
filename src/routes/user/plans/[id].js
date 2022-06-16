@@ -36,8 +36,8 @@ export async function del({params,request}){
             if(deleted_program!==2)
             {
                 return{
-                    headers:{location:`/user/plans/${id}`},
-                    status: 302
+                    /* headers:{location:`/user/plans/${id}`}, */
+                    status: 200
                 }
             }
             else

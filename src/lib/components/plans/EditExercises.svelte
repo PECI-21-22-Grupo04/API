@@ -3,15 +3,15 @@
 <script>
     import { onMount } from 'svelte';
     import Card from "../Card.svelte";
+    import {exerciseList} from "$lib/store/store.js"
     import { goto } from "$app/navigation";
-    let parsed_data = [];
     export let plan;
+    export let toggle;
+    let parsed_data = [];
     let details = 0
     let alert = 0;
 
-
     onMount(async ()=>{
-        console.log(" : session email")
 
         const res = await fetch('/user/exercises', {
         method: 'POST',
@@ -27,7 +27,22 @@
 
     const data = await res.json();
     parsed_data = data.parsed_data
-    console.log(parsed_data)
+    
+    /* const resExes = await fetch('/user/plans/selectexercises', {
+        method: 'POST',
+        body:JSON.stringify({                    
+            programID: plan.programID
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+            accept: "application/json"
+        }
+    })
+
+
+    const dataExes = await resExes.json();
+    plan["exercises"] = [...dataExes.arr]
+    console.log(plan.exercises) */
     })
 
 
@@ -36,7 +51,7 @@
     let durations = {};
     function select(exercise){
         for (let index = 0; index < plan.exercises.length; index++) {
-            if(plan.exercises[index].exercise.exerciseID == exercise.exerciseID 
+            if(plan.exercises[index].exerciseID == exercise.exerciseID 
             || repeats[exercise.exerciseID] == null 
             || sets[exercise.exerciseID] == null 
             ){
@@ -48,12 +63,20 @@
         /*     plan.exercises = plan.exercises.filter( (value) => {
                 if( value.exercise.exerciseID == exercise.exerciseID) 
             }) */
-            plan.exercises = [...plan.exercises, {exercise ,reps: repeats[exercise.exerciseID], sets: sets[exercise.exerciseID], durations:durations[exercise.exerciseID]}]
+            exercise["numSets"]=sets[exercise.exerciseID];
+            exercise["numReps"]=repeats[exercise.exerciseID];
+                       
+            plan.exercises = [...plan.exercises, exercise]
+            console.log(plan)
+            console.log($exerciseList)
         }
     }
+
+
+
     function deleteExercise(exercise){
         for (let index = 0; index < plan.exercises.length; index++) {
-            if(plan.exercises[index].exercise.exerciseID == exercise.exerciseID 
+            if(plan.exercises[index].exerciseID == exercise.exerciseID 
             ){
                 plan.exercises.splice(index,1);
                 plan.exercises = plan.exercises; 
@@ -64,17 +87,20 @@
     async function confirm(){
         let error = undefined;
         try {
-            const res = await fetch('/user/plans/exercisestoplan', {
+            const res = await fetch('/user/plans/editexercisestoplan', {
                 method: 'POST',
-                body:JSON.stringify(                    
+                body:JSON.stringify({
                     plan,
+                    exercisesToDelete: $exerciseList
+                }                    
                 ),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
             if(res.ok){
-                goto('/user/plans')
+                $exerciseList= [...plan.exercises]
+                toggle=false;
             }else{
                 error= 'An error occurred'
             }
@@ -218,35 +244,35 @@
         <div class = "bg-base-100 flex flex-row w-[400px] " style=" height: 160px ; border-radius: 25px; margin-top:20px;  box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);">
             <div class="w-[200px]" >
 
-                <img src={selected.exercise.thumbnailPath} alt="" class="w-full h-full" style="border-radius: 25px;">
+                <img src={selected.thumbnailPath} alt="" class="w-full h-full" style="border-radius: 25px;">
             </div>
             <div class="w-[250px] overflow-hidden mx-auto py-5" >
-                <h1 class="mx-auto w-full text-center h-[30px] overflow-hidden" style="font-size:x-large;font-weight:700;">{selected.exercise.eName }</h1>
+                <h1 class="mx-auto w-full text-center h-[30px] overflow-hidden" style="font-size:x-large;font-weight:700;">{selected.eName }</h1>
                 <div class="flex flex-row my-5 gap-2">
-                    {#if selected.exercise.difficulty == "Fácil"}
-                        <h1 class="badge badge-outline badge-success badge-lg ml-auto" >{selected.exercise.difficulty }</h1>
-                    {:else if selected.exercise.difficulty == "Média" }    
-                        <h1 class="badge badge-outline badge-warning badge-lg ml-auto " >{selected.exercise.difficulty }</h1>
+                    {#if selected.difficulty == "Fácil"}
+                        <h1 class="badge badge-outline badge-success badge-lg ml-auto" >{selected.difficulty }</h1>
+                    {:else if selected.difficulty == "Média" }    
+                        <h1 class="badge badge-outline badge-warning badge-lg ml-auto " >{selected.difficulty }</h1>
                     {:else}
-                        <h1 class="badge badge-outline badge-error badge-lg ml-auto " >{selected.exercise.difficulty }</h1>
+                        <h1 class="badge badge-outline badge-error badge-lg ml-auto " >{selected.difficulty }</h1>
 
                     {/if }
-                        <h1 class="badge badge-outline badge-lg mr-auto "  > {selected.exercise.targetMuscle }</h1>
+                        <h1 class="badge badge-outline badge-lg mr-auto "  > {selected.targetMuscle }</h1>
 
                 </div>
                 
                 <div class="flex flex-row">
 
                         <div class="badge badge-primary ml-auto " >Sets</div>
-                        <div class="ml-3"> {selected.sets} </div>
+                        <div class="ml-3"> {selected.numSets} </div>
                     
                     
                         <div class="badge badge-secondary ml-3" >Reps</div>
-                        <div class="ml-3 mr-auto" > {selected.reps} </div>
+                        <div class="ml-3 mr-auto" > {selected.numReps} </div>
                     
                 </div>
             </div>
-            <button class="btn p-2 z-99 bg-base-300 my-auto mx-1" style="width:fit-content; heigth:fit-content" on:click={() => deleteExercise(selected.exercise)}>
+            <button class="btn p-2 z-99 bg-base-300 my-auto mx-1" style="width:fit-content; heigth:fit-content" on:click={() => deleteExercise(selected)}>
 
                 <img src="/delete.svg" alt="" style="width:30px; height:30px" >
             </button>
@@ -256,3 +282,4 @@
     </div>
 </div>
 </div>
+<div class="btn btn-success" on:click={confirm} > Confirm</div>
