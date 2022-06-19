@@ -200,6 +200,7 @@ function selectInstructor(mail) {
         dbconnection.query(sql, [mail, dbKey], (err, data) => {
             // console.log(data);
             if (err) {
+                console.log(err)
                 resolve(1);
             }
             else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
@@ -240,8 +241,8 @@ function selectAllClients( email) {
         var sql = 'CALL spSelectInstructorClients(?,?)';
 
         dbconnection.query(sql,  [email,dbKey], (err, data) => {
-            // console.log(data)
             if (err) {
+                console.log(err)
                 resolve(1);
             }
             else if (typeof data !== 'undefined' && data.length > 0) {
@@ -264,7 +265,7 @@ function selectAllExercises(email) {
         dbconnection.query(sql,[email,dbKey] ,(err, data) => {
             // // console.log(data);
             if (err) {
-                // console.log(err)
+                console.log(err)
                 resolve("fetch error");
             }
             else if (typeof data !== 'undefined' && data.length > 0) {
@@ -325,7 +326,9 @@ function selectInstructorExerciseFromID(email,eid) {
         var sql = 'CALL spSelectInstructorExerciseFromID(?,?,?)';
 
         dbconnection.query(sql, [email,eid,dbKey], (err, data) => {
+            console.log(data)
             if (err) {
+                console.log(err)
                 resolve("fetch error");
             }
             else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
@@ -403,6 +406,7 @@ function selectClientInfo(mail) {
 
         dbconnection.query(sql, [mail, dbKey], (err, data) => {
             if (err) {
+                console.log(err)
                 resolve(1);
             }
             else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
@@ -423,9 +427,11 @@ function selectInstructorClientFromID(email,cid) {
 
         dbconnection.query(sql, [email,cid,dbKey], (err, data) => {
             if (err) {
+                console.log(err)
                 resolve("fetc error");
             }
             else if (typeof data !== 'undefined' && data.length > 0 && data[0].length > 0) {
+                console.log(data)
                 resolve(data);
             }
             else {

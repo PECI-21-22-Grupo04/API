@@ -59,12 +59,12 @@
 
      
             <!-- Sidebar content here -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="/" >
                 <span class="bi bi-house" ></span>
                 Página Incial
               </a>
-            </li>
+            </li> -->
             <li>
               <a href="/user/exercises">
                 <span class='bi bi-bicycle'  ></span>              

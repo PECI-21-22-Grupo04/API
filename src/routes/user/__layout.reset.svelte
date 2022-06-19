@@ -49,6 +49,7 @@
             console.log(JSON.stringify(n))
         }) */
         $instrutorStore = [...data.parsed_data][0];
+        console.log($instrutorStore)
     })
      
     

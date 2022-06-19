@@ -1,11 +1,13 @@
 <script>
         import {onMount, onDestroy} from 'svelte';
     import { page } from '$lib/store/store.js';
+import { goto } from '$app/navigation';
     onMount(async ()=>{
         page.update(n => 
-            n = "Página Inicial"
+        n = "Página Inicial"
         )
- 
+        goto("/user/exercises")
+        
     }),    
 
     onDestroy(async ()=>{
@@ -26,7 +28,6 @@
 }
 
 </style>
-
 
 
 <div style="padding:100px;">

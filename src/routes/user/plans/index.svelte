@@ -87,7 +87,7 @@
     <img  style="height:50px;width:50px;"src="/add.svg" alt=""> 
     <h1 style="margin-left:30px;margin-right:30px;"> Criar Plano </h1>
 </button>
-
+<!-- 
 <div class="dropdown dropdown-down dropdown-end dropdown-hover " style="margin-left:auto;margin-right:20px;">
     <label tabindex="0" class="btn m-1">Patologias</label>
     <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -95,7 +95,7 @@
       <li><a>....</a></li>
     </ul>
 </div>
-
+ -->
 </div>
 <div class="content">
     {#each parsed_data as plan }

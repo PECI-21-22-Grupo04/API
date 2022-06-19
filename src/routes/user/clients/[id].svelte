@@ -1,10 +1,13 @@
 <script context="module">
-    export async function load({ params }) {
+    export async function load({ params, session }) {
     const url = `/user/clients/${params.id}`;
+    console.log(session.user)
+    
     console.log(url)
     return {
         props: {
-            url: url,
+           
+            url
         }
     }
   }
@@ -13,20 +16,34 @@
 
     import {onMount} from 'svelte';
     import {session } from '$app/stores';
+    import Chat from '$lib/components/clients/Chat.svelte';
     import { goto } from "$app/navigation";
     import SelectPlan from "$lib/components/clients/SelectPlan.svelte";
     import { page } from '$lib/store/store.js';
-    let client = {}
+    
     export let url;
+    
+
     let toggle=0;
     let exer;
     let birthdate;
     let signday;
     let signhour;
-
-    onMount(async ()=>{
+    
+    
+    async function getClient(){
         
         console.log(url)
+        const resIns = await fetch('/user/userinfo', {
+                method: 'POST',
+                body:JSON.stringify({                    
+                    email: $session.user.email
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "accept": "application/json"
+                }
+            })
         const res = await fetch(url, {
                 method: 'POST',
                 body:JSON.stringify({                    
@@ -38,15 +55,23 @@
                 }
             })
         const data = await res.json();
-        client = data.parsed_data[0];
+        let client = data.parsed_data[0];
+        console.log(client)
         console.log(client.birthdate.substring(0,10))
         birthdate = client.birthdate.substring(0,10)
         signday = client.clientSince.substring(0,10)
         signhour = client.clientSince.substring(11,19)
+        
+        const dataIns = await resIns.json();
+        const instrutor = [...dataIns.parsed_data][0];
+
         page.update(n => 
             n = `Cliente ${client.firstName} ${client.lastName}`
         )
-    })
+        return {client,instrutor};
+    }
+    let promiseClient = getClient();
+    
     function AddExerc(){
         toggle = 1;
     }
@@ -109,39 +134,39 @@ a {
 
 
 
-{#if toggle == 0}
-<div class="card bg-base-100 mx-auto mt-[50px] px-10">
-    <img src="/Profileicon.png" alt="ProfilePic" style="width:100%">
-    <h1>{client.firstName} {client.lastName}</h1>
-    <p class="title">{client.mail}</p>
-    <h3>{client.sex}</h3>
-    <h1>Data de Nascimento: {birthdate}</h1>
-    <h1>Este utilizador associou se em: {signhour} {signday}</h1>
-    <p>
 
-    </p>
-    <a href="#"><i class="fa fa-twitter"></i></a>
-    <a href="#"><i class="fa fa-linkedin"></i></a>
-    <a href="#"><i class="fa fa-facebook"></i></a>
-    <p></p>
-    <button class="btn btn-info my-5" on:click={AddExerc}> Partilhar planos</button>
-  </div> 
-    <!-- <div   class="wrapper">
-            <div  class="detailedPlan">
-                <h1 class="col" style="text-align: center;"  >{client.firstName} {client.lastName}</h1>
-                <h1 class="col"> </h1>
-                <h1 class="col">Data de Nascimento: {client.birthdate} </h1>
-                <h1 class="col"> Este utilizador associou se em:{client.clientSince} </h1>
+    {#await promiseClient}
+        Loading 
+    {:then user } 
+ 
+        {#if toggle == 0}
+            <div class="flex flex-row h-[92vh] ">
 
-                <a href="/user/clients">Back</a>
+                <div class="card bg-base-100 h-[80vh] ml-20 mt-[50px] mb-20  px-10">
+                    <img src="/Profileicon.png" alt="ProfilePic" style="width:100%">
+                    <h1>{user.client.firstName} {user.client.lastName}</h1>
+                    <p class="title">{user.client.mail}</p>
+                    <h3>{user.client.sex}</h3>
+                    <h1>Data de Nascimento: {birthdate}</h1>
+                    <h1>Este utilizador associou se em: {signhour} {signday}</h1>
+                    <p>
+            
+                    </p>
+                    <div class="flex flex-row mx-auto">
 
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                    </div>
+                    <p></p>
+                    <button class="btn btn-info my-5" on:click={AddExerc}> Partilhar planos</button>
+                </div> 
+                
+            
+                <Chat clientFire={user.client.firebaseID} instructor={user.instrutor} />
             </div>
-        
-        
-    </div> -->
-{:else}
-    <SelectPlan bind:toggle client={client} clientmail={client.mail}/>
-{/if}
-<div>
+        {:else}
+            <SelectPlan bind:toggle client={user.client} clientmail={user.client.mail}/>
+        {/if}
+    {/await}
 
-</div>

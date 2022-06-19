@@ -24,6 +24,7 @@
             })
         const data = await res.json();
         parsed_data = data.parsed_data
+        console.log(parsed_data)
         console.log("JASJSJSA" +parsed_data)
     })
 

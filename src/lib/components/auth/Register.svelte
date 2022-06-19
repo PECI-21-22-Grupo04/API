@@ -106,7 +106,13 @@
         bind:value={birth}
         placeholder="DD-MM-YYYY"
     />
-    <input required style="margin-bottom: 15px" class="input input-bordered w-full " type="sex" bind:value={sex} placeholder="Enter your gender" />
+    <select class="select w-full max-w-s select-bordered" bind:value={sex}>
+        <option disabled selected>Enter your gender</option>
+        <option>Masculino</option>  
+        <option>Feminino</option>
+        <option>Outro</option>
+    </select>
+   
     <input required style="margin-bottom: 15px" class="input input-bordered w-full " type="city" bind:value={city} placeholder="Enter your home city" />
     <input required style="margin-bottom: 15px" class="input input-bordered w-full " type="street" bind:value={street} placeholder="Enter your address" />
     <input required
