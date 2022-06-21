@@ -52,6 +52,7 @@
 
 
     onMount(async () => {
+        $exerciseList = []
         console.log(url);
         const res = await fetch(url, {
             method: "POST",
@@ -89,14 +90,14 @@
 
     });
     function AddExerc() {
-        plan["exercises"] = [...$exerciseList];
+        // plan["exercises"] = [...$exerciseList];
         toggle = !toggle;
     }
     /* function plandetails() {
         toggle = 0;
     } */
 </script>
-<div class="btn btn-info" on:click={AddExerc} >toggle</div>
+
 {#if toggle == false}
     <h1
         class="col"
@@ -104,9 +105,25 @@
     >
         {plan.pName}
     </h1>
+    
 
     <div style="display:flex;justify-content:center; margin-top:30px; ">
         <div class="flex flex-col bg-base-200 w-[700px] h-[650px] text-center mr-10" style="box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);">
+            <h1  class="text-2xl font-bold" style="margin-bottom:20px; margin-top:20px;"> Patologias</h1>
+
+                <select class="select w-full max-w-s select-bordered" bind:value={plan.forPathology} disabled >
+                    <option disabled selected>Escolhe a patologia</option>
+                    <option value="">Nenhuma</option>
+                    <option>Gravidez</option>  
+                    <option>Obesidade</option>
+                    <option>Escoliose</option>
+                    <option>Osteoporose</option>
+                    <option>Parkison</option>
+                    <option>Reumatismo</option>
+                    <option>Asma</option>
+                    <option>Lupus</option>
+                </select>
+            
             <h1
             class="col mt-[20px]"
             style="text-align:center;font-size:32px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;margin-bottom:30px"
@@ -119,9 +136,9 @@
         </div>
 
 
-        <div style="display:flex;justify-content:center; box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);" class=" bg-base-200 ">
+        <div style="display:flex ;justify-content:center; box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);" class=" flex-col bg-base-200 ">
 
-            <div class="snap-x overflow-x-hidden my-auto p-5 gap-5" style="height:600px;">
+            <div class="snap-x overflow-x-hidden my-auto p-5 gap-5 relative exercises" style="height:600px;">
 
                 {#each $exerciseList as exercise}
     
@@ -160,24 +177,30 @@
                         </button>
                     </div>
 
-                
-                {/each}
-            
-
-            </div>
+                    
+                    {/each}
+                    
+                </div>
+                <div class="btn btn-info  mt-auto" on:click={AddExerc} >Editar</div>
 
         </div>
     </div>
 
-
+    <div class="flex flex-row">
+        <a class="btn btn-error ml-10 relativ"  href="/user/plans">Retroceder</a>
+    
+    </div>
+    
 
 {:else}
   <EditExercises bind:plan bind:toggle />  
-{/if}
+  <div class="flex flex-row">
+    <div class="btn btn-error ml-10 relativ"  on:click={AddExerc}>Retroceder</div>
 
+    </div>
 
+  {/if}
 
-<a class="btn btn-error ml-10 relativ"  href="/user/plans">Back</a>
 
 <style>
     /* a {
@@ -188,6 +211,22 @@
         border: 1px solid black;
     }
  */
+    .exercises::-webkit-scrollbar-track {
+        
+        border-radius: 10px;
+       
+    }
+    
+    .exercises::-webkit-scrollbar {
+        width: 8px;
+       
+    }
+    
+    .exercises::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        
+        background-color: #3d3d3d;
+    }
     .detailedPlan {
         display: flex;
         flex-direction: column;

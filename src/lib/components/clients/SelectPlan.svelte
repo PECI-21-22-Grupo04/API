@@ -194,6 +194,6 @@
     </div>
 </div>
 <div style="display:flex;align-items:center;">
-    <button on:click={back} class="btn btn-error ml-auto mr-5" >Back </button>
-    <button class="btn btn-success  ml-5 mr-auto" on:click={confirm} >Confirm</button>
+    <button on:click={back} class="btn btn-error ml-auto mr-5" >Retroceder </button>
+    <button class="btn btn-success  ml-5 mr-auto" on:click={confirm} >Confirmar</button>
 </div>

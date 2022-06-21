@@ -61,10 +61,12 @@
                 dispatch("success");
             } else {
                 error = "An error occurred";
+                alert("Something went wrong, try again")
             }
         } catch (err) {
             console.log(err);
             error = "An error occurred";
+            alert("Something went wrong, try again")
         }
     }
 </script>

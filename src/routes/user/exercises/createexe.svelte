@@ -180,12 +180,12 @@
 
       <Finnish bind:avatar bind:exercise bind:current/>
       <div class="flex flex-row mt-10">
-        <button on:click={back} class="btn btn-error" >Back </button>
+        <button on:click={back} class="btn btn-error" >Retroceder </button>
 
         {#if closeButton==1}
-          <button class="btn btn-success loading ml-auto">Confirm </button>
+          <button class="btn btn-success loading ml-auto">Confirmar </button>
         {:else}
-          <button on:click={confirm} class="btn btn-success  ml-auto">Confirm </button>
+          <button on:click={confirm} class="btn btn-success  ml-auto">Confirmar </button>
         
         {/if}
 

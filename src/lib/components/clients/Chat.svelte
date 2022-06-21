@@ -77,7 +77,7 @@
             {#if message.type == 0}
                 <div class="ml-auto p-3 my-1 bg-base-100 rounded-lg ">{message.content}</div>    
             {:else}
-                <div class="ml-auto p-3 my-1 bg-base-100 rounded-lg ">
+                <div class="ml-auto p-3 w-[400px] my-1 bg-base-100 rounded-lg ">
                     <img src={message.content} alt="">
                 </div>
             {/if}
@@ -85,7 +85,7 @@
             {#if message.type == 0}
                 <div class="p-3 my-1 w-[fit-content] bg-green-300 rounded-lg text-black">{message.content}</div>    
             {:else}
-                <div class="p-3 my-1 w-[fit-content] bg-green-300 rounded-lg text-black">
+                <div class="p-3 my-1 w-[400px] bg-green-300 rounded-lg text-black">
                     <img src={message.content} alt="">
                 </div>
             {/if}

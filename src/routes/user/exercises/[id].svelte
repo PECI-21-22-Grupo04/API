@@ -182,17 +182,28 @@
                         </label>
                         <label class="input-group my-5">
                             <span>Patologias</span>
-                            <input type="text-xl  " bind:value={exercise.forPathology} class="input input-bordered "  />
+                            <select class="select select-bordered" bind:value={exercise.forPathology}>
+                                <option disabled selected>Escolhe a patologia</option>
+                                <option value="">Nenhuma</option>
+                                <option>Gravidez</option>  
+                                <option>Obesidade</option>
+                                <option>Escoliose</option>
+                                <option>Osteoporose</option>
+                                <option>Parkison</option>
+                                <option>Reumatismo</option>
+                                <option>Asma</option>
+                                <option>Lupus</option>
+                            </select>
                         </label>
                         <div class="flex flex-row">
 
-                            <div on:click={toggleEdit} class="btn btn-error w-20 ml-auto mr-10 ">Go Back</div>
-                            <div on:click={() =>{ confirmEdit(exercise) }} class="btn btn-success w-20 ml-auto mr-10 ">Confirm</div>
+                            <div on:click={toggleEdit} class="btn btn-error  ml-auto mr-10 ">Retroceder</div>
+                            <div on:click={() =>{ confirmEdit(exercise) }} class="btn btn-success  ml-auto mr-10 ">Confirmar</div>
                         </div>
                     </div>
                     <label class="input-group input-group-vertical mt-10">
                         <span class="py-5 w-full text-center " >Descrição</span>
-                        <textarea type="text" bind:value={exercise.eDescription} placeholder="info@site.com" class="input input-bordered"  />
+                        <textarea type="text" bind:value={exercise.eDescription} class="input input-bordered"  />
                     </label>
                 {:else}
                     <div class="flex flex-col mx-auto">
@@ -227,7 +238,18 @@
                         </label>
                         <label class="input-group my-5">
                             <span>Patologias</span>
-                            <input type="text-xl  " bind:value={exercise.forPathology} class="input input-bordered " disabled />
+                            <select class="select select-bordered" bind:value={exercise.forPathology} disabled>
+                                <option disabled selected>Escolhe a patologia</option>
+                                <option value="">Nenhuma</option>
+                                <option>Gravidez</option>  
+                                <option>Obesidade</option>
+                                <option>Escoliose</option>
+                                <option>Osteoporose</option>
+                                <option>Parkison</option>
+                                <option>Reumatismo</option>
+                                <option>Asma</option>
+                                <option>Lupus</option>
+                            </select>
                         </label>
                         <div on:click={toggleEdit} class="btn btn-info w-20 ml-auto mr-10 ">Edit</div>
                     </div>   
@@ -245,6 +267,6 @@
     {/each}
         <div class="flex w-full">
 
-            <button class="btn btn-error w-20 ml-10 " on:click={back} >Back</button>
+            <button class="btn btn-error ml-10 " on:click={back} >Retroceder</button>
         </div>
     </div>

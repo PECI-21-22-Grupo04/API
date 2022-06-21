@@ -203,7 +203,7 @@ img {
                     <div class="card-body">
                     <h2 class="card-title">
                         {exercise.eName}
-                        <div class="badge badge-secondary">NEW</div>
+                       <!--  <div class="badge badge-secondary">NEW</div> -->
                     </h2>
                     <div style="font-size:small;    height:60px;width:230px;overflow:hidden; overflow-wrap: break-word;">
                         {exercise.eDescription}
@@ -215,7 +215,16 @@ img {
                                 <img src="/delete.svg" alt="" style="width:30px; height:30px" >
                             </button>
                             <div class="card-actions justify-end ml-auto">
-                                <div class="badge badge-outline">{exercise.difficulty}</div> 
+                                
+                                    {#if exercise.difficulty == "Fácil"}
+                                        <h1 class="badge badge-outline badge-success ml-auto" >{exercise.difficulty }</h1>
+                                    {:else if exercise.difficulty == "Média" }    
+                                        <h1 class="badge badge-outline badge-warning ml-auto " >{exercise.difficulty }</h1>
+                                    {:else}
+                                        <h1 class="badge badge-outline badge-error ml-auto " >{exercise.difficulty }</h1>
+
+                                    {/if }
+        
                                 <div class="badge badge-outline">{exercise.targetMuscle}</div>
                             </div>
 

@@ -4,7 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 import {db} from "$lib/database/dbFunctions.js";
 import {app} from "$lib/database/firebase.js";
 import fs from 'fs';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, deleteUser } from "firebase/auth";
 
 import jwt from "jsonwebtoken";
 // import { initializeApp } from "firebase/app";
@@ -28,6 +28,7 @@ import jwt from "jsonwebtoken";
 // export const app = initializeApp(firebaseConfig);
 
 export async function post({request}){
+    let user
     const body = await request.json();
     let firebaseID = "";
     if (!body.email || !body.password || !body.firstName || !body.lastName || !body.birth  || !body.sex  || !body.street ||!body.postcode ||!body.city ||!body.country || !body.contact || !body.paypalAcc )
@@ -45,7 +46,8 @@ export async function post({request}){
         .then((userCredential) => {
     
         // Signed in
-        const user = userCredential.user;
+        user = userCredential.user;
+        console.log(user)
         firebaseID = user.uid;
         console.log("we creating firebase " + JSON.stringify(user));
         success_f=1;
@@ -103,8 +105,14 @@ export async function post({request}){
             }
             
             else{
+                deleteUser(user).then(() => {
+                  // User deleted.
+                }).catch((error) => {
+                  // An error ocurred
+                  // ...
+                });
                 return{
-                    status: 500,
+                    status: 409,
                     body: {
                         message: "An error occured during Registration"
                     }

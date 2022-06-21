@@ -80,7 +80,7 @@
   </div>
   <div class="flex flex-row mt-5">
 
-    <button on:click={back} class="btn btn-error" >Back </button>
+    <button on:click={back} class="btn btn-error" >Retroceder </button>
     <button on:click={next} class="btn btn-info ml-auto" >Next </button>
   </div>
 </div>

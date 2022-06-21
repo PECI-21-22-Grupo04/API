@@ -118,8 +118,8 @@ function back(){
     </div>
     
     <div style="display:flex; overflow:auto">
-        <button class="btn btn-error ml-10 my-10" on:click={back} >Back</button>
-        <button class="btn btn-success ml-auto mr-10 my-10" on:click={createProgram} >Confirm</button>
+        <button class="btn btn-error ml-10 my-10" on:click={back} >Retroceder</button>
+        <button class="btn btn-success ml-auto mr-10 my-10" on:click={createProgram} >Confirmar</button>
     </div>
    
 </div>

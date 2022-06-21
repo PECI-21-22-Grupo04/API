@@ -156,22 +156,6 @@
         height: 75vh;
         width: 90%;
     }
-    
-
-    .timeline {
-        display: flex;
-        width: 300px;
-        padding: 20px 10px;
-        row-gap: 10px;
-        margin: 20px  auto;
-        margin-left: 10px;
-        flex-direction: column;
-        left: var(--sidebar-width);
-        height: 100%;
-        overflow-y: auto;
-        transition: left var(--sidebar-animation-time) var(--sidebar-animation-curve);
-        box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.2);
-}
     .selected{
         display: flex;
         flex-direction: row;
@@ -235,9 +219,9 @@
         <p>Não existem Exercicios</p>
         {/each}
     </div>
-    <div style=" box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);" class="flex justify-center bg-base-200 h-full transition ease-in-out ml-10">
+    <div style=" box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);" class="flex flex-col justify-center bg-base-200 h-full transition ease-in-out ml-10">
 
-        <div class="snap-x overflow-x-hidden my-auto p-5 gap-5 h-full" >
+        <div class="snap-x timeline overflow-x-hidden my-auto p-5 gap-5 h-full" >
         
         {#each plan.exercises as selected}
         
@@ -279,7 +263,7 @@
         </div>
         {/each}
 
-    </div>
+        </div>
+    <div class="btn btn-success" on:click={confirm} > Confirmar</div>
 </div>
 </div>
-<div class="btn btn-success" on:click={confirm} > Confirm</div>
